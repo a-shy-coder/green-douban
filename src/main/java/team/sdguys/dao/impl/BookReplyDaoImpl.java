@@ -61,5 +61,80 @@ public class BookReplyDaoImpl extends  BaseDaoImpl implements BookReplyDao {
         return executeUpdate("insert into BookReply (BRFromId,BRToId,BRContent,BRTime,BId,BCId,BRLikeCount) value (?,?,?,?,?,?,0)",bookReply.getBRFromId(),bookReply.getBRToId(),bookReply.getBRContent(),bookReply.getBRTime(),bookReply.getBId(),bookReply.getBCId());
     }
 
+    @Override
+    public List<Integer> getBridlistbyBCId(List<Integer> list) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        List<Integer> bridlist = null;
+
+        try {
+            connection = DataBaseUtil.getConnection();
+            preparedStatement = connection.prepareStatement("select BRId from BookReply where BCId=?");
+            for(int i = 0;i<list.size();i++){
+                preparedStatement.setInt(1, list.get(i));
+                resultSet = preparedStatement.executeQuery();
+                if (resultSet.next()) {
+                    bridlist.add(resultSet.getInt(1));
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            DataBaseUtil.close(resultSet, preparedStatement, connection);
+        }
+        return bridlist;    }
+
+    @Override
+    public List<BookReply> getBookReplybybrid(List<Integer> bridlist) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        List<BookReply> brlist = null;
+
+        BookReply bookReply = null;
+        try {
+            connection = DataBaseUtil.getConnection();
+            preparedStatement = connection.prepareStatement("select * from BookReply where BRId=?");
+            for(int i = 0;i<bridlist.size();i++){
+                preparedStatement.setInt(1, bridlist.get(i));
+                resultSet = preparedStatement.executeQuery();
+                if (resultSet.next()) {
+                    bookReply = new BookReply(resultSet.getInt(1),resultSet.getInt(2),resultSet.getInt(3),resultSet.getString(4),resultSet.getDate(5),resultSet.getInt(6),resultSet.getInt(7),resultSet.getInt(8));
+                    brlist.add(bookReply);
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            DataBaseUtil.close(resultSet, preparedStatement, connection);
+        }
+        return brlist;    }
+
+    @Override
+    public List<Integer> getBridListbyUid(int uid) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        List<Integer> bridlist = null;
+
+        try {
+            connection = DataBaseUtil.getConnection();
+            preparedStatement = connection.prepareStatement("select BRId from BookReply where UId=?");
+            preparedStatement.setInt(1, uid);
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                bridlist.add(resultSet.getInt(1));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            DataBaseUtil.close(resultSet, preparedStatement, connection);
+        }
+        return bridlist;
+    }
+
 
 }

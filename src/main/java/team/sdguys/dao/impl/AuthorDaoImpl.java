@@ -36,4 +36,9 @@ public class AuthorDaoImpl extends BaseDaoImpl implements AuthorDao {
         }
         return author;
     }
+
+    @Override
+    public int insertNewAuthor(Author author) {
+        return executeUpdate("insert into Author (AuthorId,AuthorChineseName,AuthorOriginName,AuthorInfo,AuthorGender,AuthorImg) value (?,?,?,?,?,?)", author.getAuthorId(), author.getAuthorChineseName(), author.getAuthorOriginName(), author.getAuthorInfo(), author.getAuthorGender(), author.getAuthorImg() );
+    }
 }

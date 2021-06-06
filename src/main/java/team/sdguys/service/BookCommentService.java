@@ -22,4 +22,21 @@ public interface BookCommentService {
      * @return 受影响的行数
      */
     public int submitBookComment(BookComment bookComment);
+
+
+    /**
+     * 删除一条评论
+     *
+     * @param bcid,uid;
+     * @return 修改的行数
+     */
+    public int deleteComment(int bcid, int uid);
+
+    /**
+     * 更改一条评论
+     *
+     * @param bcid,uid;
+     * @return linenumber
+     */
+    public int updateComment(int bcid, int uid, String content);
 }

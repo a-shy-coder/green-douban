@@ -13,4 +13,9 @@ public class DirectorServiceImpl implements DirectorService {
     public Director findDirectorByDirectorId(int directorId) {
         return directorDao.getDirectorByDirectorId(directorId);
     }
+
+    @Override
+    public int addNewDirector(Director director) {
+        return 0;
+    }
 }

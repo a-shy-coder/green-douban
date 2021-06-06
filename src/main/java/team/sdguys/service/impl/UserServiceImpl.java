@@ -93,4 +93,9 @@ public class UserServiceImpl implements UserService {
     public User findUserByUid(int uid) {
         return userDao.getUserByUid(uid);
     }
+
+    @Override
+    public int resetUserName(String Username, int uid) {
+        return userDao.resetUserName(Username,uid);
+    }
 }

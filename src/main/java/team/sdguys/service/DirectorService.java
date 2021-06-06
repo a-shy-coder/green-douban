@@ -12,4 +12,11 @@ public interface DirectorService {
      * @return 导演实体类
      */
     public Director findDirectorByDirectorId(int directorId);
+
+    /**
+     * 添加新电影导演
+     * @param director 新导演
+     * @return
+     */
+    public int addNewDirector(Director director);
 }

@@ -2,6 +2,7 @@ package team.sdguys.dao.impl;
 
 import team.sdguys.dao.MovieActorDao;
 import team.sdguys.entity.Director;
+import team.sdguys.entity.MovieActor;
 import team.sdguys.util.DataBaseUtil;
 
 import java.sql.Connection;
@@ -36,5 +37,10 @@ public class MovieActorDaoImpl extends BaseDaoImpl implements MovieActorDao {
             DataBaseUtil.close(resultSet, preparedStatement, connection);
         }
         return actorIdList;
+    }
+
+    @Override
+    public int insertNewMovieWithActorsInfo(MovieActor movieActor) {
+        return executeUpdate("insert into MovieActor (MovieId,ActorId) value (?,?)", movieActor.getActorId()  ,movieActor.getMovieId() );
     }
 }

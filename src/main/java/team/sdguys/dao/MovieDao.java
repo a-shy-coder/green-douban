@@ -60,4 +60,22 @@ public interface MovieDao extends BaseDao{
      * @return 最新的5部电影列表
      */
     List<Movie> getTheLatest5MoviesByActorId(int actorId);
+
+    /**
+     * 插入一条电影信息
+     * @param movie 电影
+     * @return 受影响的行数
+     */
+    int insertMovie(Movie movie);
+
+
+
+    /**
+     * 根据图书编号Mid删除图书
+     * @param Mid 图书编号
+     * @return 受影响的行数
+     */
+    int deleteMovieByMid(int Mid);
+
+
 }

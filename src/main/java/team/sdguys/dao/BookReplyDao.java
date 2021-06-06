@@ -25,7 +25,26 @@ public interface BookReplyDao extends BaseDao{
      */
     int insertReply(BookReply bookReply);
 
-    // 以下为新增的需要实现的接口
+    /**
+     *根据dcid查找drid
+     * @param list
+     * @return drid
+     */
+     List<Integer> getBridlistbyBCId(List<Integer> list);
+
+    /**
+     * 根据drid查找dr
+     * @param bridlist
+     * @return DR
+     */
+     List<BookReply> getBookReplybybrid(List<Integer> bridlist);
+
+    /**
+     * 根据uid查找BRId
+     * @param uid
+     */
+    List<Integer> getBridListbyUid(int uid);
+
 
 
 

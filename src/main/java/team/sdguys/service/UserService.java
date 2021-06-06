@@ -68,4 +68,9 @@ public interface UserService {
      * @return User实体类
      */
     public User findUserByUid(int uid);
+
+    /**
+     * 修改用户名
+     */
+    public int resetUserName(String Username,int uid);
 }

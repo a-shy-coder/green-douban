@@ -33,7 +33,7 @@ public class LoginServlet extends HttpServlet {
         System.out.println(session.getAttribute("uid"));
         // 登录成功后 跳转主页....
         resp.setContentType("text/html;charset=utf-8");
-        resp.sendRedirect("movieInfoServlet?movieChineseName=" + URLEncoder.encode("小人物","UTF-8"));
-//        resp.sendRedirect("bookInfoServlet?bookChineseName=" + URLEncoder.encode("算法导论","UTF-8"));
+//        resp.sendRedirect("movieInfoServlet?movieChineseName=" + URLEncoder.encode("小人物","UTF-8"));
+        resp.sendRedirect("bookInfoServlet?bookChineseName=" + URLEncoder.encode("算法导论","UTF-8"));
     }
 }

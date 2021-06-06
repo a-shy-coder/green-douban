@@ -116,4 +116,9 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
     public int updatePasswordByUid(int uid, String password) {
         return executeUpdate("update user set Upassword = ? where Uid = ?", password,uid);
     }
+
+    @Override
+    public int resetUserName(String Username, int uid) {
+        return executeUpdate("update User set UserName = ? where UId = ?",Username,uid);
+    }
 }

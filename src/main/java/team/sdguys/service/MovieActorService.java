@@ -1,5 +1,7 @@
 package team.sdguys.service;
 
+import team.sdguys.entity.MovieActor;
+
 import java.util.List;
 
 /**
@@ -12,4 +14,11 @@ public interface MovieActorService {
      * @return 演员列表
      */
     public List<Integer> findActorIdListByMovieId(int movieId);
+
+    /**
+     * 添加新电影演员关系
+     * @param movieActor 新电影演员关系
+     * @return
+     */
+    public int addNewMovieWithActorInfo(MovieActor movieActor);
 }

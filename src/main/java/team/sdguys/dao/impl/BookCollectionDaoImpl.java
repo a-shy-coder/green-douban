@@ -141,4 +141,26 @@ public class BookCollectionDaoImpl extends BaseDaoImpl implements BookCollection
     public int insertBookCollectionByBidAndUid(int bid, int uid) {
         return executeUpdate("insert into BookCollection (BId,UId) value(?,?)",bid,uid);
     }
+    @Override
+    public List<Integer> get8Bid(int uid) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        List<Integer> list = null;
+
+        try {
+            connection = DataBaseUtil.getConnection();
+            preparedStatement = connection.prepareStatement("select BId from BookCollection where uid = ? limit 5");
+            preparedStatement.setInt(1,uid);
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                list.add((resultSet.getInt(1)));;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            DataBaseUtil.close(resultSet, preparedStatement, connection);
+        }
+        return list;
+    }
 }

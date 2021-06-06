@@ -27,11 +27,23 @@ public interface BookCommentDao extends BaseDao{
 
     /**
      * 删除一条评论
+     * @param bcid,uid
+     * @return 修改的行数
+     */
+    int deleteComment(int bcid,int uid);
+
+    /**
+     * 删除一条评论
      * @param bookComment
      * @return 修改的行数
      */
     int deleteComment(BookComment bookComment);
 
+    /**更改一条评论
+     * @param bcid,uid;
+     * @return linenumber
+     */
+    int updateComment(int bcid,int uid,String content);
 
     /**
      * 显示高赞评论BCId
@@ -69,4 +81,5 @@ public interface BookCommentDao extends BaseDao{
      * @return 受影响的行数
      */
     int insertBookComment(BookComment bookComment);
+
 }

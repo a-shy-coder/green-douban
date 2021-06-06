@@ -51,4 +51,9 @@ public interface UserDao extends BaseDao{
      * @return 受影响的行数
      */
     int updatePasswordByUid(int uid, String password);
+
+    /**
+     * 修改用户名
+     */
+    int resetUserName(String Username,int uid);
 }

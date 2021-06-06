@@ -152,4 +152,17 @@ public class MovieDaoImpl extends BaseDaoImpl implements MovieDao {
         }
         return movieList;
     }
+
+    @Override
+    public int insertMovie(Movie movie) {
+        return executeUpdate("insert into Movie (MovieId,MChineseName,MOriginName,MType,MRating,MRatingCount,MReleaseDate,DirectorId,mLanguage,mLength,mArea,mContent,mCover) value (?,?,?,?,?,?,?,?,?,?,?,?,?)", movie.getMovieId(), movie.getMChineseName(), movie.getMOriginName(), movie.getMType(), movie.getMRating() ,movie.getMRatingCount() ,movie.getMReleaseDate() ,movie.getDirectorId() ,movie.getmLanguage() ,movie.getmLength() ,movie.getmArea() ,movie.getmContent() ,movie.getmCover() );
+
+    }
+
+
+    @Override
+    public int deleteMovieByMid(int Mid) {
+        return executeUpdate("delete from Movie where MId = ?",Mid);
+
+    }
 }

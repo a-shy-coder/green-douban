@@ -13,4 +13,12 @@ public interface AuthorDao extends BaseDao{
      * @return 作者实体类
      */
     public Author getAuthorByAuthorId(int authorId);
+
+
+    /**
+     * 插入一条书籍作者信息
+     * @param author 作者
+     * @return 受影响的行数
+     */
+    public int insertNewAuthor(Author author);
 }

@@ -16,4 +16,9 @@ public class AuthorServiceImpl implements AuthorService {
     public Author findAuthorByAuthorId(int authorId) {
         return authorDao.getAuthorByAuthorId(authorId);
     }
+
+    @Override
+    public int addNewAuthor(Author author) {
+        return authorDao.insertNewAuthor(author);
+    }
 }

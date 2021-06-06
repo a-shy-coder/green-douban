@@ -69,4 +69,9 @@ public interface UserInfoService {
      * @return 查询到的数量
      */
     public int findWomanSize();
+
+    /**
+     * 更改用户信息
+     */
+    public int resetUserInfo(UserInfo userInfo);
 }

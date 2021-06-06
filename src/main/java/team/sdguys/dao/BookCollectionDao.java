@@ -57,6 +57,10 @@ public interface BookCollectionDao extends BaseDao{
      */
     int insertBookCollectionByBidAndUid(int bid, int uid);
 
+    /**
+     *  获取8本数
+     */
+    List<Integer> get8Bid(int uid);
 
 
 

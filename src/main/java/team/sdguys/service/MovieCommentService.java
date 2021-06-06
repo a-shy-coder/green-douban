@@ -21,4 +21,18 @@ public interface MovieCommentService {
      * @return 受影响的行数
      */
     public int submitMovieComment(MovieComment movieComment);
+
+    /**
+     * 删除一条评论
+     * @param mcid,uid;
+     * @return 修改的行数
+     */
+    public int deleteComment(int mcid, int uid);
+
+    /**
+     * 更改一条评论
+     * @param mcid,uid;
+     * @return linenumber
+     */
+    public int updateComment(int mcid,int uid,String content);
 }

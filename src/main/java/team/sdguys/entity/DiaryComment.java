@@ -1,5 +1,7 @@
 package team.sdguys.entity;
 
+import java.util.Date;
+
 /**
  * 日志评论实体类
  */
@@ -13,11 +15,11 @@ public class DiaryComment {
     // 发布评论编号
     private int Uid;
     // 评论发布时间
-    private int dCTime;
+    private Date dCTime;
     // 评论点赞数量
     private int dCLikeCount;
 
-    public DiaryComment(int dCid, int did, String dCContent, int uid, int dCTime, int dCLikeCount) {
+    public DiaryComment(int dCid, int did, String dCContent, int uid, Date dCTime, int dCLikeCount) {
         this.dCid = dCid;
         this.did = did;
         this.dCContent = dCContent;
@@ -26,7 +28,7 @@ public class DiaryComment {
         this.dCLikeCount = dCLikeCount;
     }
 
-    public DiaryComment(int did, String dCContent, int uid, int dCTime, int dCLikeCount) {
+    public DiaryComment(int did, String dCContent, int uid, Date dCTime, int dCLikeCount) {
         this.did = did;
         this.dCContent = dCContent;
         Uid = uid;
@@ -66,11 +68,11 @@ public class DiaryComment {
         Uid = uid;
     }
 
-    public int getdCTime() {
+    public Date getdCTime() {
         return dCTime;
     }
 
-    public void setdCTime(int dCTime) {
+    public void setdCTime(Date dCTime) {
         this.dCTime = dCTime;
     }
 

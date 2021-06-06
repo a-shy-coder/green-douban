@@ -25,4 +25,14 @@ public class MovieCommentServiceImpl implements MovieCommentService {
     public int submitMovieComment(MovieComment movieComment) {
         return movieCommentDao.insertMovieComment(movieComment);
     }
+
+    @Override
+    public int deleteComment(int mcid, int uid) {
+        return movieCommentDao.deleteComment(mcid,uid);
+    }
+
+    @Override
+    public int updateComment(int mcid, int uid, String content) {
+        return movieCommentDao.updateComment(mcid,uid,content);
+    }
 }
