@@ -26,12 +26,12 @@ public class BookCommentServiceImpl implements BookCommentService {
     }
 
     @Override
-    public int deleteComment(int bcid, int uid) {
-        return bookCommentDao.deleteComment(bcid,uid);
+    public int deleteComment(int bid, int uid) {
+        return bookCommentDao.deleteComment(bid,uid);
     }
 
     @Override
-    public int updateComment(int bcid, int uid, String content) {
-        return bookCommentDao.updateComment(bcid,uid,content);
+    public int updateComment(int bid, int uid, String content) {
+        return bookCommentDao.updateComment(bid,uid,content);
     }
 }

@@ -10,7 +10,6 @@ public class BookCommentManagerServiceImpl implements BookCommentManagerService 
     BookDao bookDao;
     @Override
     public int deleteBookCommentByBidAndUid(int bid, int uid) {
-        BookComment bookComment=new BookComment(0,bid,null,uid,null,0 );
-        return bookCommentDao.deleteComment(bookComment);
+        return bookCommentDao.deleteComment(bid,uid);
     }
 }

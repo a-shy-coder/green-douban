@@ -51,6 +51,11 @@ public class BookCommentDaoImpl extends  BaseDaoImpl implements BookCommentDao {
     }
 
     @Override
+    public int deleteComment(BookComment bookComment) {
+        return 0;
+    }
+
+    @Override
     public int updateComment(int bcid,int uid,String content) {
         return executeUpdate("update BookComment set BCcontent = ? where BCId = ? and UId = ?",content,bcid,uid);
     }

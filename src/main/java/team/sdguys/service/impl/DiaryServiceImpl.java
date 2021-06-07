@@ -1,7 +1,7 @@
 package team.sdguys.service.impl;
 
 import team.sdguys.dao.DiaryDao;
-import team.sdguys.dao.impl.DiaryImpl;
+import team.sdguys.dao.impl.DiaryDaoImpl;
 import team.sdguys.entity.Diary;
 import team.sdguys.service.DairyService;
 import team.sdguys.util.DataBaseUtil;
@@ -12,7 +12,7 @@ import java.sql.ResultSet;
 import java.util.List;
 
 public class DiaryServiceImpl implements DairyService {
-    DiaryDao diaryDao = new DiaryImpl();
+    DiaryDao diaryDao = new DiaryDaoImpl();
     @Override
     public int insertNewDiary(Diary diary) {
         return diaryDao.executeUpdate("insert into Diary (DiaryContent,DiaryTime,UId,DLikeCount) value (?,?,?,0)",diary.getDiaryContent(),diary.getDiaryTime(),diary.getUId());

@@ -35,4 +35,11 @@ public interface MovieCommentService {
      * @return linenumber
      */
     public int updateComment(int mcid,int uid,String content);
+
+    /**
+     * 根据评论编号查找评论
+     * @param mcId 编号
+     * @return 电影评论
+     */
+    MovieComment findMovieCommentByMovieCommentId(int mcId);
 }

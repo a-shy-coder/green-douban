@@ -43,4 +43,11 @@ public interface MovieCommentDao extends BaseDao {
      * @return 修改的行数
      */
     int deleteComment(MovieComment movieComment);
+
+    /**
+     * 获取一条评论
+     * @param mcId 评论编号
+     * @return 评论
+     */
+    MovieComment getMovieCommentByMovieCommentId(int mcId);
 }

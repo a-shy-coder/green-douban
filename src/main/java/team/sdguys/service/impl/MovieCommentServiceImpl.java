@@ -35,4 +35,9 @@ public class MovieCommentServiceImpl implements MovieCommentService {
     public int updateComment(int mcid, int uid, String content) {
         return movieCommentDao.updateComment(mcid,uid,content);
     }
+
+    @Override
+    public MovieComment findMovieCommentByMovieCommentId(int mcId) {
+        return movieCommentDao.getMovieCommentByMovieCommentId(mcId);
+    }
 }

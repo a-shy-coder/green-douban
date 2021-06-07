@@ -63,16 +63,19 @@
             $("#commentModal").modal('show');
             $("#submitCommentContent").val("");
             // 监听文本域是否为空, 如果为空, 不让提交
-            textAreaListener()
+            textAreaListener();
         });
 
         // 监听文本域是否为空, 为空不能提交
         function textAreaListener(){
-            $("#submitcommentContent").blur(function (){
-                if($("#submitcommentContent").val() == ""){
-
+            if($("#submitCommentContent").val() === ""){
+                $("#submitCommentButton").addClass('disabled');
+            }
+            $("#submitCommentContent").blur(function (){
+                if($("#submitCommentContent").val() === ""){
+                    $("#submitCommentButton").addClass('disabled');
                 }else{
-
+                    $("#submitCommentButton").removeClass('disabled');
                 }
             })
         }
@@ -420,7 +423,7 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <btton id="submitCommentButton" class="btn btn-sm btn-light-green " type="button" ><i class="fas fa-comment-dots"></i> 评论 </btton>
+                            <btton id="submitCommentButton" class="btn btn-sm btn-light-green" type="button" ><i class="fas fa-comment-dots"></i> 评论 </btton>
                         </div>
                     </div>
                 </div>

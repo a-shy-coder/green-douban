@@ -79,4 +79,26 @@ public class MovieCommentDaoImpl extends BaseDaoImpl implements MovieCommentDao 
     public int deleteComment(MovieComment movieComment) {
         return executeUpdate("delete from MovieComment where Mid = ? and Uid = ?",movieComment.getMId(),movieComment.getUId());
     }
+
+    @Override
+    public MovieComment getMovieCommentByMovieCommentId(int mcId) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        MovieComment movieComment = null;
+        try {
+            connection = DataBaseUtil.getConnection();
+            preparedStatement = connection.prepareStatement("select * from movieComment Where mcId = ?");
+            preparedStatement.setInt(1,mcId);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                movieComment = new MovieComment(resultSet.getInt(1),resultSet.getInt(2),resultSet.getString(3),resultSet.getInt(4),resultSet.getTimestamp(5),resultSet.getInt(6));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            DataBaseUtil.close(resultSet, preparedStatement, connection);
+        }
+        return movieComment;
+    }
 }

@@ -20,11 +20,11 @@ public class DeleteBookCommentServlet extends HttpServlet {
     BookCommentService bookCommentService = new BookCommentServiceImpl();
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)throws IOException, ServletException{
-        int bcid  = Integer.parseInt(request.getParameter("bcid"));
+        int bid  = Integer.parseInt(request.getParameter("bid"));
         HttpSession session = request.getSession();
         int uid = (int) session.getAttribute("uid");
 
-        int result = bookCommentService.deleteComment(bcid,uid);
+        int result = bookCommentService.deleteComment(bid,uid);
         response.getWriter().write(result);
     }
 }
