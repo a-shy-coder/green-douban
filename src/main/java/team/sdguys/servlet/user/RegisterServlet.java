@@ -1,7 +1,10 @@
 package team.sdguys.servlet.user;
 
 import team.sdguys.entity.User;
+import team.sdguys.entity.UserInfo;
+import team.sdguys.service.UserInfoService;
 import team.sdguys.service.UserService;
+import team.sdguys.service.impl.UserInfoServiceImpl;
 import team.sdguys.service.impl.UserServiceImpl;
 
 import javax.servlet.ServletException;
@@ -20,6 +23,7 @@ import java.io.IOException;
 public class RegisterServlet extends HttpServlet {
 
     UserService userService = new UserServiceImpl();
+    UserInfoService userInfoService = new UserInfoServiceImpl();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -31,6 +35,7 @@ public class RegisterServlet extends HttpServlet {
         User user = new User(email,password,userName);
         userService.registerUser(user);
         int uid = userService.findUidByEmail(email);
+        userInfoService.createUserInfoByUid(uid);
         HttpSession session = req.getSession(false);
         session.setAttribute("uid",uid);
 

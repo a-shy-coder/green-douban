@@ -103,4 +103,9 @@ public class UserInfoServiceImpl implements UserInfoService {
     public int resetUserInfo(UserInfo userInfo) {
         return userInfoDao.executeUpdate("update UserInfo set (Uicon,Ugender,Uaddress,Ubirthday,Usign) value (?,?,?,?,?)",userInfo.getUicon(),userInfo.getUgender(),userInfo.getUaddress(),userInfo.getUbirthday(),userInfo.getUsign());
     }
+
+    @Override
+    public int createUserInfoByUid(int uid) {
+        return userInfoDao.insertUserInfoByUid(uid);
+    }
 }

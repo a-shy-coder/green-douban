@@ -34,4 +34,9 @@ public class BookCommentServiceImpl implements BookCommentService {
     public int updateComment(int bid, int uid, String content) {
         return bookCommentDao.updateComment(bid,uid,content);
     }
+
+    @Override
+    public void updateLikeCountByBookCommentId(int bookCommentId, int i) {
+        bookCommentDao.updateLikeCountByBookCommentId(bookCommentId,i);
+    }
 }

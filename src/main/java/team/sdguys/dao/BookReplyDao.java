@@ -1,6 +1,6 @@
 package team.sdguys.dao;
 import team.sdguys.entity.BookReply;
-import java.util.Date;
+
 import java.util.List;
 
 public interface BookReplyDao extends BaseDao{
@@ -45,7 +45,11 @@ public interface BookReplyDao extends BaseDao{
      */
     List<Integer> getBridListbyUid(int uid);
 
-
-
-
+    /**
+     * 更新图书回复点赞数量
+     * @param bookReplyId 图书回复编号
+     * @param i 增加的点赞数量 1代表增加1 -1代表减少1 直接 +=i 即可
+     * @return
+     */
+    int updateLikeCountByBookReplyId(int bookReplyId, int i);
 }

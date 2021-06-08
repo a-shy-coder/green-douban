@@ -2,7 +2,6 @@ package team.sdguys.dao.impl;
 
 import team.sdguys.dao.BookCommentDao;
 import team.sdguys.entity.BookComment;
-import team.sdguys.entity.MovieComment;
 import team.sdguys.util.DataBaseUtil;
 
 import java.sql.Connection;
@@ -139,6 +138,11 @@ public class BookCommentDaoImpl extends  BaseDaoImpl implements BookCommentDao {
     @Override
     public int insertBookComment(BookComment bookComment) {
         return executeUpdate("INSERT INTO bookcomment (BId, BCcontent, UId, BCTime, BCLikeCount) VALUES (?,?,?,?)",bookComment.getBId(),bookComment.getBcContent(),bookComment.getUId(),bookComment.getBcTime(),bookComment.getBcLikeCount());
+    }
+
+    @Override
+    public int updateLikeCountByBookCommentId(int bookCommentId, int i) {
+        return executeUpdate("UPDATE bookComment SET BCLikeCount = BCLikeCount + ? WHERE BCId = ?",i,bookCommentId);
     }
 
 }

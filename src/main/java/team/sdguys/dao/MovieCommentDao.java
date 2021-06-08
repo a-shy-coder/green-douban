@@ -50,4 +50,12 @@ public interface MovieCommentDao extends BaseDao {
      * @return 评论
      */
     MovieComment getMovieCommentByMovieCommentId(int mcId);
+
+    /**
+     * 更新电影评论点赞数量
+     * @param movieCommentId 电影评论编号
+     * @param i 增加的点赞数量 1代表增加1 -1代表减少1 直接 +=i 即可
+     * @return
+     */
+    int updateLikeCountByMovieCommentId(int movieCommentId, int i);
 }

@@ -24,6 +24,10 @@ public class UserInfo {
     public UserInfo() {
     }
 
+    public UserInfo(int uid) {
+        Uid = uid;
+    }
+
     public UserInfo(int uid, String uicon, String ugender, String uaddress, String ubirthday, String usign) {
         Uid = uid;
         Uicon = uicon;

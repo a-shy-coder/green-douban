@@ -7,7 +7,6 @@ import team.sdguys.util.DataBaseUtil;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.Date;
 import java.util.List;
 
 public class BookReplyDaoImpl extends  BaseDaoImpl implements BookReplyDao {
@@ -134,6 +133,11 @@ public class BookReplyDaoImpl extends  BaseDaoImpl implements BookReplyDao {
             DataBaseUtil.close(resultSet, preparedStatement, connection);
         }
         return bridlist;
+    }
+
+    @Override
+    public int updateLikeCountByBookReplyId(int bookReplyId, int i) {
+        return executeUpdate("UPDATE bookReply SET BRLikeCount = BRLikeCount + ? WHERE BRId = ?",i,bookReplyId);
     }
 
 

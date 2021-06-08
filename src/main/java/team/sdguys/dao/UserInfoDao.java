@@ -70,4 +70,11 @@ public interface UserInfoDao extends BaseDao{
      * @return 包含所有信息的列表
      */
     public List<UserInfo> getAll();
+
+    /**
+     * 插入用户信息(用户编号和默认头像)
+     * @param uid 用户编号
+     * @return 受影响的行数
+     */
+    int insertUserInfoByUid(int uid);
 }

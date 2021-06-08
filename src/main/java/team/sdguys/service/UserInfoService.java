@@ -74,4 +74,11 @@ public interface UserInfoService {
      * 更改用户信息
      */
     public int resetUserInfo(UserInfo userInfo);
+
+    /**
+     * 插入用户信息(用户编号和默认头像)
+     * @param uid 用户编号
+     * @return 受影响的行数
+     */
+    int createUserInfoByUid(int uid);
 }

@@ -2,7 +2,6 @@ package team.sdguys.dao.impl;
 
 import team.sdguys.dao.MovieReplyDao;
 import team.sdguys.entity.MovieReply;
-import team.sdguys.entity.MovieReply;
 import team.sdguys.util.DataBaseUtil;
 
 import java.sql.*;
@@ -12,7 +11,7 @@ import java.util.List;
 /**
  * 电影评论Dao的实现层
  */
-public class MovieReplyDaoImpl implements MovieReplyDao {
+public class MovieReplyDaoImpl extends BaseDaoImpl implements MovieReplyDao {
     @Override
     public List<MovieReply> getMovieReplyListByMovieCommentId(int mcId) {
         Connection connection = null;
@@ -65,5 +64,10 @@ public class MovieReplyDaoImpl implements MovieReplyDao {
             DataBaseUtil.close(null, preparedStatement, connection);
         }
         return autoIncrementId;
+    }
+
+    @Override
+    public int updateLikeCountByMovieReplyId(int movieReplyId, int i) {
+        return executeUpdate("UPDATE movieReply SET MCLikeCount = MRLikeCount + ? WHERE MRId = ?",i,movieReplyId);
     }
 }

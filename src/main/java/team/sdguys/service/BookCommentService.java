@@ -39,4 +39,11 @@ public interface BookCommentService {
      * @return linenumber
      */
     public int updateComment(int bcid, int uid, String content);
+
+    /**
+     * 更新图书评论点赞数量
+     * @param bookCommentId 图书评论编号
+     * @param i 增加的点赞数量
+     */
+    void updateLikeCountByBookCommentId(int bookCommentId, int i);
 }

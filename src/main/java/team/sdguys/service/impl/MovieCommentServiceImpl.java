@@ -40,4 +40,9 @@ public class MovieCommentServiceImpl implements MovieCommentService {
     public MovieComment findMovieCommentByMovieCommentId(int mcId) {
         return movieCommentDao.getMovieCommentByMovieCommentId(mcId);
     }
+
+    @Override
+    public void updateLikeCountByMovieCommentId(int movieCommentId, int i) {
+        movieCommentDao.updateLikeCountByMovieCommentId(movieCommentId, i);
+    }
 }

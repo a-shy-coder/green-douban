@@ -1,7 +1,6 @@
 package team.sdguys.dao.impl;
 
 import team.sdguys.dao.MovieCommentDao;
-import team.sdguys.entity.Director;
 import team.sdguys.entity.MovieComment;
 import team.sdguys.util.DataBaseUtil;
 
@@ -100,5 +99,10 @@ public class MovieCommentDaoImpl extends BaseDaoImpl implements MovieCommentDao 
             DataBaseUtil.close(resultSet, preparedStatement, connection);
         }
         return movieComment;
+    }
+
+    @Override
+    public int updateLikeCountByMovieCommentId(int movieCommentId, int i) {
+        return executeUpdate("UPDATE movieComment SET MCLikeCount = MCLikeCount + ? WHERE MCId = ?",i,movieCommentId);
     }
 }

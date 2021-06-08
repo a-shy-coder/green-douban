@@ -217,4 +217,9 @@ public class UserInfoDaoImpl extends BaseDaoImpl implements UserInfoDao {
         }
         return list;
     }
+
+    @Override
+    public int insertUserInfoByUid(int uid) {
+        return executeUpdate("INSERT userinfo(uid) values (?)",uid);
+    }
 }

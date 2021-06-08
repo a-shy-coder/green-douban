@@ -45,6 +45,7 @@
 
         checkMovieCollection();
         getUserMovieRating();
+        checkLike();
 
         // 监听收藏按钮
         $("#collectionBtn").click(function(){
@@ -57,6 +58,27 @@
 
         // 监听发表评论按钮
         $("#submitCommentButton").click(submitComment);
+
+        // 监听点赞按钮, 更改点赞样式
+        $("[id=likeButton]").click(function (){
+
+            // 点赞
+            if($(this).children().hasClass("far")){
+                $(this).children().removeClass("far");
+                $(this).children().addClass("fas");
+                var count = parseInt($(this).children().html()) + 1;
+                $(this).children().html(" " + count);
+                submitLike($(this).attr("data-toggle"),1)
+            // 取消点赞
+            }else{
+                $(this).children().removeClass("fas");
+                $(this).children().addClass("far");
+                var count = parseInt($(this).children().html()) - 1;
+                $(this).children().html(" " + count);
+                submitLike($(this).attr("data-toggle"),-1)
+
+            }
+        })
 
         // 点击评论按钮, 弹出模态框, 并且清空文本框内容
         $("#commentButton").click(function (){
@@ -175,30 +197,76 @@
                     "commentContent":$("#submitCommentContent").val()
                 },
                 success: function (data) {
-                    console.log(data);
-                    $("#commentModal").modal('hide'); // 关闭模态框
-                    $(".modal-backdrop").remove();
-                    $("#commentList").append("                <div id=\"comment\"  class=\"borderTop mt-2 pt-3\">\n" +
-                        "                    <div id=\"commentHeader\">\n" +
-                        "                        <img width=\"24\" height=\"24\" src=\"" + data.userIcon +"\">\n" +
-                        "                        <span class=\"ml-2 commentIcon\">\n" +
-                        "                            "+ data.userName +"\n" +
-                        "                        </span>\n" +
-                        "                        <span class=\"ml-2\">"+data.movieCommentTime+"</span>\n" +
-                        "                    </div>\n" +
-                        "                    <div id=\"commentContent\" class=\"mt-3 commentContent\">\n" +
-                        "                        "+ data.commentContent +
-                        "                    </div>\n" +
-                        "                    <div id=\"commentFooter\" class=\"mt-1\">\n" +
-                        "                        <btton class=\"btn btn-sm btn-light-green\" type=\"button\"><i class=\"far fa-thumbs-up\"></i>"+ data.commentLikeCount+"</btton>\n" +
-                        "                        <a class=\"btn btn-sm btn-info\" type=\"button\" href=\"movieReplyInfoServlet?movieCommentId="+ data.movieCommentId +"\"><i class=\"fas fa-reply\"></i> 回复</a>\n" +
-                        "                    </div>\n" +
-                        "                </div>\n")
+                    window.location.reload(); // 直接重新刷新页面
+                    // console.log(data);
+                    // $("#commentModal").modal('hide'); // 关闭模态框
+                    // $(".modal-backdrop").remove();
+                    // $("#commentList").append("                <div id=\"comment\"  class=\"borderTop mt-2 pt-3\">\n" +
+                    //     "                    <div id=\"commentHeader\">\n" +
+                    //     "                        <img width=\"24\" height=\"24\" src=\"" + data.userIcon +"\">\n" +
+                    //     "                        <span class=\"ml-2 commentIcon\">\n" +
+                    //     "                            "+ data.userName +"\n" +
+                    //     "                        </span>\n" +
+                    //     "                        <span class=\"ml-2\">"+data.movieCommentTime+"</span>\n" +
+                    //     "                    </div>\n" +
+                    //     "                    <div id=\"commentContent\" class=\"mt-3 commentContent\">\n" +
+                    //     "                        "+ data.commentContent +
+                    //     "                    </div>\n" +
+                    //     "                    <div id=\"commentFooter\" class=\"mt-1\">\n" +
+                    //     "                                                <button id=\"likeButton\" class=\"btn btn-sm btn-light-green\" type=\"button\" data-toggle=\""+data.movieCommentId+"\"><i class=\"far fa-thumbs-up\">"+data.commentLikeCount+"</i></button>\n"+
+                    //     "                        <a class=\"btn btn-sm btn-info\" type=\"button\" href=\"movieReplyInfoServlet?movieCommentId="+ data.movieCommentId +"\"><i class=\"fas fa-reply\"></i> 回复</a>\n" +
+                    //     "                    </div>\n" +
+                    //     "                </div>\n")
                 },
                 error: function () {
                     alert("请求方式错误");
                 }
             })
+        }
+
+        // 点赞
+        function submitLike(likeId,count){
+            $.ajax({
+                url: "submitLikeServlet",
+                type: "GET",
+                async:false, // 同步请求
+                data: {
+                    "type":0,
+                    "likeId":likeId,
+                    "count":count,
+                },
+                error: function () {
+                    alert("请求方式错误");
+                }
+            })
+        }
+
+        // 检索用户点赞过的评论
+        function checkLike(){
+            $.ajax({
+                url: "checkLikeServlet",
+                type: "GET",
+                async:false, // 同步请求
+                data: {
+                    "type":0
+                },
+                success: function (data) {
+                    var jsonArray = JSON.parse(data);
+                    console.log(jsonArray);
+                    for(var i=0; i<jsonArray.length; i++){
+                        var id = jsonArray[i];
+                        console.log(id);
+                        // 改变点赞样式
+                        var element = $("button[data-toggle="+id+"]");
+                        element.children().removeClass("far");
+                        element.children().addClass("fas");
+                    }
+                },
+                error: function () {
+                    alert("请求方式错误");
+                }
+            })
+
         }
     })
 
@@ -378,7 +446,7 @@
         <div id="content5" class="clearfix mt-4">
             <div >
                 <h2 id="commentListTitle" class="contentTitle float-left">${requestScope.movie.MChineseName}的评论 · · · · · · </h2>
-                <btton id="commentButton" class="btn btn-sm btn-light-green m-0 ml-5"><i class="fas fa-comment-dots"></i>我要评论</btton>
+                <button id="commentButton" class="btn btn-sm btn-light-green m-0 ml-5"><i class="fas fa-comment-dots"></i>我要评论</button>
             </div>
             <div id="commentList" class="mt-3">
                 <%
@@ -399,7 +467,7 @@
                         <%=movieComment.getMCcontent()%>
                     </div>
                     <div id="commentFooter" class="mt-1">
-                        <btton class="btn btn-sm btn-light-green" type="button"><i class="far fa-thumbs-up"></i> <%=movieComment.getMCLikeCount()%></btton>
+                        <button id="likeButton" class="btn btn-sm btn-light-green" type="button" data-toggle="<%=movieComment.getMCId()%>"><i class="far fa-thumbs-up"> <%=movieComment.getMCLikeCount()%></i></button>
                         <a class="btn btn-sm btn-info" type="button" href="movieReplyInfoServlet?movieCommentId=<%=movieComment.getMCId()%>"><i class="fas fa-reply"></i> 回复</a>
                     </div>
                 </div>
@@ -423,7 +491,7 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <btton id="submitCommentButton" class="btn btn-sm btn-light-green" type="button" ><i class="fas fa-comment-dots"></i> 评论 </btton>
+                            <button id="submitCommentButton" class="btn btn-sm btn-light-green" type="button" ><i class="fas fa-comment-dots"></i> 评论 </button>
                         </div>
                     </div>
                 </div>

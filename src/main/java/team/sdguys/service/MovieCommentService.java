@@ -42,4 +42,11 @@ public interface MovieCommentService {
      * @return 电影评论
      */
     MovieComment findMovieCommentByMovieCommentId(int mcId);
+
+    /**
+     * 更新电影评论点赞数量
+     * @param movieCommentId 电影评论编号
+     * @param i 增加的点赞数量
+     */
+    void updateLikeCountByMovieCommentId(int movieCommentId, int i);
 }

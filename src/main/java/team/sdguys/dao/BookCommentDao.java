@@ -1,6 +1,5 @@
 package team.sdguys.dao;
 import team.sdguys.entity.BookComment;
-import team.sdguys.entity.MovieComment;
 
 import java.util.List;
 
@@ -82,4 +81,11 @@ public interface BookCommentDao extends BaseDao{
      */
     int insertBookComment(BookComment bookComment);
 
+    /**
+     * 更新图书评论点赞数量
+     * @param bookCommentId 图书评论编号
+     * @param i 增加的点赞数量 1代表增加1 -1代表减少1 直接 +=i 即可
+     * @return
+     */
+    int updateLikeCountByBookCommentId(int bookCommentId, int i);
 }
