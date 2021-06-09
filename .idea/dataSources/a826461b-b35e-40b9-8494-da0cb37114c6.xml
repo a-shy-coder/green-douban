@@ -1416,7 +1416,7 @@ uid</ColNames>
     </column>
     <column id="388" parent="289" name="type">
       <Position>4</Position>
-      <Comment>点赞的是电影/书籍的评论/回复 1(电影评论) 2(电影回复) 3(书籍评论) 4(书籍回复)</Comment>
+      <Comment>点赞的是电影/书籍的评论/回复 0(电影评论) 1(电影回复) 2(书籍评论) 3(书籍回复)</Comment>
       <DataType>varchar(255)|0s</DataType>
     </column>
     <key id="389" parent="289" name="PRIMARY">

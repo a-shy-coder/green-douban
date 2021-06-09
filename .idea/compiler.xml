@@ -8,6 +8,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="sdguys1.0" />
         <module name="sdguys0.6" />
+        <module name="sdguys1.1" />
       </profile>
     </annotationProcessing>
   </component>

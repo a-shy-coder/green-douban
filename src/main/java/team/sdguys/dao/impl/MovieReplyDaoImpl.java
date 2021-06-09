@@ -68,6 +68,6 @@ public class MovieReplyDaoImpl extends BaseDaoImpl implements MovieReplyDao {
 
     @Override
     public int updateLikeCountByMovieReplyId(int movieReplyId, int i) {
-        return executeUpdate("UPDATE movieReply SET MCLikeCount = MRLikeCount + ? WHERE MRId = ?",i,movieReplyId);
+        return executeUpdate("UPDATE movieReply SET MRLikeCount = MRLikeCount + ? WHERE MRId = ?",i,movieReplyId);
     }
 }

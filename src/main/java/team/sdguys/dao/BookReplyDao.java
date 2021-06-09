@@ -52,4 +52,12 @@ public interface BookReplyDao extends BaseDao{
      * @return
      */
     int updateLikeCountByBookReplyId(int bookReplyId, int i);
+
+
+    /**
+     * 根据评论编号查找所有的回复
+     * @param bcId 评论编号
+     * @return 图书回复列表
+     */
+    List<BookReply> getBookReplyListByBookCommentId(int bcId);
 }

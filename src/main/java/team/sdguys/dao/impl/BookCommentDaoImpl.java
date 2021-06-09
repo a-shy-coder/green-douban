@@ -2,6 +2,7 @@ package team.sdguys.dao.impl;
 
 import team.sdguys.dao.BookCommentDao;
 import team.sdguys.entity.BookComment;
+import team.sdguys.entity.BookComment;
 import team.sdguys.util.DataBaseUtil;
 
 import java.sql.Connection;
@@ -137,12 +138,34 @@ public class BookCommentDaoImpl extends  BaseDaoImpl implements BookCommentDao {
 
     @Override
     public int insertBookComment(BookComment bookComment) {
-        return executeUpdate("INSERT INTO bookcomment (BId, BCcontent, UId, BCTime, BCLikeCount) VALUES (?,?,?,?)",bookComment.getBId(),bookComment.getBcContent(),bookComment.getUId(),bookComment.getBcTime(),bookComment.getBcLikeCount());
+        return executeUpdate("INSERT INTO bookcomment (BId, BCcontent, UId, BCTime, BCLikeCount) VALUES (?,?,?,?,?)",bookComment.getBId(),bookComment.getBcContent(),bookComment.getUId(),bookComment.getBcTime(),bookComment.getBcLikeCount());
     }
 
     @Override
     public int updateLikeCountByBookCommentId(int bookCommentId, int i) {
         return executeUpdate("UPDATE bookComment SET BCLikeCount = BCLikeCount + ? WHERE BCId = ?",i,bookCommentId);
+    }
+
+    @Override
+    public BookComment findBookCommentByBookCommentId(int bcId) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        BookComment bookComment = null;
+        try {
+            connection = DataBaseUtil.getConnection();
+            preparedStatement = connection.prepareStatement("select * from bookComment Where bcId = ?");
+            preparedStatement.setInt(1,bcId);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                bookComment = new BookComment(resultSet.getInt(1),resultSet.getInt(2),resultSet.getString(3),resultSet.getInt(4),resultSet.getTimestamp(5),resultSet.getInt(6));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            DataBaseUtil.close(resultSet, preparedStatement, connection);
+        }
+        return bookComment;
     }
 
 }

@@ -88,4 +88,11 @@ public interface BookCommentDao extends BaseDao{
      * @return
      */
     int updateLikeCountByBookCommentId(int bookCommentId, int i);
+
+    /**
+     * 根据评论编号查找评论
+     * @param bcId 编号
+     * @return 电影评论
+     */
+    BookComment findBookCommentByBookCommentId(int bcId);
 }

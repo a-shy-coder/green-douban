@@ -14,6 +14,7 @@
 <%@ page autoFlush="false" %>
 <%@ page isELIgnored="false" %>
 <%@ page buffer="128kb" %>
+
 <html>
 <head>
     <base href="<%=request.getContextPath()%>/">
@@ -272,7 +273,8 @@
 
 </script>
 <body style="font-size: 14px">
-<div class="container ml-auto">
+<%@include file="/jsp/navbar.jsp"%>
+<div class="container ml-auto clearfix" style="margin-top: 70px">
     <div id="article" class="float-left mt-3" style="width: 700px">
 
         <!-- 电影标题 -->
@@ -497,5 +499,10 @@
                 </div>
             </div>
         </div>
+
+    </div>
+</div>
+<%@ include file="/jsp/footer.jsp"%>
+
 </body>
 </html>

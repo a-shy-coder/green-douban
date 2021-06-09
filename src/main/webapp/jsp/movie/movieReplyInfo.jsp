@@ -42,18 +42,94 @@
 
         var toId;
 
+        checkLike();
+
+        // 监听点赞按钮, 更改点赞样式
+        // 动态添加的元素, 要用on绑定事件, 否则jQuery找不到该元素
+        // $("button").on('click','#likeButton',function (){
+        //     changeLikeStyle();
+        // });
+
+        $("button[id=likeButton]").click(changeLikeStyle);
+
         // 监听发表评论按钮
         $("#submitCommentButton").click(submitComment);
 
         // 点击评论按钮, 弹出模态框, 并且清空文本框内容
-        $("#commentButton, #replyButton").click(function (){
+        $("#commentButton").click(showModal);
+        $("button[id=replyButton]").click(showModal);
+
+
+        function changeLikeStyle() {
+            // 点赞
+            if ($(this).children().hasClass("far")) {
+                $(this).children().removeClass("far");
+                $(this).children().addClass("fas");
+                var count = parseInt($(this).children().html()) + 1;
+                $(this).children().html(" " + count);
+                submitLike($(this).attr("data-toggle"), 1)
+                // 取消点赞
+            } else {
+                $(this).children().removeClass("fas");
+                $(this).children().addClass("far");
+                var count = parseInt($(this).children().html()) - 1;
+                $(this).children().html(" " + count);
+                submitLike($(this).attr("data-toggle"), -1)
+            }
+        }
+        // 点赞
+        function submitLike(likeId,count){
+            $.ajax({
+                url: "submitLikeServlet",
+                type: "GET",
+                async:false, // 同步请求
+                data: {
+                    "type":1,
+                    "likeId":likeId,
+                    "count":count,
+                },
+                error: function () {
+                    alert("请求方式错误");
+                }
+            })
+        }
+
+        // 检索用户点赞过的评论
+        function checkLike(){
+            $.ajax({
+                url: "checkLikeServlet",
+                type: "GET",
+                async:false, // 同步请求
+                data: {
+                    "type":1
+                },
+                success: function (data) {
+                    var jsonArray = JSON.parse(data);
+                    console.log(jsonArray);
+                    for(var i=0; i<jsonArray.length; i++){
+                        var id = jsonArray[i];
+                        console.log(id);
+                        // 改变点赞样式
+                        var element = $("button[data-toggle="+id+"]");
+                        element.children().removeClass("far");
+                        element.children().addClass("fas");
+                    }
+                },
+                error: function () {
+                    alert("请求方式错误");
+                }
+            })
+
+        }
+
+        // 弹出模态框, 并且清空文本框内容
+        function showModal() {
             toId = $(this).attr("data-toggle");
             $("#commentModal").modal('show');
             $("#submitCommentContent").val("");
             // 监听文本域是否为空, 如果为空, 不让提交
             textAreaListener()
-        });
-
+        }
         // 监听文本域是否为空, 为空不能提交
         function textAreaListener(){
             if($("#submitCommentContent").val() === ""){
@@ -81,26 +157,29 @@
                     "commentContent":$("#submitCommentContent").val()
                 },
                 success: function (result) {
-                    console.log(result);
-                    $("#commentModal").modal('hide'); // 关闭模态框
-                    $(".modal-backdrop").remove();
-                    $("#replyList").append("                <div id=\"reply\"  class=\"borderTop mt-2 pt-3\">\n" +
-                        "                    <div id=\"replyHeader\">\n" +
-                        "                        <img width=\"24\" height=\"24\" src=\""+result.fromUserIcon +"\"\n" +
-                        "                        <span id=\"fromUserName\" class=\"ml-2 commentIcon\">\n" + result.fromUserName +
-                        "                        </span>\n" +
-                        "                        &nbsp;回复\n" +
-                        "                        <span id=\"toUserName\" class=\"ml-2 commentIcon\">\n" + result.toUserName +
-                        "                        </span>\n" +
-                        "                        <span class=\"ml-2\">"+result.movieReplyTime+"</span>\n" +
-                        "                    </div>\n" +
-                        "                    <div id=\"replyContent\" class=\"mt-3 commentContent\">\n" + result.commentContent +
-                        "                    </div>\n" +
-                        "                    <div id=\"replyFooter\" class=\"mt-1\">\n" +
-                        "                        <btton class=\"btn btn-sm btn-light-green\" type=\"button\"><i class=\"far fa-thumbs-up\"></i>"+result.commentLikeCount+"</btton>\n" +
-                        "                        <button id=\"replyButton\" class=\"btn btn-sm btn-info\" type=\"button\" data-toggle=\""+result.fromId+"\"><i class=\"fas fa-reply\"></i> 回复层主</button>\n" +
-                        "                    </div>\n" +
-                        "                </div>\n");
+                    window.location.reload(); // 直接重新刷新页面
+
+                    // 实在没办法了, jq 死活获取不到 动态添加的元素啊 淦!
+
+                    // $("#commentModal").modal('hide'); // 关闭模态框
+                    // $(".modal-backdrop").remove();
+                    // $("#replyList").append("                <div id=\"reply\"  class=\"borderTop mt-2 pt-3\">\n" +
+                    //     "                    <div id=\"replyHeader\">\n" +
+                    //     "                        <img width=\"24\" height=\"24\" src=\""+result.fromUserIcon +"\">\n" +
+                    //     "                        <span id=\"fromUserName\" class=\"ml-2 commentIcon\">\n" + result.fromUserName +
+                    //     "                        </span>\n" +
+                    //     "                        &nbsp;回复\n" +
+                    //     "                        <span id=\"toUserName\" class=\"ml-2 commentIcon\">\n" + result.toUserName +
+                    //     "                        </span>\n" +
+                    //     "                        <span class=\"ml-2\">"+result.movieReplyTime+"</span>\n" +
+                    //     "                    </div>\n" +
+                    //     "                    <div id=\"replyContent\" class=\"mt-3 commentContent\">\n" + result.commentContent +
+                    //     "                    </div>\n" +
+                    //     "                    <div id=\"replyFooter\" class=\"mt-1\">\n" +
+                    //     "                        <button id=\"likeButton\" class=\"btn btn-sm btn-light-green\" type=\"button\" data-toggle=\""+result.movieReplyId+"\"><i class=\"far fa-thumbs-up\"> " +result.commentLikeCount+"</i></button>\n" +
+                    //     "                        <button id=\"replyButton\" class=\"btn btn-sm btn-info\" type=\"button\" data-toggle=\""+result.fromId+"\"><i class=\"fas fa-reply\"></i> 回复层主</button>\n" +
+                    //     "                    </div>\n" +
+                    //     "                </div>\n");
                 },
                 error: function () {
                     alert("请求方式错误");
@@ -151,7 +230,7 @@
         <div id="content2" class="clearfix mt-4">
             <div >
                 <h2 id="replyListTitle" class="contentTitle float-left">全部回复 · · · · · · </h2>
-                <btton id="commentButton" class="btn btn-sm btn-light-green m-0 ml-5" data-toggle="<%=movieComment.getUId()%>"><i class="fas fa-comment-dots"></i> 回复楼主</btton>
+                <button id="commentButton" class="btn btn-sm btn-light-green m-0 ml-5" data-toggle="<%=movieComment.getUId()%>"><i class="fas fa-comment-dots"></i> 回复楼主</button>
             </div>
             <div id="replyList" class="mt-3">
                 <%
@@ -179,7 +258,7 @@
                         <%=movieReply.getMRContent()%>
                     </div>
                     <div id="replyFooter" class="mt-1">
-                        <btton class="btn btn-sm btn-light-green" type="button"><i class="far fa-thumbs-up"></i> <%=movieReply.getMRLikeCount()%></btton>
+                        <button id="likeButton" class="btn btn-sm btn-light-green" type="button" data-toggle="<%=movieReply.getMRId()%>"><i class="far fa-thumbs-up"> <%=movieReply.getMRLikeCount()%></i></button>
                         <button id="replyButton" class="btn btn-sm btn-info" type="button" data-toggle="<%=formId%>"><i class="fas fa-reply"></i> 回复层主</button>
                     </div>
                 </div>
@@ -203,7 +282,7 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <btton id="submitCommentButton" class="btn btn-sm btn-light-green " type="button" ><i class="fas fa-comment-dots"></i> 评论 </btton>
+                            <button id="submitCommentButton" class="btn btn-sm btn-light-green " type="button" ><i class="fas fa-comment-dots"></i> 评论 </button>
                         </div>
                     </div>
                 </div>

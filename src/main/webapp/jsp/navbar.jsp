@@ -1,59 +1,51 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <base href="<%=request.getContextPath()%>/">
-    <title>登录</title>
-    <link rel="shortcut icon" href="img/douban.ico" type="image/x-icon"/>
-    <link rel="stylesheet" type="text/css" href="css/login.css"/>
-
-    <!-- MD5加密 -->
-    <script type="text/javascript" src="js/md5.js"></script>
-
-    <!-- MDB -->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/mdb.min.css">
-    <script type="text/javascript" src="js/jquery.min.js"></script>
-    <script type="text/javascript" src="js/popper.min.js"></script>
-    <script type="text/javascript" src="js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="js/mdb.min.js"></script>
+    <title>页尾</title>
 </head>
-<body style="background-color: #f2f2f2">
-<div class="container">
-    <div class="col-7 mx-auto  z-depth-1 card-body" style="background-color: white">
-        <div class="card-body">
-            <h2 class="text-center ">欢迎登录</h2>
-            <form action="admin\login.jsp" class="loginForm" novalidate>
-                <h5>邮箱</h5>
-                <div class="md-form form-sm">
-                    <i class="far fa-envelope prefix"></i>
-                    <input type="email" id="email" class="form-control" required>
-                    <label for="email" class="">请输入您的邮箱</label>
-                    <div class="errorMsg" id="emailErrorInfo">请输入正确的邮箱地址</div>
-                </div>
-                <h5>密码</h5>
-                <div class="md-form form-sm">
-                    <i class="fas fa-key prefix"></i>
-                    <input type="password" id="password" class="form-control" autocomplete="true" required>
-                    <label for="password" class="">请输入您的密码</label>
-                    <div class="errorMsg" id="passwordErrorInfo">请输入密码</div>
-                </div>
-            </form>
-            <div class="text-center pb-2">
-                <a href="jsp/user/forgetPassword.jsp">忘记密码</a> |
-                <a href="jsp/user/register.jsp">注册</a> |
-                <a href="jsp/admin/login.jsp">管理员登录</a>
+<body>
+<!-- 导航栏 -->
+<nav class="navbar navbar-expand-lg navbar-dark green scrolling-navbar fixed-top">
+    <a class="navbar-brand" href="#">绿豆芽</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-333"
+            aria-controls="navbarSupportedContent-333" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent-333">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="#">首页 </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">电影</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">图书</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">社区</a>
+            </li>
+        </ul>
+        <form class="form-inline mb-0 ml-auto" method="get">
+            <div class="md-form my-0">
+                <input id="search" class="form-control" type="text" placeholder="搜索您感兴趣的内容" aria-label="Search">
             </div>
-            <div class="ml-auto text-center">
-                <button class="btn btn-light-green btn-sm" id="loginBtn" type="button">登录</button>
-                <div class="errorMsg" id="loginErrorInfo">用户名或密码错误</div>
-            </div>
-            </form>
-        </div>
-    </div>
-</div>
-</div>
+            <button class="btn btn-outline-white btn-md my-0 ml-sm-2" type="submit">搜索</button>
+        </form>
+        <ul class="navbar-nav ml-auto nav-flex-icons">
+            <li class="nav-item dropdown">
 
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown">
+                    <img src="${sessionScope.userInfo.uicon}" class="rounded z-depth-1" height="35">
+                    <span id="userName">${sessionScope.user.uname}</span>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right dropdown-default">
+                    <a class="dropdown-item" href="#">我的空间</a>
+                    <a class="dropdown-item" href="#">退出登录</a>
+                </div>
+            </li>
+        </ul>
+    </div>
+</nav>
 </body>
 </html>

@@ -42,6 +42,8 @@
 
         checkBookCollection();
         getUserBookRating();
+        checkLike();
+
 
         // 监听收藏按钮
         $("#collectionBtn").click(function(){
@@ -51,6 +53,116 @@
                 deleteBookCollection();
             }
         })
+
+        // 监听发表评论按钮
+        $("#submitCommentButton").click(submitComment);
+
+        // 监听点赞按钮, 更改点赞样式
+        $("[id=likeButton]").click(function (){
+
+            // 点赞
+            if($(this).children().hasClass("far")){
+                $(this).children().removeClass("far");
+                $(this).children().addClass("fas");
+                var count = parseInt($(this).children().html()) + 1;
+                $(this).children().html(" " + count);
+                submitLike($(this).attr("data-toggle"),1)
+                // 取消点赞
+            }else{
+                $(this).children().removeClass("fas");
+                $(this).children().addClass("far");
+                var count = parseInt($(this).children().html()) - 1;
+                $(this).children().html(" " + count);
+                submitLike($(this).attr("data-toggle"),-1)
+
+            }
+        })
+
+        // 点击评论按钮, 弹出模态框, 并且清空文本框内容
+        $("#commentButton").click(function (){
+            $("#commentModal").modal('show');
+            $("#submitCommentContent").val("");
+            // 监听文本域是否为空, 如果为空, 不让提交
+            textAreaListener();
+        });
+
+        // 发表评论
+        function submitComment(){
+            $.ajax({
+                url: "submitBookCommentServlet",
+                type: "POST",
+                async:false,
+                data: {
+                    "bookId": ${requestScope.book.BId},
+                    "commentContent":$("#submitCommentContent").val()
+                },
+                success: function (data) {
+                    window.location.reload(); // 直接重新刷新页面
+                },
+                error: function () {
+                    alert("请求方式错误");
+                }
+            })
+        }
+
+        // 点赞
+        function submitLike(likeId,count){
+            $.ajax({
+                url: "submitLikeServlet",
+                type: "GET",
+                async:false, // 同步请求
+                data: {
+                    "type":2,
+                    "likeId":likeId,
+                    "count":count,
+                },
+                error: function () {
+                    alert("请求方式错误");
+                }
+            })
+        }
+
+        // 检索用户点赞过的评论
+        function checkLike(){
+            $.ajax({
+                url: "checkLikeServlet",
+                type: "GET",
+                async:false, // 同步请求
+                data: {
+                    "type":2
+                },
+                success: function (data) {
+                    var jsonArray = JSON.parse(data);
+                    console.log(jsonArray);
+                    for(var i=0; i<jsonArray.length; i++){
+                        var id = jsonArray[i];
+                        console.log(id);
+                        // 改变点赞样式
+                        var element = $("button[data-toggle="+id+"]");
+                        element.children().removeClass("far");
+                        element.children().addClass("fas");
+                    }
+                },
+                error: function () {
+                    alert("请求方式错误");
+                }
+            })
+
+        }
+
+        // 监听文本域是否为空, 为空不能提交
+        function textAreaListener(){
+            if($("#submitCommentContent").val() === ""){
+                $("#submitCommentButton").addClass('disabled');
+            }
+            $("#submitCommentContent").blur(function (){
+                if($("#submitCommentContent").val() === ""){
+                    $("#submitCommentButton").addClass('disabled');
+                }else{
+                    $("#submitCommentButton").removeClass('disabled');
+                }
+            })
+        }
 
         // 添加图书收藏
         function addBookCollection(){
@@ -115,7 +227,7 @@
             })
         }
 
-        // 检索用户对电影的评分
+        // 检索用户对图书的评分
         function getUserBookRating(){
             $.ajax({
                 url: "getUserBookRatingServlet",
@@ -138,7 +250,8 @@
 </script>
 
 <body style="font-size: 14px">
-<div class="container ml-auto">
+<%@include file="/jsp/navbar.jsp"%>
+<div class="container ml-auto clearfix" style="margin-top: 70px">
     <div id="article" class="float-left mt-3" style="width: 700px">
 
         <!-- 图书标题 -->
@@ -316,7 +429,10 @@
             List<BookComment> bookCommentList = (List<BookComment>) request.getAttribute("bookCommentList");
         %>
         <div id="content5" class="clearfix mt-4">
-            <h2 id="commentListTitle" class="contentTitle">${requestScope.book.BChineseName}的评论 · · · · · · </h2>
+            <div >
+                <h2 id="commentListTitle" class="contentTitle float-left">${requestScope.book.BChineseName}的评论 · · · · · · </h2>
+                <button id="commentButton" class="btn btn-sm btn-light-green m-0 ml-5"><i class="fas fa-comment-dots" type="button"></i>我要评论</button>
+            </div>
             <div id="commentList" class="mt-3">
                 <%
                     for(BookComment bookComment : bookCommentList){
@@ -336,8 +452,8 @@
                         <%=bookComment.getBcContent()%>
                     </div>
                     <div id="commentFooter" class="mt-1">
-                        <btton class="btn btn-sm btn-light-green" type="button"><i class="far fa-thumbs-up"></i> <%=bookComment.getBcLikeCount()%></btton>
-                        <btton class="btn btn-sm btn-info" type="button"><i class="fas fa-reply"></i> 回复</btton>
+                        <button id="likeButton" class="btn btn-sm btn-light-green" type="button" data-toggle="<%=bookComment.getBcId()%>"><i class="far fa-thumbs-up"> <%=bookComment.getBcLikeCount()%></i></button>
+                        <a class="btn btn-sm btn-info" type="button" href="bookReplyInfoServlet?bookCommentId=<%=bookComment.getBcId()%>"><i class="fas fa-reply"></i> 回复</a>
                     </div>
                 </div>
                 <%
@@ -345,8 +461,31 @@
                 %>
             </div>
         </div>
+        <!-- 评论框 -->
+        <div class="modal fade" id="commentModal" tabindex="-1" role="dialog" backdrop="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">评论</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group ">
+                            <textarea class="form-control" id="submitCommentContent" rows="3" placeholder="写下您的评论" required></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="submitCommentButton" class="btn btn-sm btn-light-green" type="button" ><i class="fas fa-comment-dots"></i> 评论 </button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-
+    </div>
+</div>
+<%@ include file="/jsp/footer.jsp"%>
 
 </body>
 </html>

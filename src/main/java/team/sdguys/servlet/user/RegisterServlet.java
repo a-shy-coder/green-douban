@@ -36,9 +36,13 @@ public class RegisterServlet extends HttpServlet {
         userService.registerUser(user);
         int uid = userService.findUidByEmail(email);
         userInfoService.createUserInfoByUid(uid);
-        HttpSession session = req.getSession(false);
-        session.setAttribute("uid",uid);
+        // 将uid user userInfo 放入会话, 方便其他页面获取相关信息
+        UserInfo userInfo = userInfoService.findUserInfoById(uid);
 
+        HttpSession session = req.getSession(true);
+        session.setAttribute("uid",uid);
+        session.setAttribute("user",user);
+        session.setAttribute("userInfo",userInfo);
         // 注册成功后跳转页面.....
     }
 }

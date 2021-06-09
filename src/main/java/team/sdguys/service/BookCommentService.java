@@ -46,4 +46,11 @@ public interface BookCommentService {
      * @param i 增加的点赞数量
      */
     void updateLikeCountByBookCommentId(int bookCommentId, int i);
+
+    /**
+     * 根据评论编号查找评论
+     * @param bcId 编号
+     * @return 电影评论
+     */
+    BookComment findBookCommentByBookCommentId(int bcId);
 }
