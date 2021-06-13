@@ -33,7 +33,8 @@
     <script type="text/javascript" src="js/mdb.min.js"></script>
 </head>
 <body style="font-size: 14px">
-<div class="container ml-auto">
+<%@include file="/jsp/navbar.jsp"%>
+<div class="container ml-auto clearfix" style="margin-top: 70px">
     <div id="article" class="float-left mt-3" style="width: 700px">
 
         <!-- 演员姓名 -->
@@ -85,7 +86,7 @@
                                  src="${movie.mCover}">
                             <div class="movieName text-truncate">${movie.MChineseName}</div>
                         </a>
-                        <div class="smallRatingText">${movie.BRating}</div>
+                        <div class="smallRatingText">${movie.MRating}</div>
                     </li>
                 </c:forEach>
             </ul>
@@ -102,12 +103,13 @@
                                  src="${movie.mCover}">
                             <div class="movieName text-truncate">${movie.MChineseName}</div>
                         </a>
-                        <div class="smallRatingText">${movie.BRating}</div>
+                        <div class="smallRatingText">${movie.MRating}</div>
                     </li>
                 </c:forEach>
             </ul>
         </div>
     </div>
 </div>
+<%@include file="/jsp/footer.jsp"%>
 </body>
 </html>

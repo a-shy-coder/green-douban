@@ -11,6 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * 修改个人信息的Servlet
@@ -25,7 +28,13 @@ public class ChangeUserInfoServlet extends HttpServlet {
         String Uicon = request.getParameter("Uicon");
         String Ugender = request.getParameter("Uaddress");
         String Uaddress = request.getParameter("Uaddress");
-        String Ubirthday = request.getParameter("Ubirthday");
+        Date Ubirthday = null;
+        try {
+            Ubirthday = new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("birthday"));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
         String Usign = request.getParameter("Usign");
 
         UserInfo userInfo = new UserInfo(uid,Uicon,Ugender,Uaddress,Ubirthday,Usign);

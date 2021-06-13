@@ -36,12 +36,12 @@
             <li class="nav-item dropdown">
 
                 <a class="nav-link dropdown-toggle" data-toggle="dropdown">
-                    <img src="${sessionScope.userInfo.uicon}" class="rounded z-depth-1" height="35">
+                    <img src="${sessionScope.userInfo.uicon}" class="rounded z-depth-1" style="height:35px" width="auto">
                     <span id="userName">${sessionScope.user.uname}</span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right dropdown-default">
-                    <a class="dropdown-item" href="#">我的空间</a>
-                    <a class="dropdown-item" href="#">退出登录</a>
+                    <a class="dropdown-item" href="userInfoServlet">我的空间</a>
+                    <a class="dropdown-item" href="logoutServlet">退出登录</a>
                 </div>
             </li>
         </ul>

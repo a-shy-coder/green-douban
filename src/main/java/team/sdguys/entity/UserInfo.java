@@ -1,5 +1,7 @@
 package team.sdguys.entity;
 
+import java.util.Date;
+
 /**
  * 学生实体类： 存储学生所有信息
  *
@@ -15,7 +17,7 @@ public class UserInfo {
     //用户所在地
     private String Uaddress;
     //用户生日
-    private String Ubirthday;
+    private Date Ubirthday;
     //用户星座
     private String Usign;
 
@@ -28,7 +30,7 @@ public class UserInfo {
         Uid = uid;
     }
 
-    public UserInfo(int uid, String uicon, String ugender, String uaddress, String ubirthday, String usign) {
+    public UserInfo(int uid, String uicon, String ugender, String uaddress, Date ubirthday, String usign) {
         Uid = uid;
         Uicon = uicon;
         Ugender = ugender;
@@ -55,7 +57,7 @@ public class UserInfo {
         return Uaddress;
     }
 
-    public String getUbirthday() {
+    public Date getUbirthday() {
         return Ubirthday;
     }
 
@@ -79,7 +81,7 @@ public class UserInfo {
         Uaddress = uaddress;
     }
 
-    public void setUbirthday(String ubirthday) {
+    public void setUbirthday(Date ubirthday) {
         Ubirthday = ubirthday;
     }
 

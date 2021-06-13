@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -75,7 +76,7 @@ public class UserInfoDaoImpl extends BaseDaoImpl implements UserInfoDao {
                 String Uicon = rs.getString(2);
                 String Ugender = rs.getString(3);
                 String Uaddress = rs.getString(4);
-                String Ubirthday = rs.getString(5);
+                Date Ubirthday = rs.getDate(5);
                 String Usign = rs.getString(6);
                 u = new UserInfo(Uid, Uicon, Ugender, Uaddress, Ubirthday, Usign);
             }
@@ -171,7 +172,7 @@ public class UserInfoDaoImpl extends BaseDaoImpl implements UserInfoDao {
                 String Uicon = rs.getString(2);
                 String Ugender = rs.getString(3);
                 String Uaddress = rs.getString(4);
-                String Ubirthday = rs.getString(5);
+                Date Ubirthday = rs.getDate(5);
                 String Usign = rs.getString(6);
                 UserInfo u = new UserInfo(Uid, Uicon, Ugender, Uaddress, Ubirthday, Usign);
                 list.add(u);
@@ -205,7 +206,7 @@ public class UserInfoDaoImpl extends BaseDaoImpl implements UserInfoDao {
                 String Uicon = rs.getString(2);
                 String Ugender = rs.getString(3);
                 String Uaddress = rs.getString(4);
-                String Ubirthday = rs.getString(5);
+                Date Ubirthday = rs.getDate(5);
                 String Usign = rs.getString(6);
                 UserInfo u = new UserInfo(Uid, Uicon, Ugender, Uaddress, Ubirthday, Usign);
                 list.add(u);
