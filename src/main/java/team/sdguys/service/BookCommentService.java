@@ -27,10 +27,10 @@ public interface BookCommentService {
     /**
      * 删除一条评论
      *
-     * @param bcid,uid;
+     * @param bcid;
      * @return 修改的行数
      */
-    public int deleteComment(int bcid, int uid);
+    public int deleteComment(int bcid);
 
     /**
      * 更改一条评论
@@ -53,4 +53,11 @@ public interface BookCommentService {
      * @return 电影评论
      */
     BookComment findBookCommentByBookCommentId(int bcId);
+
+    /**
+     * 根据uid查找该用户的所有评论
+     * @param uid 用户编号
+     * @return 评论列表
+     */
+    List<BookComment> findBookCommentListByUid(int uid);
 }

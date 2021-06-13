@@ -30,4 +30,11 @@ public interface BookReplyService {
      * @return 图书回复编号
      */
     int submitBookReply(BookReply bookReply);
+
+    /**
+     * 根据uid查找该用户的所有回复
+     * @param uid 用户编号
+     * @return 评论列表
+     */
+    List<BookReply> findBookReplyListByUid(int uid);
 }

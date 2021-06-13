@@ -1,4 +1,6 @@
+<%@ page import="team.sdguys.entity.UserInfo" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page isELIgnored="false" %>
 <html>
 <head>
     <base href="<%=request.getContextPath()%>/">
@@ -30,9 +32,25 @@
         $("#chooseBtn").click(function (){
             $("input[id='icon']").click();
         })
-        // 上传头像
+        
+        //上传头像
         $("#uploadBtn").click(function (){
-            console.log($("input[id='icon']").val());
+            var formData = new FormData();
+            formData.append('file',$("input[id='icon']")[0].files[0]);
+            $.ajax({
+                url: 'uploadUserIconServlet',
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (fileName) {
+                    console.log(fileName);
+                    $("#iconImg").attr("src",fileName);
+                },
+                error: function () {
+                    alert("error");
+                }
+            });
         })
         // 地址级联选择器
         $('#areaSelect').cxSelect({
@@ -57,6 +75,7 @@
                 },
                 success: function(){
                     alert("修改成功");
+                    window.location.reload();
                 },
                 error: function () {
                     alert("请求方式错误");
@@ -66,49 +85,7 @@
     })
 </script>
 <body style="font-size: 14px">
-<!-- 导航栏 -->
-<nav class="navbar navbar-expand-lg navbar-dark green scrolling-navbar fixed-top">
-    <a class="navbar-brand" href="#">绿豆芽</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-333"
-            aria-controls="navbarSupportedContent-333" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent-333">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="nav-link" href="#">首页 </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">电影</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">图书</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">社区</a>
-            </li>
-        </ul>
-        <form class="form-inline mb-0 ml-auto" method="get">
-            <div class="md-form my-0">
-                <input id="search" class="form-control" type="text" placeholder="搜索您感兴趣的内容" aria-label="Search">
-            </div>
-            <button class="btn btn-outline-white btn-md my-0 ml-sm-2" type="submit">搜索</button>
-        </form>
-        <ul class="navbar-nav ml-auto nav-flex-icons">
-            <li class="nav-item dropdown">
-
-                <a class="nav-link dropdown-toggle" data-toggle="dropdown">
-                    <img src="https://mdbootstrap.com/img/Photos/Avatars/avatar-5.jpg" class="rounded z-depth-1" height="35">
-                    <span id="userName">yyds</span>
-                </a>
-                <div class="dropdown-menu dropdown-menu-right dropdown-default">
-                    <a class="dropdown-item" href="#">我的空间</a>
-                    <a class="dropdown-item" href="#">退出登录</a>
-                </div>
-            </li>
-        </ul>
-    </div>
-</nav>
+<%@include file="/jsp/navbar.jsp"%>
 <div class="container ml-auto clearfix" style="margin-top: 70px">
     <div id="article" class="float-left mt-3" style="width: 700px">
 
@@ -117,49 +94,69 @@
         <hr>
         <div id="content1" class="clearfix">
             <div id="subContent1" class="float-left" style="width: 500px">
-                <h5 class="mb-5 mt-3">您是绿豆芽的第1位用户 · · · · · ·</h5>
+                <h5 class="mb-5 mt-3">您是绿豆芽的第${requestScope.user.uid}位用户 · · · · · ·</h5>
                 <form id="infoForm">
                     <h5>您注册时的邮箱</h5>
                     <div class="md-form">
-                        <input type="email" id="email" class="form-control" value="1285929172@qq.com" disabled>
+                        <input type="email" id="email" class="form-control" value="${requestScope.user.uemail}" disabled>
                     </div>
                     <h5>昵称</h5>
                     <div class="md-form">
-                        <input type="text" id="nickyName" class="form-control" value="yyds">
+                        <input type="text" id="nickyName" class="form-control" value="${requestScope.user.uname}">
                     </div>
                     <h5>头像</h5>
                     <div class="md-form">
-                        <div style="width: 160px;  display:inline-block">
-                            <img id="iconImg" src="https://img2.doubanio.com/icon/ul202842239-2.jpg">
+                        <div style="width: 160px;   display:inline-block">
+                            <img id="iconImg" src="${requestScope.userInfo.uicon}" style="width:160px; height:auto">
                         </div>
-                        <input type="file" id="icon" class="form-control" hidden>
+                        <input type="file" id="icon" name="file" class="form-control" hidden>
                         <button id="chooseBtn" class="btn btn-light-green btn-sm" type="button">选择头像</button>
                         <button class="btn btn-light-green btn-sm" id="uploadBtn" type="button">上传</button>
                     </div>
                     <h5>地址</h5>
                     <div class="mb-3" id="areaSelect">
-                        <select class="form-control form-inline province" data-value="山东省"></select>
-                        <select class="form-control form-inline city" data-value="青岛市"></select>
-                        <select class="form-control form-inline area" data-value="崂山区"></select>
+                        <select class="form-control form-inline province" data-value="${requestScope.province}"></select>
+                        <select class="form-control form-inline city" data-value="${requestScope.city}"></select>
+                        <select class="form-control form-inline area" data-value="${requestScope.area}"></select>
                     </div>
                     <h5>生日</h5>
                     <div class="md-form">
-                        <input placeholder="Select date" type="date" id="birthday" class="form-control">
+                        <input placeholder="Select date" type="date" id="birthday" class="form-control" value="${requestScope.userInfo.ubirthday}">
                     </div>
 
                     <h5>性别</h5>
                     <div class="custom-control custom-radio custom-control-inline mb-3">
+                        <%
+                            UserInfo userInfo = (UserInfo) request.getAttribute("userInfo");
+                            String gender = userInfo.getUgender();
+                            if("男".equals(gender)){
+                        %>
                         <input type="radio" class="custom-control-input" id="radio1" value="男" name="gender" checked>
+
+                        <%
+                            }else{
+                        %>
+                            <input type="radio" class="custom-control-input" id="radio1" value="男" name="gender">
+                        <%}%>
                         <label class="custom-control-label" for="radio1">男</label>
                     </div>
                     <div class="custom-control custom-radio custom-control-inline" mb-3>
+                        <%
+                        if("女".equals(gender)){
+                        %>
+                        <input type="radio" class="custom-control-input" id="radio2" value="女" name="gender" checked>
+
+                        <%
+                            }else{
+                        %>
                         <input type="radio" class="custom-control-input" id="radio2" value="女" name="gender">
+                        <%}%>
                         <label class="custom-control-label" for="radio2">女</label>
                     </div>
 
                     <h5 class="mt-3">星座</h5>
                     <select class="browser-default custom-select mb-3" name="sign" id="sign">
-                        <option value="您的星座"selected>您的星座</option>
+                        <option value="${requestScope.userInfo.usign}" selected>${requestScope.userInfo.usign}</option>
                         <option value="白羊座">白羊座</option>
                         <option value="金牛座">金牛座</option>
                         <option value="双子座">双子座</option>
@@ -184,67 +181,16 @@
             <h6 class="pt-3 pl-3">我的空间</h6>
             <br>
             <ul class="mb-1 pl-3 pb-2">
-                <li class="mb-2"><a href="#"><i class="far fa-user ic-w mr-1"></i>我的信息</a></li>
+                <li class="mb-2"><a href="userInfoServlet"><i class="far fa-user ic-w mr-1"></i>我的信息</a></li>
                 <li class="mb-2"><a href="#"><i class="far fa-edit ic-w mr-1"></i>我的日志</a></li>
-                <li class="mb-2"><a href="#"><i class="far fa-star ic-w mr-1"></i>我的收藏</a></li>
-                <li class="mb-2"><a href="#"><i class="far fa-comment ic-w mr-1"></i>我的评论</a></li>
-                <li class="mb-2"><a href="#"><i class="far fa-comment ic-w mr-1"></i>我的回复</a></li>
+                <li class="mb-2"><a href="userCollectionInfoServlet"><i class="far fa-star ic-w mr-1"></i>我的收藏</a></li>
+                <li class="mb-2"><a href="userCommentInfoServlet"><i class="far fa-comment ic-w mr-1"></i>我的评论</a></li>
+                <li class="mb-2"><a href="userReplyInfoServlet"><i class="far fa-comment ic-w mr-1"></i>我的回复</a></li>
             </ul>
         </div>
     </div>
 </div>
+<%@include file="/jsp/footer.jsp"%>
 <!-- Footer -->
-<div class="container-fluid p-0">
-    <br><br><br>
-    <!-- Footer -->
-    <footer class="page-footer font-small grey pt-4">
-        <div class="container-fluid text-center text-md-left">
-            <div class="row">
-                <div class="col-md-6 mt-md-0 mt-3">
-                    <h5 class="text-uppercase">关于绿豆芽</h5>
-                    <p>
-                        <a href="jsp/user/login.jsp">
-                            <img src="img/douban16.png"><span> 虚假的豆瓣</span>
-                        </a>
-                    </p>
-                    <p>
-                        <a href="https://www.douban.com/">
-                            <img src="img/douban16.png"><span> 真正的豆瓣</span>
-                        </a>
-                    </p>
-                </div>
-                <hr class="clearfix w-100 d-md-none pb-3">
-                <div class="col-md-3">
-                    <h5 class="text-uppercase">友情链接</h5>
-                    <ul class="list-unstyled">
-                        <li>
-                            <a href="https://blog.csdn.net/a3612999a" target="_blank">
-                                <img src="img/csdn.png"><span> Glx's Blog</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="https://blog.csdn.net/qq_45800977" target="_blank">
-                                <img src="img/csdn.png"><span> Yz's Blog</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="https://blog.csdn.net/weixin_45682949" target="_blank">
-                                <img src="img/csdn.png"><span> Shy's Blog</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="https://blog.csdn.net/weixin_45682949" target="_blank">
-                                <img src="img/bilibili.png"><span> Xb's Bilibili</span>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div class="footer-copyright text-center py-3">© 2021 Copyright:
-            <span class="text-white">Produced By SdGuys</span>
-        </div>
-    </footer>
-</div>
 </body>
 </html>

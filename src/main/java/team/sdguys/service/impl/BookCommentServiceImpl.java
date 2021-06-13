@@ -26,8 +26,8 @@ public class BookCommentServiceImpl implements BookCommentService {
     }
 
     @Override
-    public int deleteComment(int bid, int uid) {
-        return bookCommentDao.deleteComment(bid,uid);
+    public int deleteComment(int bcid) {
+        return bookCommentDao.deleteComment(bcid);
     }
 
     @Override
@@ -43,5 +43,10 @@ public class BookCommentServiceImpl implements BookCommentService {
     @Override
     public BookComment findBookCommentByBookCommentId(int bcId) {
         return bookCommentDao.findBookCommentByBookCommentId(bcId);
+    }
+
+    @Override
+    public List<BookComment> findBookCommentListByUid(int uid) {
+        return bookCommentDao.getBookCommentListByUid(uid);
     }
 }

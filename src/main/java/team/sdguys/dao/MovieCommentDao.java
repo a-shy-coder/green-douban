@@ -25,10 +25,10 @@ public interface MovieCommentDao extends BaseDao {
 
     /**
      * 删除一条评论
-     * @param mcid,uid
+     * @param mcid 评论编号
      * @return 修改的行数
      */
-    int deleteComment(int mcid,int uid);
+    int deleteComment(int mcid);
 
     /**
      * 更改一条评论
@@ -58,4 +58,11 @@ public interface MovieCommentDao extends BaseDao {
      * @return
      */
     int updateLikeCountByMovieCommentId(int movieCommentId, int i);
+
+    /**
+     * 根据uid查找该用户的所有评论
+     * @param uid 用户编号
+     * @return 评论列表
+     */
+    List<MovieComment> getMovieCommentListByUid(int uid);
 }

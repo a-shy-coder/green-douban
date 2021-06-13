@@ -17,11 +17,11 @@ import java.io.IOException;
 @WebServlet("/deleteMovieCommentServlet")
 public class DeleteMovieCommentServlet extends HttpServlet {
     MovieCommentService movieCommentService = new MovieCommentServiceImpl();
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)throws IOException, ServletException{
         int mcid = Integer.parseInt(request.getParameter("mcid"));
         HttpSession session = request.getSession();
-        int uid = (int) session.getAttribute("uid");
-        int result = movieCommentService.deleteComment(mcid,uid);
+        int result = movieCommentService.deleteComment(mcid);
         response.getWriter().write(result);
     }
 }

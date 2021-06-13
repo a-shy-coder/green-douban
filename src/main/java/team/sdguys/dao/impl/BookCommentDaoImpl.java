@@ -46,10 +46,14 @@ public class BookCommentDaoImpl extends  BaseDaoImpl implements BookCommentDao {
     }
 
     @Override
-    public int deleteComment(int bcid,int uid) {
-        return executeUpdate("delete from BookComment where BCId = ? and UId = ?",bcid,uid);
+    public int deleteComment(int bcid) {
+        return executeUpdate("delete from BookComment where BCId = ?",bcid);
     }
 
+    @Override
+    public int deleteComment(int bcid, int uid) {
+        return executeUpdate("delete from BookComment where BCId = ? And UId = ?",bcid,uid);
+    }
     @Override
     public int deleteComment(BookComment bookComment) {
         return 0;
@@ -166,6 +170,30 @@ public class BookCommentDaoImpl extends  BaseDaoImpl implements BookCommentDao {
             DataBaseUtil.close(resultSet, preparedStatement, connection);
         }
         return bookComment;
+    }
+
+    @Override
+    public List<BookComment> getBookCommentListByUid(int uid) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        List<BookComment> bookCommentList = new ArrayList<BookComment>();
+
+        try {
+            connection = DataBaseUtil.getConnection();
+            preparedStatement = connection.prepareStatement("select * from bookComment Where UId = ?");
+            preparedStatement.setInt(1,uid);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                BookComment bookComment = new BookComment(resultSet.getInt(1),resultSet.getInt(2),resultSet.getString(3),resultSet.getInt(4),resultSet.getTimestamp(5),resultSet.getInt(6));
+                bookCommentList.add(bookComment);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            DataBaseUtil.close(resultSet, preparedStatement, connection);
+        }
+        return bookCommentList;
     }
 
 }

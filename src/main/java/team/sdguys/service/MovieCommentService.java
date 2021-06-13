@@ -24,10 +24,10 @@ public interface MovieCommentService {
 
     /**
      * 删除一条评论
-     * @param mcid,uid;
+     * @param mcid 评论编号
      * @return 修改的行数
      */
-    public int deleteComment(int mcid, int uid);
+    public int deleteComment(int mcid);
 
     /**
      * 更改一条评论
@@ -49,4 +49,11 @@ public interface MovieCommentService {
      * @param i 增加的点赞数量
      */
     void updateLikeCountByMovieCommentId(int movieCommentId, int i);
+
+    /**
+     * 根据uid查找该用户的所有评论
+     * @param uid 用户编号
+     * @return 评论列表
+     */
+    List<MovieComment> findMovieCommentListByUid(int uid);
 }

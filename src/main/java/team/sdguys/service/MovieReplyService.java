@@ -22,4 +22,11 @@ public interface MovieReplyService {
      * @return 电影回复编号
      */
     int submitMovieReply(MovieReply movieReply);
+
+    /**
+     * 根据uid查找该用户的所有回复
+     * @param uid 用户编号
+     * @return 评论列表
+     */
+    List<MovieReply> findMovieReplyListByUid(int uid);
 }

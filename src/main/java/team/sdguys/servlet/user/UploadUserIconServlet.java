@@ -15,7 +15,8 @@ import java.util.Enumeration;
 @WebServlet("/uploadUserIconServlet")
 public class UploadUserIconServlet extends HttpServlet {
 
-    // 更改项目时, 需要改变此路径
+    // 更改项目时, 需要改变此路径 !!!!
+    // 暂时没有找到更好的解决方案
     private String saveDirectory = "D:\\WorkSpace\\IDEA\\sdguys1.1\\src\\main\\webapp\\img";
 
     @Override

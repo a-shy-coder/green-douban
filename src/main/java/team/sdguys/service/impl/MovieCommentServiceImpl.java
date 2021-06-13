@@ -27,8 +27,8 @@ public class MovieCommentServiceImpl implements MovieCommentService {
     }
 
     @Override
-    public int deleteComment(int mcid, int uid) {
-        return movieCommentDao.deleteComment(mcid,uid);
+    public int deleteComment(int mcid) {
+        return movieCommentDao.deleteComment(mcid);
     }
 
     @Override
@@ -44,5 +44,10 @@ public class MovieCommentServiceImpl implements MovieCommentService {
     @Override
     public void updateLikeCountByMovieCommentId(int movieCommentId, int i) {
         movieCommentDao.updateLikeCountByMovieCommentId(movieCommentId, i);
+    }
+
+    @Override
+    public List<MovieComment> findMovieCommentListByUid(int uid) {
+        return movieCommentDao.getMovieCommentListByUid(uid);
     }
 }

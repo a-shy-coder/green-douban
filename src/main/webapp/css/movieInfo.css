@@ -48,6 +48,10 @@
     height: 161px;
     width: 115px;
 }
+.tableImg{
+    height: 100px;
+    width: 70px;
+}
 .actorName, .authorName{
     text-align: center;
 }

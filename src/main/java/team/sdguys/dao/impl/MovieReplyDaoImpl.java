@@ -70,4 +70,28 @@ public class MovieReplyDaoImpl extends BaseDaoImpl implements MovieReplyDao {
     public int updateLikeCountByMovieReplyId(int movieReplyId, int i) {
         return executeUpdate("UPDATE movieReply SET MRLikeCount = MRLikeCount + ? WHERE MRId = ?",i,movieReplyId);
     }
+
+    @Override
+    public List<MovieReply> getMovieReplyListByUid(int uid) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        List<MovieReply> movieReplyList = new ArrayList<MovieReply>();
+
+        try {
+            connection = DataBaseUtil.getConnection();
+            preparedStatement = connection.prepareStatement("SELECT * FROM moviereply WHERE MRFromId = ?");
+            preparedStatement.setInt(1,uid);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                MovieReply movieReply = new MovieReply(resultSet.getInt(1),resultSet.getInt(2),resultSet.getInt(3),resultSet.getString(4),resultSet.getTimestamp(5),resultSet.getInt(6),resultSet.getInt(7),resultSet.getInt(8));
+                movieReplyList.add(movieReply);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            DataBaseUtil.close(resultSet, preparedStatement, connection);
+        }
+        return movieReplyList;
+    }
 }

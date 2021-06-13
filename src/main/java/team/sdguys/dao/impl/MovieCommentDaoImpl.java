@@ -65,8 +65,8 @@ public class MovieCommentDaoImpl extends BaseDaoImpl implements MovieCommentDao 
     }
 
     @Override
-    public int deleteComment(int mcid, int uid) {
-        return executeUpdate("delete from MovieComment where MCId = ? and UId = ?",mcid,uid);
+    public int deleteComment(int mcid) {
+        return executeUpdate("delete from MovieComment where MCId = ?",mcid);
     }
 
     @Override
@@ -104,5 +104,29 @@ public class MovieCommentDaoImpl extends BaseDaoImpl implements MovieCommentDao 
     @Override
     public int updateLikeCountByMovieCommentId(int movieCommentId, int i) {
         return executeUpdate("UPDATE movieComment SET MCLikeCount = MCLikeCount + ? WHERE MCId = ?",i,movieCommentId);
+    }
+
+    @Override
+    public List<MovieComment> getMovieCommentListByUid(int uid) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        List<MovieComment> movieCommentList = new ArrayList<MovieComment>();
+
+        try {
+            connection = DataBaseUtil.getConnection();
+            preparedStatement = connection.prepareStatement("select * from movieComment Where uid = ?");
+            preparedStatement.setInt(1,uid);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                MovieComment movieComment = new MovieComment(resultSet.getInt(1),resultSet.getInt(2),resultSet.getString(3),resultSet.getInt(4),resultSet.getTimestamp(5),resultSet.getInt(6));
+                movieCommentList.add(movieComment);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            DataBaseUtil.close(resultSet, preparedStatement, connection);
+        }
+        return movieCommentList;
     }
 }

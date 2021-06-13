@@ -23,4 +23,9 @@ public class MovieReplyServiceImpl implements MovieReplyService {
     public int submitMovieReply(MovieReply movieReply) {
         return movieReplyDao.insertMovieReply(movieReply);
     }
+
+    @Override
+    public List<MovieReply> findMovieReplyListByUid(int uid) {
+        return movieReplyDao.getMovieReplyListByUid(uid);
+    }
 }

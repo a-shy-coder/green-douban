@@ -28,4 +28,9 @@ public class BookReplyServiceImpl implements BookReplyService {
     public int submitBookReply(BookReply bookReply) {
         return bookReplyDao.insertReply(bookReply);
     }
+
+    @Override
+    public List<BookReply> findBookReplyListByUid(int uid) {
+        return bookReplyDao.getBookReplyListByUid(uid);
+    }
 }

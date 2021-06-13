@@ -166,5 +166,29 @@ public class BookReplyDaoImpl extends  BaseDaoImpl implements BookReplyDao {
         return bookReplyList;
     }
 
+    @Override
+    public List<BookReply> getBookReplyListByUid(int uid) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        List<BookReply> bookReplyList = new ArrayList<BookReply>();
+
+        try {
+            connection = DataBaseUtil.getConnection();
+            preparedStatement = connection.prepareStatement("SELECT * FROM bookreply WHERE BRFromId = ?");
+            preparedStatement.setInt(1,uid);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                BookReply bookReply = new BookReply(resultSet.getInt(1),resultSet.getInt(2),resultSet.getInt(3),resultSet.getString(4),resultSet.getTimestamp(5),resultSet.getInt(6),resultSet.getInt(7),resultSet.getInt(8));
+                bookReplyList.add(bookReply);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            DataBaseUtil.close(resultSet, preparedStatement, connection);
+        }
+        return bookReplyList;
+    }
+
 
 }
