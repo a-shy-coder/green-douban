@@ -14,7 +14,7 @@ import java.io.IOException;
 /**
  * 删除日志评论的Servlet
  */
-@WebServlet("/DeleteDiaryCommentServlet")
+@WebServlet("/deleteDiaryCommentServlet")
 public class DeleteDiaryCommentServlet extends HttpServlet {
 
     DiaryCommentService diaryCommentService = new DiaryCommentServiceImpl();

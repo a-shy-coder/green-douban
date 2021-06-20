@@ -1,8 +1,6 @@
 package team.sdguys.service;
 
 import team.sdguys.entity.Book;
-import team.sdguys.entity.Book;
-import team.sdguys.entity.Book;
 
 import java.util.List;
 
@@ -57,4 +55,48 @@ public interface BookService {
      * @return 最新的5部电影列表
      */
     public List<Book> findTheLatest5BooksByAuthorId(int authorId);
+
+    /**
+     * 分页查询书籍列表
+     * @param pageNo
+     * @param defaultPageSize
+     * @return
+     */
+    List<Book> findBookByPage(int pageNo, int defaultPageSize);
+
+    /**
+     * 查询书籍本数
+     * @return
+     */
+    int getBookCount();
+
+
+    /**
+     * 删除书籍
+     * @param bookId
+     * @return
+     */
+    int deleteBookById(int bookId);
+
+    /**
+     * 发布图书
+     * @param book
+     * @return
+     */
+    int addBook(Book book);
+
+    /**
+     * 修改图书信息
+     * @param book
+     * @return
+     */
+    int modifyBookById(Book book);
+
+    /**
+     * 修改图书作者
+     * @param bookId
+     * @param authorId
+     * @return
+     */
+    int modifyBookAuthorByBookId(int bookId, int authorId);
 }

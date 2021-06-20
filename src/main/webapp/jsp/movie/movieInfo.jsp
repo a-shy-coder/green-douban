@@ -401,14 +401,16 @@
         <div id="content3" class="clearfix mt-4">
             <h2 id="movieActorTitle" class="contentTitle">${requestScope.movie.MChineseName}的演职员 · · · · · · </h2>
             <ul id="actorList" class="actorUl">
-                <li class="actorLi m-2">
-                    <a href="directorInfoServlet?directorId=${requestScope.director.directorId}">
-                        <img id="directorImg" class="actorImg"
-                             src="${requestScope.director.directorImg}">
-                        <div id="directorName" class="actorName text-truncate">${requestScope.director.directorChineseName}</div>
-                        <div id="directorRole" class="actorRole">导演</div>
-                    </a>
-                </li>
+                <c:if test="${ not empty requestScope.director}">
+                    <li class="actorLi m-2">
+                        <a href="directorInfoServlet?directorId=${requestScope.director.directorId}">
+                            <img id="directorImg" class="actorImg"
+                                 src="${requestScope.director.directorImg}">
+                            <div id="directorName" class="actorName text-truncate">${requestScope.director.directorChineseName}</div>
+                            <div id="directorRole" class="actorRole">导演</div>
+                        </a>
+                    </li>
+                </c:if>
                 <c:forEach items="${requestScope.actorList}" var="actor">
                     <li class="actorLi m-2">
                         <a href="actorInfoServlet?actorId=${actor.actorId}">

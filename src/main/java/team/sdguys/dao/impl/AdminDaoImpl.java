@@ -8,7 +8,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 
 public class AdminDaoImpl  extends  BaseDaoImpl implements  AdminDao{
@@ -93,4 +92,44 @@ public class AdminDaoImpl  extends  BaseDaoImpl implements  AdminDao{
     public int updateAdminByAid(Admin admin) {
         return executeUpdate("update Admin set Ausername=?, Apassword=? where Aid=?",admin.getAUsername(),admin.getAPassword(),admin.getAid());
     }
+
+    @Override
+    public List<Admin> getAdminList() {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        Admin admin = null;
+        List<Admin> adminList = new ArrayList<Admin>();
+
+        try {
+            connection = DataBaseUtil.getConnection();
+            preparedStatement = connection.prepareStatement("select * from ADMIN");
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                admin = new Admin(resultSet.getInt(1),resultSet.getString(2),resultSet.getString(3));
+                adminList.add(admin);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            DataBaseUtil.close(resultSet, preparedStatement, connection);
+        }
+        return adminList;
+    }
+
+    @Override
+    public int addAdmin(Admin admin) {
+        return executeUpdate("INSERT INTO admin (Ausername, Apassword) VALUES (?, ?)",admin.getAUsername(),admin.getAPassword());
+    }
+
+    @Override
+    public int modifyAdminPasswordByAdminId(String adminPassword, int adminId) {
+        return executeUpdate("UPDATE admin SET Apassword = ? WHERE Aid = ?",adminPassword,adminId);
+    }
+
+    @Override
+    public int deleteAdminByAdminId(int adminId) {
+        return executeUpdate("DELETE FROM admin WHERE Aid = ?",adminId);
+    }
+
 }

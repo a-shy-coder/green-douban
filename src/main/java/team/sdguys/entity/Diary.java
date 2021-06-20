@@ -8,6 +8,8 @@ import java.util.Date;
 public class Diary {
     // 日志编号
     private int DiaryId;
+    // 日志标题
+    private String DiaryTitle;
     // 日志内容
     private String DiaryContent;
     // 日志发布时间
@@ -17,21 +19,21 @@ public class Diary {
     // 日志点赞数量
     private int DLikeCount;
 
-    public Diary(int DiaryId,String DiaryContent,Date DiaryTime,int UId,int DLikeCount){
-        this.DiaryId = DiaryId;
-        this.DiaryContent = DiaryContent;
-        this.DiaryTime = DiaryTime;
+    public Diary(int diaryId, String diaryTitle, String diaryContent, Date diaryTime, int UId, int DLikeCount) {
+        DiaryId = diaryId;
+        DiaryTitle = diaryTitle;
+        DiaryContent = diaryContent;
+        DiaryTime = diaryTime;
         this.UId = UId;
         this.DLikeCount = DLikeCount;
-
     }
 
-    public Diary(String DiaryContent,Date DiaryTime,int UId,int DLikeCount){
-        this.DiaryContent = DiaryContent;
-        this.DiaryTime = DiaryTime;
+    public Diary(String diaryTitle, String diaryContent, Date diaryTime, int UId, int DLikeCount) {
+        DiaryTitle = diaryTitle;
+        DiaryContent = diaryContent;
+        DiaryTime = diaryTime;
         this.UId = UId;
         this.DLikeCount = DLikeCount;
-
     }
 
     public int getDiaryId() {
@@ -40,6 +42,14 @@ public class Diary {
 
     public void setDiaryId(int diaryId) {
         DiaryId = diaryId;
+    }
+
+    public String getDiaryTitle() {
+        return DiaryTitle;
+    }
+
+    public void setDiaryTitle(String diaryTitle) {
+        DiaryTitle = diaryTitle;
     }
 
     public String getDiaryContent() {

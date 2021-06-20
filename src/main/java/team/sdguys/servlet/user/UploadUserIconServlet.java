@@ -17,7 +17,7 @@ public class UploadUserIconServlet extends HttpServlet {
 
     // 更改项目时, 需要改变此路径 !!!!
     // 暂时没有找到更好的解决方案
-    private String saveDirectory = "D:\\WorkSpace\\IDEA\\sdguys1.1\\src\\main\\webapp\\img";
+    private String saveDirectory = "D:\\WorkSpace\\IDEA\\sdguys1.2\\src\\main\\webapp\\img";
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -25,7 +25,7 @@ public class UploadUserIconServlet extends HttpServlet {
         MultipartRequest request
                 = new MultipartRequest(req, saveDirectory, 100 * 1024 * 1024, "UTF-8", policy);
 
-        String fileName = "img/" + request.getFile("file").getName();
+        String fileName = "/img/" + request.getFile("file").getName();
         //上传的图片因为使用了文件重命名策略，所以上传的多个文件都会重命名的
         //为了在页面上显示上传的图片，需要将重命名的名称列表返回给页面
         //对于ajax请求，打印的响应内容就是返回的数据

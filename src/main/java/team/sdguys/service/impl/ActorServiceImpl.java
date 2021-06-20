@@ -29,4 +29,34 @@ public class ActorServiceImpl implements ActorService {
         }
         return actorList;
     }
+
+    @Override
+    public List<Actor> getActorList() {
+        return actorDao.getActorList();
+    }
+
+    @Override
+    public int getActorCount() {
+        return actorDao.getActorCount();
+    }
+
+    @Override
+    public List<Actor> findActorByPage(int pageNo, int defaultPageSize) {
+        return actorDao.getActorByPage(pageNo,defaultPageSize);
+    }
+
+    @Override
+    public int deleteActorById(int actorId) {
+        return actorDao.deleteActorById(actorId);
+    }
+
+    @Override
+    public int addActor(Actor actor) {
+        return actorDao.addActor(actor);
+    }
+
+    @Override
+    public int modifyActorById(Actor actor) {
+        return actorDao.modifyActorById(actor);
+    }
 }

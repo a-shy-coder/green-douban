@@ -4,7 +4,7 @@
 <html>
 <head>
     <base href="<%=request.getContextPath()%>/">
-    <title>个人信息</title>
+    <title>我的信息</title>
     <link rel="shortcut icon" href="img/douban.ico" type="image/x-icon"/>
     <link rel="stylesheet" type="text/css" href="css/movieInfo.css"/>
 
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="js/jquery.raty.js"></script>
 
     <!-- 多级选择框 -->
-    <script src="js/jquery.cxselect.js"></script>
+    <script type="text/javascript" src="js/jquery.cxselect.min.js"></script>
 </head>
 <script>
     $(document).ready(function(){
@@ -52,12 +52,7 @@
                 }
             });
         })
-        // 地址级联选择器
-        $('#areaSelect').cxSelect({
-            url: 'JSON/cityData.min.json',
-            selects: ['province', 'city', 'area'],
-            nodata: 'none'
-        });
+
         // 修改个人信息
         $("#modifyBtn").click(function(){
             $.ajax({
@@ -114,11 +109,19 @@
                         <button class="btn btn-light-green btn-sm" id="uploadBtn" type="button">上传</button>
                     </div>
                     <h5>地址</h5>
-                    <div class="mb-3" id="areaSelect">
+                    <div class="mb-3" id="areaSelect" data-url="JSON/cityData.min.json">
                         <select class="form-control form-inline province" data-value="${requestScope.province}"></select>
                         <select class="form-control form-inline city" data-value="${requestScope.city}"></select>
                         <select class="form-control form-inline area" data-value="${requestScope.area}"></select>
                     </div>
+                    <script>
+                        // 地址级联选择器
+                        $('#areaSelect').cxSelect({
+                            url: 'JSON/cityData.min.json',
+                            selects: ['province', 'city', 'area'],
+                            nodata: 'none'
+                        })
+                    </script>
                     <h5>生日</h5>
                     <div class="md-form">
                         <input placeholder="Select date" type="date" id="birthday" class="form-control" value="${requestScope.userInfo.ubirthday}">
@@ -176,19 +179,8 @@
             </div>
         </div>
     </div>
-    <div id="sidebar" class="float-right">
-        <div class="treeview w-20 text-right">
-            <h6 class="pt-3 pl-3">我的空间</h6>
-            <br>
-            <ul class="mb-1 pl-3 pb-2">
-                <li class="mb-2"><a href="userInfoServlet"><i class="far fa-user ic-w mr-1"></i>我的信息</a></li>
-                <li class="mb-2"><a href="#"><i class="far fa-edit ic-w mr-1"></i>我的日志</a></li>
-                <li class="mb-2"><a href="userCollectionInfoServlet"><i class="far fa-star ic-w mr-1"></i>我的收藏</a></li>
-                <li class="mb-2"><a href="userCommentInfoServlet"><i class="far fa-comment ic-w mr-1"></i>我的评论</a></li>
-                <li class="mb-2"><a href="userReplyInfoServlet"><i class="far fa-comment ic-w mr-1"></i>我的回复</a></li>
-            </ul>
-        </div>
-    </div>
+    <!-- 侧边栏 -->
+    <%@include file="/jsp/siderbar.jsp"%>
 </div>
 <%@include file="/jsp/footer.jsp"%>
 <!-- Footer -->

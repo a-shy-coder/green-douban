@@ -64,4 +64,46 @@ public interface MovieService {
      * @return 最新的5部电影列表
      */
     public List<Movie> findTheLatest5MoviesByActorId(int actorId);
+
+    /**
+     * 分页查询电影
+     * @param pageNo
+     * @param defaultPageSize
+     * @return
+     */
+    List<Movie> findMovieByPage(int pageNo, int defaultPageSize);
+
+    /**
+     * 检索电影总本书
+     * @return
+     */
+    int getMovieCount();
+
+    /**
+     * 删除电影
+     * @param mid
+     */
+    void deleteMovieByMovieId(int mid);
+
+    /**
+     * 发布电影
+     * @param movie
+     * @return
+     */
+    int addMovie(Movie movie);
+
+    /**
+     * 修改电影信息
+     * @param movie
+     * @return
+     */
+    int modifyMovieById(Movie movie);
+
+    /**
+     * 修改电影导演
+     * @param directorId
+     * @param movieId
+     * @return
+     */
+    int modifyMovieDirectorById(int directorId, int movieId);
 }

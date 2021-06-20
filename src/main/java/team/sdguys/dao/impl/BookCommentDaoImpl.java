@@ -5,9 +5,7 @@ import team.sdguys.entity.BookComment;
 import team.sdguys.entity.BookComment;
 import team.sdguys.util.DataBaseUtil;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -142,7 +140,29 @@ public class BookCommentDaoImpl extends  BaseDaoImpl implements BookCommentDao {
 
     @Override
     public int insertBookComment(BookComment bookComment) {
-        return executeUpdate("INSERT INTO bookcomment (BId, BCcontent, UId, BCTime, BCLikeCount) VALUES (?,?,?,?,?)",bookComment.getBId(),bookComment.getBcContent(),bookComment.getUId(),bookComment.getBcTime(),bookComment.getBcLikeCount());
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        int autoIncrementId = 0;
+        try {
+            connection = DataBaseUtil.getConnection();
+            preparedStatement = connection.prepareStatement("INSERT INTO bookcomment (BId, BCcontent, UId, BCTime, BCLikeCount) VALUES (?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
+            preparedStatement.setInt(1,bookComment.getBId());
+            preparedStatement.setString(2,bookComment.getBcContent());
+            preparedStatement.setInt(3,bookComment.getUId());
+            preparedStatement.setObject(4, bookComment.getBcTime());
+            preparedStatement.setInt(5,bookComment.getBcLikeCount());
+            preparedStatement.executeUpdate();
+            resultSet = preparedStatement.getGeneratedKeys();
+            if(resultSet.next()){
+                autoIncrementId = resultSet.getInt(1);
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DataBaseUtil.close(resultSet, preparedStatement, connection);
+        }
+        return autoIncrementId;
     }
 
     @Override

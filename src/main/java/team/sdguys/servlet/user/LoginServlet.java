@@ -48,6 +48,8 @@ public class LoginServlet extends HttpServlet {
         resp.setContentType("text/html;charset=utf-8");
 //        resp.sendRedirect("movieInfoServlet?movieChineseName=" + URLEncoder.encode("小人物","UTF-8"));
 //        resp.sendRedirect("bookInfoServlet?bookChineseName=" + URLEncoder.encode("算法导论","UTF-8"));
-        resp.sendRedirect("userInfoServlet");
+//        resp.sendRedirect("userInfoServlet");
+//        resp.sendRedirect("jsp/diary/submitDiary.jsp");
+        resp.sendRedirect("diaryInfoServlet?diaryId=12");
     }
 }

@@ -21,4 +21,20 @@ public interface MovieActorService {
      * @return
      */
     public int addNewMovieWithActorInfo(MovieActor movieActor);
+
+    /**
+     * 删除参演人员
+     * @param movieId
+     * @param actorId
+     * @return
+     */
+    int deleteRecordByMovieIdAndActorId(int movieId, int actorId);
+
+    /**
+     * 添加电影演员
+     * @param movieId
+     * @param actorId
+     * @return
+     */
+    int addMovieActor(int movieId, int actorId);
 }

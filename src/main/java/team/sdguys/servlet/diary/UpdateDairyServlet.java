@@ -1,6 +1,6 @@
 package team.sdguys.servlet.diary;
 
-import team.sdguys.service.DairyService;
+import team.sdguys.service.DiaryService;
 import team.sdguys.service.impl.DiaryServiceImpl;
 
 import javax.servlet.ServletException;
@@ -14,7 +14,7 @@ import java.io.IOException;
  */
 @WebServlet("/updateDairyServlet")
 public class UpdateDairyServlet {
-    DairyService dairyService = new DiaryServiceImpl();
+    DiaryService dairyService = new DiaryServiceImpl();
 
     protected void doGet(HttpServletRequest request,HttpServletResponse response)throws ServletException,IOException{
         String content = request.getParameter("content");

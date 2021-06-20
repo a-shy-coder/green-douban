@@ -1,7 +1,6 @@
 package team.sdguys.servlet.diary;
 
-import team.sdguys.entity.Diary;
-import team.sdguys.service.DairyService;
+import team.sdguys.service.DiaryService;
 import team.sdguys.service.impl.DiaryServiceImpl;
 
 import javax.servlet.ServletException;
@@ -20,7 +19,7 @@ import java.util.Date;
 @WebServlet("/insertDairyServlet")
 public class InsertDairyServlet extends HttpServlet{
 
-    DairyService dairyService = new DiaryServiceImpl();
+    DiaryService dairyService = new DiaryServiceImpl();
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)throws ServletException,IOException{
         String content = request.getParameter("content");
@@ -29,10 +28,10 @@ public class InsertDairyServlet extends HttpServlet{
         HttpSession session = request.getSession();
         int uid  = (int) session.getAttribute("uid");
 
-        Diary diary = new Diary(content,timestamp,uid,0);
-        int result = dairyService.insertNewDiary(diary);
+//        Diary diary = new Diary(content,timestamp,uid,0);
+//        int result = dairyService.insertNewDiary(diary);
 
-        response.getWriter().write(result);
+//        response.getWriter().write(result);
 
     }
 }

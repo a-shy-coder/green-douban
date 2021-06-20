@@ -8,6 +8,8 @@ import team.sdguys.util.DataBaseUtil;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * AuthorDao 的 实现类
@@ -41,4 +43,105 @@ public class AuthorDaoImpl extends BaseDaoImpl implements AuthorDao {
     public int insertNewAuthor(Author author) {
         return executeUpdate("insert into Author (AuthorId,AuthorChineseName,AuthorOriginName,AuthorInfo,AuthorGender,AuthorImg) value (?,?,?,?,?,?)", author.getAuthorId(), author.getAuthorChineseName(), author.getAuthorOriginName(), author.getAuthorInfo(), author.getAuthorGender(), author.getAuthorImg() );
     }
+
+    @Override
+    public List<Author> getAuthorList() {
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        List<Author> list = new ArrayList();
+
+        try {
+            con = DataBaseUtil.getConnection();
+            ps = con.prepareStatement("select * from Author");
+            rs = ps.executeQuery();
+            while (rs.next()) { //next()判断有没有下一行，并移动到下一行
+                int AuthorId = rs.getInt(1);
+                String AuthorChineseName = rs.getString(2);
+                String AuthorOriginName = rs.getString(3);
+                String AuthorInfo = rs.getString(4);
+                String AuthorGender = rs.getString(5);
+                String AuthorImg = rs.getString(6);
+                Author author = new Author(AuthorId, AuthorChineseName, AuthorOriginName, AuthorInfo, AuthorGender, AuthorImg);
+                list.add(author);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            DataBaseUtil.close(rs, ps, con);
+        }
+        return list;
+    }
+
+    @Override
+    public int getAuthorCount() {
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        int count=0;
+
+        try {
+            con = DataBaseUtil.getConnection();
+            ps = con.prepareStatement("select count(*) from Author");
+            rs = ps.executeQuery();
+            if(rs.next()){
+                count=rs.getInt(1);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            DataBaseUtil.close(rs, ps, con);
+        }
+        return count;
+    }
+
+    @Override
+    public List<Author> getAuthorByPage(int pageNo, int defaultPageSize) {
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        List<Author> list = new ArrayList();
+
+        try {
+            con = DataBaseUtil.getConnection();
+            ps = con.prepareStatement("select * from Author limit ?, ?");
+            ps.setInt(1, (pageNo-1)*defaultPageSize);
+            ps.setInt(2, defaultPageSize);               rs = ps.executeQuery();
+            while (rs.next()) { //next()判断有没有下一行，并移动到下一行
+                int AuthorId = rs.getInt(1);
+                String AuthorChineseName = rs.getString(2);
+                String AuthorOriginName = rs.getString(3);
+                String AuthorInfo = rs.getString(4);
+                String AuthorGender = rs.getString(5);
+                String AuthorImg = rs.getString(6);
+                Author author = new Author(AuthorId, AuthorChineseName, AuthorOriginName, AuthorInfo, AuthorGender, AuthorImg);
+                list.add(author);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            DataBaseUtil.close(rs, ps, con);
+        }
+        return list;
+    }
+
+    @Override
+    public int deleteAuthorById(int authorId) {
+        return executeUpdate("DELETE FROM author WHERE AuthorId = ?",authorId);
+    }
+
+    @Override
+    public int addAuthor(Author author) {
+        return executeUpdate("INSERT INTO author (AuthorChineseName, AuthorOriginName, AuthorInfo, AuthorGender, AuthorImg) VALUES (?, ?, ?, ?, ?)",
+                author.getAuthorChineseName(),author.getAuthorOriginName(),author.getAuthorInfo(),author.getAuthorGender(),author.getAuthorImg());
+
+    }
+
+    @Override
+    public int modifyAuthorById(Author author) {
+        return executeUpdate("UPDATE author \n" +
+                "        SET AuthorChineseName = ?,AuthorOriginName  = ?,AuthorInfo = ?,AuthorGender = ?,AuthorImg = ?\n" +
+                "        WHERE AuthorId = ?",author.getAuthorChineseName(),author.getAuthorOriginName(),author.getAuthorInfo(),author.getAuthorGender(),author.getAuthorImg(),author.getAuthorId());
+    }
 }
+

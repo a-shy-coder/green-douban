@@ -44,4 +44,29 @@ public class DiaryReplyServiceImpl implements DiaryReplyService {
         return diaryReplyDao.deleteDiaryReply(Drid,uid);
     }
 
+    @Override
+    public void updateLikeCountByDiaryReplyId(int diaryReplyId, int i) {
+        diaryReplyDao.updateLikeCountByDiaryReplyId(diaryReplyId,i);
+    }
+
+    @Override
+    public List<DiaryReply> getDiaryReplyListByDiaryCommentId(int dcId) {
+        return diaryReplyDao.getDiaryReplyListByDiaryCommentId(dcId);
+    }
+
+    @Override
+    public int submitDiaryReply(DiaryReply diaryReply) {
+        return diaryReplyDao.insertDiaryReply(diaryReply);
+    }
+
+    @Override
+    public List<DiaryReply> findDiaryReplyListByUid(int uid) {
+        return diaryReplyDao.getDiaryReplyListByUid(uid);
+    }
+
+    @Override
+    public int deleteDiaryReplyByDiaryReplyId(int diaryReplyId) {
+        return diaryReplyDao.deleteDiaryReplyByDiaryReplyId(diaryReplyId);
+    }
+
 }

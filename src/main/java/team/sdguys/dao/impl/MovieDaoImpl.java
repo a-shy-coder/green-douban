@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -161,8 +162,93 @@ public class MovieDaoImpl extends BaseDaoImpl implements MovieDao {
 
 
     @Override
-    public int deleteMovieByMid(int Mid) {
-        return executeUpdate("delete from Movie where MId = ?",Mid);
+    public int deleteMovieByMid(int mid) {
+        return executeUpdate("delete from Movie where MovieId = ?",mid);
 
     }
+
+    @Override
+    public List<Movie> getMovieByPage(int pageNo, int pageSize) {
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        List<Movie> list = new ArrayList();
+
+        try {
+            con = DataBaseUtil.getConnection();
+            ps = con.prepareStatement("select * from Movie limit ?, ?");
+            ps.setInt(1, (pageNo - 1) * pageSize);
+            ps.setInt(2, pageSize);
+            rs = ps.executeQuery();
+            while (rs.next()) { //next()判断有没有下一行，并移动到下一行
+                int Mid = rs.getInt(1);
+                String MChineseName = rs.getString(2);
+                String MOriginName = rs.getString(3);
+                String MType = rs.getString(4);
+                Double MRating = rs.getDouble(5);
+                Integer MRatingCount = rs.getInt(6);
+                Date MReleaseDate = rs.getDate(7);
+                Integer DirectorId = rs.getInt(8);
+                String mLanguage = rs.getString(9);
+                String mLength = rs.getString(10);
+                String mArea = rs.getString(11);
+                String mContent = rs.getString(12);
+                String mCover = rs.getString(13);
+
+
+
+                Movie movie= new Movie(Mid, MChineseName, MOriginName, MType, MRating, MRatingCount, MReleaseDate, DirectorId, mLanguage, mLength, mArea, mContent, mCover);
+                list.add(movie);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            DataBaseUtil.close(rs, ps, con);
+        }
+        return list;
+    }
+
+    @Override
+    public int getMovieCount() {
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        int count=0;
+
+        try {
+            con = DataBaseUtil.getConnection();
+            ps = con.prepareStatement("select count(*) from Movie");
+            rs = ps.executeQuery();
+            if(rs.next()){
+                count=rs.getInt(1);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            DataBaseUtil.close(rs, ps, con);
+        }
+        return count;
+    }
+
+    @Override
+    public int addMovie(Movie movie) {
+        return executeUpdate("INSERT INTO movie (MChineseName, MOriginName, MType, MRating, MRatingCount, MReleaseDate, DirectorId, MLanguage, MLength, MArea, MContent, MCover) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",movie.getMChineseName(),movie.getMOriginName(),movie.getMType(),movie.getMRating(),movie.getMRatingCount(),movie.getMReleaseDate(),movie.getDirectorId(),movie.getmLanguage(),movie.getmLength(),movie.getmArea(),movie.getmContent(),movie.getmCover());
+    }
+
+    @Override
+    public int modifyMovieDirectorById(int directorId, int movieId) {
+        return executeUpdate("UPDATE movie SET DirectorId = ? WHERE MovieId = ?",directorId,movieId);
+    }
+
+    @Override
+    public int modifyMovieById(Movie movie) {
+        return executeUpdate("UPDATE movie \n" +
+                "        SET MChineseName = ?,MOriginName  = ?,MType = ?, MRating = ?, MRatingCount = ?, MReleaseDate = ?, DirectorId = ?, MLanguage = ?, MLength = ?, MArea = ?, MContent = ?, MCover = ?\n" +
+                "        WHERE MovieId = ?", movie.getMChineseName(),movie.getMOriginName(),movie.getMType(),movie.getMRating(),movie.getMRatingCount(),movie.getMReleaseDate(),movie.getDirectorId(),movie.getmLanguage(),movie.getmLength(),movie.getmArea(),movie.getmContent(),movie.getmCover(),movie.getMovieId());
+
+
+
+    }
+
 }

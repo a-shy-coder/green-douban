@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -320,6 +321,93 @@ public class BookDaoImpl extends BaseDaoImpl implements BookDao {
             DataBaseUtil.close(resultSet, preparedStatement, connection);
         }
         return bookList;
+    }
+
+    @Override
+    public List<Book> getBookByPage(int pageNo, int pageSize) {
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        List<Book> list = new ArrayList();
+
+        try {
+            con = DataBaseUtil.getConnection();
+            ps = con.prepareStatement("select * from Book limit ?, ?");
+            ps.setInt(1, (pageNo-1)*pageSize);
+            ps.setInt(2, pageSize);
+            rs = ps.executeQuery();
+            while (rs.next()) { //next()判断有没有下一行，并移动到下一行
+                int Bid = rs.getInt(1);
+                String BChineseName = rs.getString(2);
+                String BOriginName = rs.getString(3);
+                String BType = rs.getString(4);
+                Float BRating = rs.getFloat(5);
+                Integer BRatingCount = rs.getInt(6);
+                Date BReleaseDate = rs.getDate(7);
+                String BPublisher = rs.getString(8);
+                Integer AuthorId = rs.getInt(9);
+                Integer bPageCount = rs.getInt(10);
+                String bBinding = rs.getString(11);
+                String bContent = rs.getString(12);
+                String bLanguage = rs.getString(13);
+                String bCover = rs.getString(14);
+
+                Book book = new Book(Bid , BChineseName, BOriginName, BType, BRating ,BRatingCount , BReleaseDate , BPublisher,AuthorId , bPageCount , bBinding,bContent , bLanguage, bCover);
+                list.add(book);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            DataBaseUtil.close(rs, ps, con);
+        }
+        return list;
+    }
+
+
+    @Override
+    public int getBookCount() {
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        int count=0;
+
+        try {
+            con = DataBaseUtil.getConnection();
+            ps = con.prepareStatement("select count(*) from Book");
+            rs = ps.executeQuery();
+            if(rs.next()){
+                count=rs.getInt(1);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            DataBaseUtil.close(rs, ps, con);
+        }
+        return count;
+    }
+
+    @Override
+    public int addBook(Book book) {
+        return executeUpdate("INSERT INTO book (BChineseName, BOriginName, BType, BRating, BRatingCount, BReleaseDate, BPublisher, AuthorId, " +
+                "BPageCount, BBinding, BContent, BLanguage, BCover) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                book.getBChineseName(),book.getBOriginName(),book.getBType(),book.getBRating(),book.getBRatingCount(),book.getBReleaseDate(),book.getBPublisher(),book.getAuthorId(),
+                book.getbPageCount(),book.getbBinding(),book.getbContent(),book.getbLanguage(),book.getbCover());
+    }
+
+    @Override
+    public int modifyBookById(Book book) {
+        return executeUpdate(" UPDATE book" +
+                " SET BChineseName = ?,BOriginName  = ?,BType = ?,BRating = ?,BRatingCount = ?,BReleaseDate = ?,BPublisher = ?,AuthorId = ?,BPageCount = ?,BBinding = ?,BContent = ?,BLanguage = ?,BCover = ?" +
+                " WHERE BId = ?",book.getBChineseName(),book.getBOriginName(),book.getBType(),book.getBRating(),book.getBRatingCount(),book.getBReleaseDate(),book.getBPublisher(),book.getAuthorId(),
+                book.getbPageCount(),book.getbBinding(),book.getbContent(),book.getbLanguage(),book.getbCover(),book.getBId());
+
+
+
+    }
+
+    @Override
+    public int modifyBookAuthorByBookId(int bookId, int authorId) {
+        return executeUpdate("UPDATE book SET AuthorId = ? WHERE BId = ?",authorId,bookId);
     }
 
 }

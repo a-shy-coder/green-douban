@@ -10,6 +10,13 @@ import java.util.List;
 public interface MovieReplyService {
 
     /**
+     * 更新电影回复点赞数量
+     * @param movieReplyId 电影回复编号
+     * @param i 增加的点赞数量
+     */
+    void updateLikeCountByMovieReplyId(int movieReplyId, int i);
+
+    /**
      * 根据评论编号查找所有的回复
      * @param mcId 评论编号
      * @return 电影回复列表
@@ -29,4 +36,11 @@ public interface MovieReplyService {
      * @return 评论列表
      */
     List<MovieReply> findMovieReplyListByUid(int uid);
+
+    /**
+     * 根据回复编号删除回复
+     * @param movieReplyId 回复编号
+     * @return 受影响的行数
+     */
+    int deleteMovieReplyByMovieReplyId(int movieReplyId);
 }

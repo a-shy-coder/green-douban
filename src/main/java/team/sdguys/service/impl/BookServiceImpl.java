@@ -62,4 +62,34 @@ public class BookServiceImpl implements BookService {
     public List<Book> findTheLatest5BooksByAuthorId(int authorId) {
         return bookDao.getTheLatest5BooksByAuthorId(authorId);
     }
+
+    @Override
+    public List<Book> findBookByPage(int pageNo, int defaultPageSize) {
+        return bookDao.getBookByPage(pageNo,defaultPageSize);
+    }
+
+    @Override
+    public int getBookCount() {
+        return bookDao.getBookCount();
+    }
+
+    @Override
+    public int deleteBookById(int bookId) {
+        return bookDao.deleteBookByBid(bookId);
+    }
+
+    @Override
+    public int addBook(Book book) {
+        return bookDao.addBook(book);
+    }
+
+    @Override
+    public int modifyBookById(Book book) {
+        return bookDao.modifyBookById(book);
+    }
+
+    @Override
+    public int modifyBookAuthorByBookId(int bookId, int authorId) {
+        return bookDao.modifyBookAuthorByBookId(bookId,authorId);
+    }
 }

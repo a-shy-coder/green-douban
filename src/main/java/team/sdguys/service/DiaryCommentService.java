@@ -48,5 +48,38 @@ public interface DiaryCommentService {
     public int suboneDCLikeCount(int DCId);
 
 
+    /**
+     * 通过日志编号获取日志评论列表
+     * @param diaryId 日志编号
+     * @return 日志评论列表
+     */
+    List<DiaryComment> getDiaryCommentListByDiaryId(int diaryId);
 
+    /**
+     * 插入一条日志评论
+     * @param diaryComment 日志评论
+     * @return 受影响的行数
+     */
+    int submitDiaryComment(DiaryComment diaryComment);
+    
+    /**
+     * 更新评论点赞数量
+     * @param diaryCommentId 评论编号
+     * @param i 增加的点赞数量
+     */
+    void updateLikeCountByDiaryCommentId(int diaryCommentId, int i);
+
+    /**
+     * 根据评论编号查找评论
+     * @param dcId 编号
+     * @return 评论
+     */
+    DiaryComment findDiaryCommentByDiaryCommentId(int dcId);
+
+    /**
+     * 根据uid查找该用户的所有评论
+     * @param uid 用户编号
+     * @return 评论列表
+     */
+    List<DiaryComment> findDiaryCommentListByUid(int uid);
 }

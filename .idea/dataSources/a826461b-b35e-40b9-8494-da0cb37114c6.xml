@@ -1250,472 +1250,477 @@ uid</ColNames>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="357" parent="285" name="DiaryContent">
+    <column id="357" parent="285" name="DiaryTitle">
       <Position>2</Position>
+      <Comment>日志标题</Comment>
+      <DataType>varchar(255)|0s</DataType>
+    </column>
+    <column id="358" parent="285" name="DiaryContent">
+      <Position>3</Position>
       <Comment>日志内容</Comment>
       <DataType>longtext|0s</DataType>
     </column>
-    <column id="358" parent="285" name="DiaryTime">
-      <Position>3</Position>
+    <column id="359" parent="285" name="DiaryTime">
+      <Position>4</Position>
       <Comment>日志发布时间</Comment>
       <DataType>datetime|0s</DataType>
     </column>
-    <column id="359" parent="285" name="UId">
-      <Position>4</Position>
+    <column id="360" parent="285" name="UId">
+      <Position>5</Position>
       <Comment>日志发布用户</Comment>
       <DataType>int|0s</DataType>
     </column>
-    <column id="360" parent="285" name="DLikeCount">
-      <Position>5</Position>
+    <column id="361" parent="285" name="DLikeCount">
+      <Position>6</Position>
       <Comment>日志点赞数量</Comment>
       <DataType>int|0s</DataType>
     </column>
-    <key id="361" parent="285" name="PRIMARY">
+    <key id="362" parent="285" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>DiaryId</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="362" parent="286" name="DCId">
+    <column id="363" parent="286" name="DCId">
       <Position>1</Position>
       <Comment>日志评论编号</Comment>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="363" parent="286" name="DId">
+    <column id="364" parent="286" name="DId">
       <Position>2</Position>
       <Comment>评论的哪篇日志</Comment>
       <DataType>int|0s</DataType>
     </column>
-    <column id="364" parent="286" name="DCcontent">
+    <column id="365" parent="286" name="DCcontent">
       <Position>3</Position>
       <Comment>评论内容</Comment>
       <DataType>text|0s</DataType>
     </column>
-    <column id="365" parent="286" name="UId">
+    <column id="366" parent="286" name="UId">
       <Position>4</Position>
       <Comment>评论用户id</Comment>
       <DataType>int|0s</DataType>
     </column>
-    <column id="366" parent="286" name="DCTime">
+    <column id="367" parent="286" name="DCTime">
       <Position>5</Position>
       <Comment>评论发布时间</Comment>
       <DataType>datetime|0s</DataType>
     </column>
-    <column id="367" parent="286" name="DCLikeCount">
+    <column id="368" parent="286" name="DCLikeCount">
       <Position>6</Position>
       <Comment>点赞数量</Comment>
       <DataType>int|0s</DataType>
     </column>
-    <key id="368" parent="286" name="PRIMARY">
+    <key id="369" parent="286" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>DCId</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="369" parent="287" name="DRId">
+    <column id="370" parent="287" name="DRId">
       <Position>1</Position>
       <Comment>回复编号</Comment>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="370" parent="287" name="DRFromId">
+    <column id="371" parent="287" name="DRFromId">
       <Position>2</Position>
       <Comment>发布回复的人&#xd;
 </Comment>
       <DataType>int|0s</DataType>
     </column>
-    <column id="371" parent="287" name="DRToId">
+    <column id="372" parent="287" name="DRToId">
       <Position>3</Position>
       <Comment>回复目标</Comment>
       <DataType>int|0s</DataType>
     </column>
-    <column id="372" parent="287" name="DRContent">
+    <column id="373" parent="287" name="DRContent">
       <Position>4</Position>
       <Comment>回复内容</Comment>
       <DataType>text|0s</DataType>
     </column>
-    <column id="373" parent="287" name="DRTime">
+    <column id="374" parent="287" name="DRTime">
       <Position>5</Position>
       <Comment>回复时间</Comment>
       <DataType>datetime|0s</DataType>
     </column>
-    <column id="374" parent="287" name="DId">
+    <column id="375" parent="287" name="DId">
       <Position>6</Position>
       <Comment>关于哪个日志的回复</Comment>
       <DataType>int|0s</DataType>
     </column>
-    <column id="375" parent="287" name="DCId">
+    <column id="376" parent="287" name="DCId">
       <Position>7</Position>
       <Comment>评论的编号</Comment>
       <DataType>int|0s</DataType>
     </column>
-    <column id="376" parent="287" name="DRLikeCount">
+    <column id="377" parent="287" name="DRLikeCount">
       <Position>8</Position>
       <Comment>点赞数量</Comment>
       <DataType>int|0s</DataType>
     </column>
-    <key id="377" parent="287" name="PRIMARY">
+    <key id="378" parent="287" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>DRId</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="378" parent="288" name="DirectorId">
+    <column id="379" parent="288" name="DirectorId">
       <Position>1</Position>
       <Comment>导演编号</Comment>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="379" parent="288" name="DirectorChineseName">
+    <column id="380" parent="288" name="DirectorChineseName">
       <Position>2</Position>
       <Comment>中文名</Comment>
       <DataType>varchar(255)|0s</DataType>
     </column>
-    <column id="380" parent="288" name="DirectorOriginName">
+    <column id="381" parent="288" name="DirectorOriginName">
       <Position>3</Position>
       <Comment>原名</Comment>
       <DataType>varchar(255)|0s</DataType>
     </column>
-    <column id="381" parent="288" name="DirectorInfo">
+    <column id="382" parent="288" name="DirectorInfo">
       <Position>4</Position>
       <Comment>导演简介</Comment>
       <DataType>text|0s</DataType>
     </column>
-    <column id="382" parent="288" name="DirectorGender">
+    <column id="383" parent="288" name="DirectorGender">
       <Position>5</Position>
       <Comment>性别</Comment>
       <DataType>varchar(255)|0s</DataType>
     </column>
-    <column id="383" parent="288" name="DirectorImg">
+    <column id="384" parent="288" name="DirectorImg">
       <Position>6</Position>
       <Comment>个人照</Comment>
       <DataType>varchar(255)|0s</DataType>
     </column>
-    <key id="384" parent="288" name="PRIMARY">
+    <key id="385" parent="288" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>DirectorId</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="385" parent="289" name="id">
+    <column id="386" parent="289" name="id">
       <Position>1</Position>
       <Comment>自增编号</Comment>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="386" parent="289" name="uid">
+    <column id="387" parent="289" name="uid">
       <Position>2</Position>
       <Comment>用户编号</Comment>
       <DataType>int|0s</DataType>
     </column>
-    <column id="387" parent="289" name="likeId">
+    <column id="388" parent="289" name="likeId">
       <Position>3</Position>
       <Comment>点赞的电影/书籍的评论/回复编号</Comment>
       <DataType>int|0s</DataType>
     </column>
-    <column id="388" parent="289" name="type">
+    <column id="389" parent="289" name="type">
       <Position>4</Position>
       <Comment>点赞的是电影/书籍的评论/回复 0(电影评论) 1(电影回复) 2(书籍评论) 3(书籍回复)</Comment>
       <DataType>varchar(255)|0s</DataType>
     </column>
-    <key id="389" parent="289" name="PRIMARY">
+    <key id="390" parent="289" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="390" parent="290" name="MovieId">
+    <column id="391" parent="290" name="MovieId">
       <Position>1</Position>
       <Comment>电影编号</Comment>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="391" parent="290" name="MChineseName">
+    <column id="392" parent="290" name="MChineseName">
       <Position>2</Position>
       <Comment>电影中文名</Comment>
       <DataType>varchar(255)|0s</DataType>
     </column>
-    <column id="392" parent="290" name="MOriginName">
+    <column id="393" parent="290" name="MOriginName">
       <Position>3</Position>
       <Comment>电影原名</Comment>
       <DataType>varchar(255)|0s</DataType>
     </column>
-    <column id="393" parent="290" name="MType">
+    <column id="394" parent="290" name="MType">
       <Position>4</Position>
       <Comment>类型</Comment>
       <DataType>varchar(255)|0s</DataType>
     </column>
-    <column id="394" parent="290" name="MRating">
+    <column id="395" parent="290" name="MRating">
       <Position>5</Position>
       <Comment>评分</Comment>
       <DataType>double(16,1 digit)|0s</DataType>
     </column>
-    <column id="395" parent="290" name="MRatingCount">
+    <column id="396" parent="290" name="MRatingCount">
       <Position>6</Position>
       <Comment>评分人数</Comment>
       <DataType>int|0s</DataType>
     </column>
-    <column id="396" parent="290" name="MReleaseDate">
+    <column id="397" parent="290" name="MReleaseDate">
       <Position>7</Position>
       <Comment>发行日期</Comment>
       <DataType>date|0s</DataType>
     </column>
-    <column id="397" parent="290" name="DirectorId">
+    <column id="398" parent="290" name="DirectorId">
       <Position>8</Position>
       <Comment>导演Id</Comment>
       <DataType>int|0s</DataType>
     </column>
-    <column id="398" parent="290" name="MLanguage">
+    <column id="399" parent="290" name="MLanguage">
       <Position>9</Position>
       <Comment>语言</Comment>
       <DataType>varchar(255)|0s</DataType>
     </column>
-    <column id="399" parent="290" name="MLength">
+    <column id="400" parent="290" name="MLength">
       <Position>10</Position>
       <Comment>时长</Comment>
       <DataType>varchar(255)|0s</DataType>
     </column>
-    <column id="400" parent="290" name="MArea">
+    <column id="401" parent="290" name="MArea">
       <Position>11</Position>
       <Comment>制片国家/地区</Comment>
       <DataType>varchar(255)|0s</DataType>
     </column>
-    <column id="401" parent="290" name="MContent">
+    <column id="402" parent="290" name="MContent">
       <Position>12</Position>
       <Comment>简介</Comment>
       <DataType>text|0s</DataType>
     </column>
-    <column id="402" parent="290" name="MCover">
+    <column id="403" parent="290" name="MCover">
       <Position>13</Position>
       <Comment>电影封面</Comment>
       <DataType>varchar(255)|0s</DataType>
     </column>
-    <index id="403" parent="290" name="DirectorId">
+    <index id="404" parent="290" name="DirectorId">
       <ColNames>DirectorId</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="404" parent="290" name="PRIMARY">
+    <key id="405" parent="290" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>MovieId</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="405" parent="291" name="MovieId">
+    <column id="406" parent="291" name="MovieId">
       <Position>1</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="406" parent="291" name="ActorId">
+    <column id="407" parent="291" name="ActorId">
       <Position>2</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="407" parent="291" name="MovieId">
+    <index id="408" parent="291" name="MovieId">
       <ColNames>MovieId</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="408" parent="291" name="ActorId">
+    <index id="409" parent="291" name="ActorId">
       <ColNames>ActorId</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="409" parent="291" name="PRIMARY">
+    <key id="410" parent="291" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>MovieId
 ActorId</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="410" parent="292" name="MCollectionId">
+    <column id="411" parent="292" name="MCollectionId">
       <Position>1</Position>
       <Comment>电影收藏编号</Comment>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="411" parent="292" name="MId">
+    <column id="412" parent="292" name="MId">
       <Position>2</Position>
       <Comment>收藏的哪部电影</Comment>
       <DataType>int|0s</DataType>
     </column>
-    <column id="412" parent="292" name="UId">
+    <column id="413" parent="292" name="UId">
       <Position>3</Position>
       <Comment>谁收藏的</Comment>
       <DataType>int|0s</DataType>
     </column>
-    <key id="413" parent="292" name="PRIMARY">
+    <key id="414" parent="292" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>MCollectionId</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="414" parent="293" name="MCId">
+    <column id="415" parent="293" name="MCId">
       <Position>1</Position>
       <Comment>电影评论编号</Comment>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="415" parent="293" name="MId">
+    <column id="416" parent="293" name="MId">
       <Position>2</Position>
       <Comment>评论的哪部电影</Comment>
       <DataType>int|0s</DataType>
     </column>
-    <column id="416" parent="293" name="MCcontent">
+    <column id="417" parent="293" name="MCcontent">
       <Position>3</Position>
       <Comment>电影评论内容</Comment>
       <DataType>text|0s</DataType>
     </column>
-    <column id="417" parent="293" name="UId">
+    <column id="418" parent="293" name="UId">
       <Position>4</Position>
       <Comment>评论用户id</Comment>
       <DataType>int|0s</DataType>
     </column>
-    <column id="418" parent="293" name="MCTime">
+    <column id="419" parent="293" name="MCTime">
       <Position>5</Position>
       <Comment>评论发布时间</Comment>
       <DataType>datetime|0s</DataType>
     </column>
-    <column id="419" parent="293" name="MCLikeCount">
+    <column id="420" parent="293" name="MCLikeCount">
       <Position>6</Position>
       <Comment>点赞数量</Comment>
       <DataType>int|0s</DataType>
     </column>
-    <key id="420" parent="293" name="PRIMARY">
+    <key id="421" parent="293" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>MCId</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="421" parent="294" name="movieId">
+    <column id="422" parent="294" name="movieId">
       <Position>1</Position>
       <Comment>电影编号</Comment>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="422" parent="294" name="uid">
+    <column id="423" parent="294" name="uid">
       <Position>2</Position>
       <Comment>用户编号</Comment>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="423" parent="294" name="rating">
+    <column id="424" parent="294" name="rating">
       <Position>3</Position>
       <Comment>评分</Comment>
       <DataType>double|0s</DataType>
     </column>
-    <key id="424" parent="294" name="PRIMARY">
+    <key id="425" parent="294" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>movieId
 uid</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="425" parent="295" name="MRId">
+    <column id="426" parent="295" name="MRId">
       <Position>1</Position>
       <Comment>回复编号</Comment>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="426" parent="295" name="MRFromId">
+    <column id="427" parent="295" name="MRFromId">
       <Position>2</Position>
       <Comment>发布回复的人&#xd;
 </Comment>
       <DataType>int|0s</DataType>
     </column>
-    <column id="427" parent="295" name="MRToId">
+    <column id="428" parent="295" name="MRToId">
       <Position>3</Position>
       <Comment>回复目标</Comment>
       <DataType>int|0s</DataType>
     </column>
-    <column id="428" parent="295" name="MRContent">
+    <column id="429" parent="295" name="MRContent">
       <Position>4</Position>
       <Comment>回复内容</Comment>
       <DataType>text|0s</DataType>
     </column>
-    <column id="429" parent="295" name="MRTime">
+    <column id="430" parent="295" name="MRTime">
       <Position>5</Position>
       <Comment>回复时间</Comment>
       <DataType>datetime|0s</DataType>
     </column>
-    <column id="430" parent="295" name="MId">
+    <column id="431" parent="295" name="MId">
       <Position>6</Position>
       <Comment>关于哪部电影的回复</Comment>
       <DataType>int|0s</DataType>
     </column>
-    <column id="431" parent="295" name="MCId">
+    <column id="432" parent="295" name="MCId">
       <Position>7</Position>
       <Comment>评论的编号</Comment>
       <DataType>int|0s</DataType>
     </column>
-    <column id="432" parent="295" name="MRLikeCount">
+    <column id="433" parent="295" name="MRLikeCount">
       <Position>8</Position>
       <Comment>点赞数量</Comment>
       <DataType>int|0s</DataType>
     </column>
-    <key id="433" parent="295" name="PRIMARY">
+    <key id="434" parent="295" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>MRId</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="434" parent="296" name="Uid">
+    <column id="435" parent="296" name="Uid">
       <Position>1</Position>
       <Comment>注册用户的编号</Comment>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="435" parent="296" name="Uemail">
+    <column id="436" parent="296" name="Uemail">
       <Position>2</Position>
       <Comment>用户邮箱(登录时的用户名)</Comment>
       <DataType>varchar(255)|0s</DataType>
     </column>
-    <column id="436" parent="296" name="Upassword">
+    <column id="437" parent="296" name="Upassword">
       <Position>3</Position>
       <Comment>用户密码</Comment>
       <DataType>varchar(255)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="437" parent="296" name="Uname">
+    <column id="438" parent="296" name="Uname">
       <Position>4</Position>
       <Comment>用户昵称</Comment>
       <DataType>varchar(255)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <key id="438" parent="296" name="PRIMARY">
+    <key id="439" parent="296" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>Uid</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="439" parent="297" name="Uid">
+    <column id="440" parent="297" name="Uid">
       <Position>1</Position>
       <Comment>用户编号 主键</Comment>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="440" parent="297" name="Uicon">
+    <column id="441" parent="297" name="Uicon">
       <Position>2</Position>
       <Comment>用户头像</Comment>
       <DataType>varchar(255)|0s</DataType>
       <DefaultExpression>&apos;https://gitee.com/a-shy-coder/blog-images/raw/master/user_normal.jpg&apos;</DefaultExpression>
     </column>
-    <column id="441" parent="297" name="Ugender">
+    <column id="442" parent="297" name="Ugender">
       <Position>3</Position>
       <Comment>用户性别</Comment>
       <DataType>varchar(255)|0s</DataType>
     </column>
-    <column id="442" parent="297" name="Uaddress">
+    <column id="443" parent="297" name="Uaddress">
       <Position>4</Position>
       <Comment>用户所在地</Comment>
       <DataType>varchar(255)|0s</DataType>
     </column>
-    <column id="443" parent="297" name="Ubirthday">
+    <column id="444" parent="297" name="Ubirthday">
       <Position>5</Position>
       <Comment>用户生日</Comment>
       <DataType>date|0s</DataType>
     </column>
-    <column id="444" parent="297" name="Usign">
+    <column id="445" parent="297" name="Usign">
       <Position>6</Position>
       <Comment>用户星座</Comment>
       <DataType>varchar(255)|0s</DataType>
     </column>
-    <key id="445" parent="297" name="PRIMARY">
+    <key id="446" parent="297" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>Uid</ColNames>
       <Primary>1</Primary>

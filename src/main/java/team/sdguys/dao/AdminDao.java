@@ -43,5 +43,30 @@ public interface AdminDao extends BaseDao{
      */
     int updateAdminByAid(Admin admin);
 
+    /**
+     * 获取所有的管理员列表
+     * @return 管理员列表
+     */
+    List<Admin> getAdminList();
 
+    /**
+     * 插入管理员用户
+     * @param admin 管理员
+     * @return 受影响的行数
+     */
+    int addAdmin(Admin admin);
+
+    /**
+     * 修改管理员密码
+     * @param adminPassword
+     * @param adminId
+     */
+    int modifyAdminPasswordByAdminId(String adminPassword, int adminId);
+
+    /**
+     * 删除管理员账号
+     * @param adminId
+     * @return
+     */
+    int deleteAdminByAdminId(int adminId);
 }

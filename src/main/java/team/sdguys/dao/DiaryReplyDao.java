@@ -138,4 +138,31 @@ public interface DiaryReplyDao extends BaseDao{
      */
     List<Integer> getDridListbyuid(int uid);
 
+    /**
+     * 更新回复点赞数量
+     * @param diaryReplyId 回复编号
+     * @param i 增加的点赞数量
+     */
+    void updateLikeCountByDiaryReplyId(int diaryReplyId, int i);
+
+    /**
+     * 根据评论编号查找所有的回复
+     * @param dcId 评论编号
+     * @return 电影回复列表
+     */
+    List<DiaryReply> getDiaryReplyListByDiaryCommentId(int dcId);
+
+    /**
+     * 根据uid查找该用户的所有回复
+     * @param uid 用户编号
+     * @return 评论列表
+     */
+    List<DiaryReply> getDiaryReplyListByUid(int uid);
+
+    /**
+     * 根据回复编号删除回复
+     * @param diaryReplyId 回复编号
+     * @return 受影响的行数
+     */
+    int deleteDiaryReplyByDiaryReplyId(int diaryReplyId);
 }

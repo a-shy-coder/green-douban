@@ -43,4 +43,14 @@ public class MovieActorDaoImpl extends BaseDaoImpl implements MovieActorDao {
     public int insertNewMovieWithActorsInfo(MovieActor movieActor) {
         return executeUpdate("insert into MovieActor (MovieId,ActorId) value (?,?)", movieActor.getActorId()  ,movieActor.getMovieId() );
     }
+
+    @Override
+    public int deleteRecordByMovieIdAndActorId(int movieId, int actorId) {
+        return executeUpdate("DELETE FROM movieactor WHERE MovieId = ? AND ActorId = ?",movieId,actorId);
+    }
+
+    @Override
+    public int addMovieActor(int movieId, int actorId) {
+        return executeUpdate("INSERT INTO movieactor (MovieId, ActorId) VALUES (?, ?)\n",movieId, actorId);
+    }
 }

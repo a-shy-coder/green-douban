@@ -4,7 +4,7 @@ import team.sdguys.entity.Diary;
 
 import java.util.List;
 
-public interface DairyService {
+public interface DiaryService {
     /**
      * 新建一条日志
      * @return 受影响的行数
@@ -64,4 +64,11 @@ public interface DairyService {
      * @return diary
      */
     public Diary getallbyDiaryId(int did);
+
+    /**
+     * 根据uid查找该用户的所有日志
+     * @param uid 用户编号
+     * @return 日志列表
+     */
+    List<Diary> getDiaryListByUid(int uid);
 }

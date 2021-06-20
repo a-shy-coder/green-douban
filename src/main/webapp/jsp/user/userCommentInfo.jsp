@@ -1,14 +1,8 @@
-<%@ page import="team.sdguys.service.UserService" %>
-<%@ page import="team.sdguys.service.UserInfoService" %>
 <%@ page import="java.util.List" %>
-<%@ page import="team.sdguys.service.impl.UserInfoServiceImpl" %>
-<%@ page import="team.sdguys.service.impl.UserServiceImpl" %>
 <%@ page import="team.sdguys.util.DateFormatUtil" %>
-<%@ page import="team.sdguys.service.impl.MovieServiceImpl" %>
-<%@ page import="team.sdguys.service.MovieService" %>
-<%@ page import="team.sdguys.service.BookService" %>
-<%@ page import="team.sdguys.service.impl.BookServiceImpl" %>
 <%@ page import="team.sdguys.entity.*" %>
+<%@ page import="team.sdguys.service.*" %>
+<%@ page import="team.sdguys.service.impl.*" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -69,8 +63,25 @@
             }
         })
     }
+
+    // 删除日志评论
+    function deleteDiaryComment(diaryCommentId){
+        $.ajax({
+            url:"deleteDiaryCommentServlet",
+            type:"GET",
+            data:{
+                "dcid":diaryCommentId,
+            },
+            success(){
+                $("div[id=diaryComment"+diaryCommentId+"]").fadeOut('slow');
+            },
+            error(){
+                alert("error");
+            }
+        })
+    }
 </script>
-<body>
+<body style="font-size: 14px">
 <%@include file="/jsp/navbar.jsp"%>
 <div class="container ml-auto clearfix" style="margin-top: 70px">
     <div id="article" class="float-left mt-3" style="width: 700px">
@@ -82,6 +93,8 @@
             List<MovieComment> movieCommentList = (List<MovieComment>) request.getAttribute("userMovieCommentList");
             BookService bookService = new BookServiceImpl();
             List<BookComment> bookCommentList = (List<BookComment>) request.getAttribute("userBookCommentList");
+            DiaryService diaryService = new DiaryServiceImpl();
+            List<DiaryComment> diaryCommentList = (List<DiaryComment>) request.getAttribute("userDiaryCommentList");
         %>
             <h1 class="title mb-4">我的评论</h1>
             <div id="commentList" class="mt-3" style="font-size: 14px">
@@ -144,22 +157,44 @@
                 <%
                     }
                 %>
+
+                <%
+                    for (DiaryComment diaryComment : diaryCommentList) {
+                        int uid = diaryComment.getUid();
+                        User user = userService.findUserByUid(uid);
+                        UserInfo userInfo = userInfoService.findUserInfoById(uid);
+                        Diary diary = diaryService.getallbyDiaryId(diaryComment.getDid());
+                %>
+                <div id="diaryComment<%=diaryComment.getdCid()%>"  class="borderTop mt-2 pt-3">
+                    <div>
+                        <img width="24" height="24" src="<%=userInfo.getUicon()%>">
+                        <span class="ml-2 commentIcon">
+                                <%=user.getUname()%>
+                        </span>
+                        &nbsp;评论
+                        <span class="ml-2 text-truncate" style="width: 400px; display: inline-block">
+                            <a class="commentIcon" href="diaryInfoServlet?diaryId=<%=diaryComment.getDid()%>"><%=diary.getDiaryTitle()%> </a>
+                        </span>
+
+<%--                        <a class="ml-2 commentIcon" href="diaryInfoServlet?diaryId=<%=diaryComment.getDid()%>"><span class="text-truncate" style="width: 400px; display: inline-block"><%=diary.getDiaryTitle()%></span></a>--%>
+                        <span class="ml-2"><%=DateFormatUtil.formatDateTime((diaryComment.getdCTime()))%></span>
+                        <a href="javascript:deleteDiaryComment('<%=diaryComment.getdCid()%>')"> 删除 <i class="fas fa-times"></i></a>
+
+                    </div>
+                    <div class="mt-3 commentContent">
+                        <%=diaryComment.getdCContent()%>
+                    </div>
+                    <div class="mt-1">
+                        <button  class="btn btn-sm btn-light-green" type="button" data-toggle="<%=diaryComment.getdCid()%>" disabled><i class="far fa-thumbs-up"> <%=diaryComment.getdCLikeCount()%></i></button>
+                    </div>
+                </div>
+                <%
+                    }
+                %>
             </div>
     </div>
     <!-- 侧边栏 -->
-    <div id="sidebar" class="float-right">
-        <div class="treeview w-20 text-right">
-            <h6 class="pt-3 pl-3">我的空间</h6>
-            <br>
-            <ul class="mb-1 pl-3 pb-2">
-                <li class="mb-2"><a href="userInfoServlet"><i class="far fa-user ic-w mr-1"></i>我的信息</a></li>
-                <li class="mb-2"><a href="#"><i class="far fa-edit ic-w mr-1"></i>我的日志</a></li>
-                <li class="mb-2"><a href="userCollectionInfoServlet"><i class="far fa-star ic-w mr-1"></i>我的收藏</a></li>
-                <li class="mb-2"><a href="userCommentInfoServlet"><i class="far fa-comment ic-w mr-1"></i>我的评论</a></li>
-                <li class="mb-2"><a href="userReplyInfoServlet"><i class="far fa-comment ic-w mr-1"></i>我的回复</a></li>
-            </ul>
-        </div>
-    </div>
+    <%@include file="/jsp/siderbar.jsp"%>
 </div>
 <%@ include file="/jsp/footer.jsp"%>
 

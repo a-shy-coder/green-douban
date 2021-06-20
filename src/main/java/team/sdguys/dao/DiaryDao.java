@@ -96,4 +96,10 @@ public interface DiaryDao extends BaseDao{
      */
     List<Integer> getTop5DiaryId();
 
+    /**
+     * 根据uid查找该用户的所有日志
+     * @param uid 用户编号
+     * @return 日志列表
+     */
+    List<Diary> getDiaryListByUid(int uid);
 }

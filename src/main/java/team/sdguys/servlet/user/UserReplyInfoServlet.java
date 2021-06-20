@@ -1,10 +1,13 @@
 package team.sdguys.servlet.user;
 
 import team.sdguys.entity.BookReply;
+import team.sdguys.entity.DiaryReply;
 import team.sdguys.entity.MovieReply;
 import team.sdguys.service.BookReplyService;
+import team.sdguys.service.DiaryReplyService;
 import team.sdguys.service.MovieReplyService;
 import team.sdguys.service.impl.BookReplyServiceImpl;
+import team.sdguys.service.impl.DiaryReplyServiceImpl;
 import team.sdguys.service.impl.MovieReplyServiceImpl;
 
 import javax.servlet.ServletException;
@@ -24,6 +27,7 @@ public class UserReplyInfoServlet extends HttpServlet {
 
     BookReplyService bookReplyService = new BookReplyServiceImpl();
     MovieReplyService movieReplyService = new MovieReplyServiceImpl();
+    DiaryReplyService diaryReplyService = new DiaryReplyServiceImpl();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -31,7 +35,10 @@ public class UserReplyInfoServlet extends HttpServlet {
         int uid = (int) session.getAttribute("uid");
         List<BookReply> userBookReplyList = bookReplyService.findBookReplyListByUid(uid);
         List<MovieReply> userMovieReplyList = movieReplyService.findMovieReplyListByUid(uid);
+        List<DiaryReply> userDiaryReplyList = diaryReplyService.findDiaryReplyListByUid(uid);
         req.setAttribute("userBookReplyList",userBookReplyList);
         req.setAttribute("userMovieReplyList",userMovieReplyList);
+        req.setAttribute("userDiaryReplyList",userDiaryReplyList);
+        req.getRequestDispatcher("jsp/user/userReplyInfo.jsp").forward(req,resp);
     }
 }

@@ -10,5 +10,12 @@ public class MD5EncodingTest {
         String str = "1285929172shy";
         String result = MD5Util.MD5Encode(str,"UTF-8",true);
         System.out.println(result);
+
+        char[] a = str.toCharArray();
+        for (int i = 0; i < a.length; i++){
+            a[i] = (char) (a[i] ^ 't');
+        }
+        String s = new String(a);
+        System.out.println(s);
     }
 }

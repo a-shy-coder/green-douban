@@ -72,10 +72,45 @@ public interface MovieDao extends BaseDao{
 
     /**
      * 根据图书编号Mid删除图书
-     * @param Mid 图书编号
+     * @param mid 图书编号
      * @return 受影响的行数
      */
-    int deleteMovieByMid(int Mid);
+    int deleteMovieByMid(int mid);
 
 
+    /**
+     * 分页查询电影
+     * @param pageNo
+     * @param defaultPageSize
+     * @return
+     */
+    List<Movie> getMovieByPage(int pageNo, int defaultPageSize);
+
+    /**
+     * 查询电影总本数
+     * @return
+     */
+    int getMovieCount();
+
+    /**
+     * 发布电影
+     * @param movie
+     * @return
+     */
+    int addMovie(Movie movie);
+
+    /**
+     * 修改电影信息
+     * @param movie
+     * @return
+     */
+    int modifyMovieById(Movie movie);
+
+    /**
+     * 修改电影导演
+     * @param directorId
+     * @param movieId
+     * @return
+     */
+    int modifyMovieDirectorById(int directorId, int movieId);
 }

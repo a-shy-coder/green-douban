@@ -37,4 +37,11 @@ public interface MovieReplyDao {
      * @return 评论列表
      */
     List<MovieReply> getMovieReplyListByUid(int uid);
+
+    /**
+     * 根据回复编号删除回复
+     * @param movieReplyId 回复编号
+     * @return 受影响的行数
+     */
+    int deleteMovieReplyByMovieReplyId(int movieReplyId);
 }

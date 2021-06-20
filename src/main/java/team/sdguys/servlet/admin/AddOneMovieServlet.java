@@ -1,7 +1,9 @@
 package team.sdguys.servlet.admin;
 
 import team.sdguys.entity.Movie;
+import team.sdguys.service.MovieService;
 import team.sdguys.service.impl.MovieManagerServiceImpl;
+import team.sdguys.service.impl.MovieServiceImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,48 +13,31 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
-@WebServlet("/aoms")
+@WebServlet("/addOneMovieServlet")
 public class AddOneMovieServlet extends HttpServlet {
 
-    MovieManagerServiceImpl movieManagerServiceImpl=new MovieManagerServiceImpl();
+    MovieService movieService = new MovieServiceImpl();
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-        //获取新添加的图书的信息，封装成一个Movie对象
-        req.setCharacterEncoding("utf-8");
-        String MovieId = req.getParameter("MovieId");
-        String MChineseName = req.getParameter("MChineseName");
-        String MOriginName = req.getParameter("MOriginName");
-        String MType = req.getParameter("MType");
-        String MRating = req.getParameter("MRating");
-        String MRatingCount = req.getParameter("MRatingCount");
-        String MReleaseDate = req.getParameter("MReleaseDate");
-        String DirectorId = req.getParameter("DirectorId");
-
-        String mLanguage = req.getParameter("mLanguage");
-        String mLength = req.getParameter("mLength");
-        String mArea = req.getParameter("mArea");
-        String mContent = req.getParameter("mContent");
-        String mCover = req.getParameter("mCover");
-
-
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");//注意月份是MM
-
-        //获取图书的信息，封装成一个Book对象
-        Movie movie=null;
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String chineseName = req.getParameter("chineseName");
+        String originName = req.getParameter("originName");
+        String cover = req.getParameter("cover");
+        String type = req.getParameter("type");
+        Date releaseDate = null;
         try {
-            movie = new Movie(Integer.parseInt(MovieId) , MChineseName, MOriginName, MType,Float.parseFloat(MRating) ,Integer.parseInt(MRatingCount) , simpleDateFormat.parse(MReleaseDate) ,Integer.parseInt(DirectorId) ,mLanguage ,mLength ,mArea ,mContent, mCover);
+            releaseDate = new SimpleDateFormat("yyyy-MM-dd").parse(req.getParameter("releaseDate"));
         } catch (ParseException e) {
             e.printStackTrace();
         }
+        String language = req.getParameter("language");
+        String area = req.getParameter("area");
+        String time = req.getParameter("time");
+        String content = req.getParameter("content");
 
-        //2. 执行业务逻辑
-        //将新学生插入数据库
-        int rows=movieManagerServiceImpl.addWholeMovie(movie);
-
-        //3. 生成响应内容，这里直接返回了受影响的行数，用于判断是否插入成功
-        resp.getWriter().println(rows);
+        Movie movie = new Movie(chineseName,originName,type,0,0,releaseDate,0,language,time,area,content,cover);
+        int rows = movieService.addMovie(movie);
     }
 }

@@ -1,6 +1,6 @@
 package team.sdguys.servlet.diary;
 
-import team.sdguys.service.DairyService;
+import team.sdguys.service.DiaryService;
 import team.sdguys.service.impl.DiaryServiceImpl;
 
 import javax.servlet.ServletException;
@@ -16,7 +16,7 @@ import java.io.IOException;
 @WebServlet("/deleteDairySerlvet")
 public class DeleteDairySerlvet extends HttpServlet{
 
-    DairyService dairyService = new DiaryServiceImpl();
+    DiaryService dairyService = new DiaryServiceImpl();
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)throws ServletException,IOException{
         int did = Integer.parseInt(request.getParameter("did"));

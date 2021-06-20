@@ -30,7 +30,9 @@ public class LoginServlet extends HttpServlet {
         // 将uid放入会话, 方便其他页面获取相关信息
         HttpSession session = req.getSession(false);
         session.setAttribute("aid",aid);
+        session.setAttribute("adminUserName",username);
         System.out.println("aid: " + session.getAttribute("aid"));
         // 登录成功后 跳转主页....
+        resp.sendRedirect("accountManagementInfoServlet");
     }
 }

@@ -1,41 +1,36 @@
 package team.sdguys.servlet.admin;
 
+import team.sdguys.entity.Book;
 import team.sdguys.entity.Director;
+import team.sdguys.service.BookService;
 import team.sdguys.service.DirectorService;
+import team.sdguys.service.impl.BookServiceImpl;
+import team.sdguys.service.impl.DirectorServiceImpl;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
+@WebServlet("/addOneDirectorServlet")
 public class AddOneDirectorServlet extends HttpServlet {
 
-    DirectorService directorService;
+    DirectorService directorService = new DirectorServiceImpl();
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String chineseName = req.getParameter("chineseName");
+        String originName = req.getParameter("originName");
+        String cover = req.getParameter("cover");
+        String gender = req.getParameter("gender");
+        String content = req.getParameter("content");
 
-        //获取新添加的图书作者的信息，封装成一个Author对象
-
-        String directorId = req.getParameter("directorId");
-        String directorChineseName = req.getParameter("directorChineseName");
-        String directorOriginName = req.getParameter("directorOriginName");
-        String directorInfo = req.getParameter("directorInfo");
-        String directorGender = req.getParameter("directorGender");
-        String directorImg = req.getParameter("directorImg");
-
-
-        //SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");//注意月份是MM
-
-        //获取图书的信息，封装成一个Book对象
-        Director director= new Director(Integer.parseInt(directorId) , directorChineseName, directorOriginName, directorInfo , directorGender ,directorImg );
-
-        //2. 执行业务逻辑
-        //将新图书插入数据库
-        int rows=directorService.addNewDirector(director);
-
-        //3. 生成响应内容，这里直接返回了受影响的行数，用于判断是否插入成功
-        resp.getWriter().println(rows);
+        Director director = new Director(chineseName,originName,content,gender,cover);
+        int rows = directorService.addDirector(director);
     }
 }

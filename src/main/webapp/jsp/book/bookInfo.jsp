@@ -385,23 +385,25 @@
         <div id="content3" class="clearfix mt-4">
             <h2 id="bookAuthorTitle" class="contentTitle">${requestScope.book.BChineseName}的作者 · · · · · · </h2>
             <ul id="authorList" class="authorUl">
-                <li class="authorLi m-2">
-                    <a href="authorInfoServlet?authorId=${requestScope.author.authorId}">
-                        <img id="authorImg" class="authorImg"
-                             src="${requestScope.author.authorImg}">
-                        <div id="authorName" class="authorName text-truncate">
-                            <c:choose>
-                                <c:when test="${requestScope.author.authorChineseName == null}">
-                                    ${requestScope.author.authorOriginName}
-                                </c:when>
-                                <c:otherwise>
-                                    ${requestScope.author.authorChineseName}
-                                </c:otherwise>
-                            </c:choose>
-                        </div>
-                        <div id="authorRole" class="authorRole">作者</div>
-                    </a>
-                </li>
+                <c:if test="${ not empty requestScope.author}">
+                    <li class="authorLi m-2">
+                        <a href="authorInfoServlet?authorId=${requestScope.author.authorId}">
+                            <img id="authorImg" class="authorImg"
+                                 src="${requestScope.author.authorImg}">
+                            <div id="authorName" class="authorName text-truncate">
+                                <c:choose>
+                                    <c:when test="${requestScope.author.authorChineseName == null}">
+                                        ${requestScope.author.authorOriginName}
+                                    </c:when>
+                                    <c:otherwise>
+                                        ${requestScope.author.authorChineseName}
+                                    </c:otherwise>
+                                </c:choose>
+                            </div>
+                            <div id="authorRole" class="authorRole">作者</div>
+                        </a>
+                    </li>
+                </c:if>
             </ul>
         </div>
 

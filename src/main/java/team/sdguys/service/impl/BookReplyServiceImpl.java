@@ -33,4 +33,9 @@ public class BookReplyServiceImpl implements BookReplyService {
     public List<BookReply> findBookReplyListByUid(int uid) {
         return bookReplyDao.getBookReplyListByUid(uid);
     }
+
+    @Override
+    public int deleteBookReplyByBookReplyId(int bookReplyId) {
+        return bookReplyDao.deleteBookReplyByBookReplyId(bookReplyId);
+    }
 }

@@ -1,12 +1,14 @@
 package team.sdguys.dao.impl;
 
 import team.sdguys.dao.DiaryReplyDao;
+import team.sdguys.entity.BookReply;
+import team.sdguys.entity.Diary;
 import team.sdguys.entity.DiaryReply;
+import team.sdguys.entity.MovieReply;
 import team.sdguys.util.DataBaseUtil;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.sql.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -264,8 +266,32 @@ public class DiaryReplyDaoImpl extends BaseDaoImpl implements DiaryReplyDao {
 
     @Override
     public int insertDiaryReply(DiaryReply diaryReply) {
-        return executeUpdate("insert into DiaryReply (DRFromId,DRToId,DRContent,DRTime,DId,DCId,DRLikeCount) value (?,?,?,?,?,?,0)",diaryReply.getDRFromId(),diaryReply.getDRToId(),diaryReply.getDRContent(),diaryReply.getDRTime(),diaryReply.getDId(),diaryReply.getDCId());
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        int autoIncrementId = 0;
+        try {
+            connection = DataBaseUtil.getConnection();
+            preparedStatement = connection.prepareStatement("insert into DiaryReply (DRFromId,DRToId,DRContent,DRTime,DId,DCId,DRLikeCount) value (?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
+            preparedStatement.setInt(1,diaryReply.getDRFromId());
+            preparedStatement.setInt(2,diaryReply.getDRToId());
+            preparedStatement.setString(3,diaryReply.getDRContent());
+            preparedStatement.setObject(4, diaryReply.getDRTime());
+            preparedStatement.setInt(5,diaryReply.getDId());
+            preparedStatement.setInt(6,diaryReply.getDCId());
+            preparedStatement.setInt(7,diaryReply.getDRLikeCount());
 
+            preparedStatement.executeUpdate();
+            resultSet = preparedStatement.getGeneratedKeys();
+            if(resultSet.next()){
+                autoIncrementId = resultSet.getInt(1);
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DataBaseUtil.close(resultSet, preparedStatement, connection);
+        }
+        return autoIncrementId;
     }
 
     @Override
@@ -294,4 +320,62 @@ public class DiaryReplyDaoImpl extends BaseDaoImpl implements DiaryReplyDao {
             DataBaseUtil.close(resultSet, preparedStatement, connection);
         }
         return dridlist;    }
+
+    @Override
+    public void updateLikeCountByDiaryReplyId(int diaryReplyId, int i) {
+        executeUpdate("UPDATE diaryreply SET DRLikeCount = DRLikeCount + ? WHERE DRId = ?",i,diaryReplyId);
+    }
+
+    @Override
+    public List<DiaryReply> getDiaryReplyListByDiaryCommentId(int dcId) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        List<DiaryReply> diaryReplyList = new ArrayList<DiaryReply>();
+
+        try {
+            connection = DataBaseUtil.getConnection();
+            preparedStatement = connection.prepareStatement("SELECT * FROM diaryReply WHERE DCId = ?");
+            preparedStatement.setInt(1,dcId);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                DiaryReply diaryReply = new DiaryReply(resultSet.getInt(1),resultSet.getInt(2),resultSet.getInt(3),resultSet.getString(4),resultSet.getTimestamp(5),resultSet.getInt(6),resultSet.getInt(7),resultSet.getInt(8));
+                diaryReplyList.add(diaryReply);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            DataBaseUtil.close(resultSet, preparedStatement, connection);
+        }
+        return diaryReplyList;
+    }
+
+    @Override
+    public List<DiaryReply> getDiaryReplyListByUid(int uid) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        List<DiaryReply> diaryReplyList = new ArrayList<DiaryReply>();
+
+        try {
+            connection = DataBaseUtil.getConnection();
+            preparedStatement = connection.prepareStatement("SELECT * FROM diaryReply WHERE DRFromId = ?");
+            preparedStatement.setInt(1,uid);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                DiaryReply diaryReply = new DiaryReply(resultSet.getInt(1),resultSet.getInt(2),resultSet.getInt(3),resultSet.getString(4),resultSet.getTimestamp(5),resultSet.getInt(6),resultSet.getInt(7),resultSet.getInt(8));
+                diaryReplyList.add(diaryReply);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            DataBaseUtil.close(resultSet, preparedStatement, connection);
+        }
+        return diaryReplyList;
+    }
+
+    @Override
+    public int deleteDiaryReplyByDiaryReplyId(int diaryReplyId) {
+        return executeUpdate("DELETE FROM diaryReply WHERE DRId = ?",diaryReplyId);
+    }
 }

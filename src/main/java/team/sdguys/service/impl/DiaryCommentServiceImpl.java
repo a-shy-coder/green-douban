@@ -49,4 +49,30 @@ public class DiaryCommentServiceImpl implements DiaryCommentService {
         return diaryCommentDao.suboneDCLikeCount(DCId);
     }
 
+    @Override
+    public List<DiaryComment> getDiaryCommentListByDiaryId(int diaryId) {
+        return diaryCommentDao.getDiaryCommentListByDiaryId(diaryId);
+    }
+
+    @Override
+    public int submitDiaryComment(DiaryComment diaryComment) {
+        return diaryCommentDao.InsertDiaryComment(diaryComment);
+    }
+
+    @Override
+    public void updateLikeCountByDiaryCommentId(int diaryCommentId, int i) {
+        diaryCommentDao.updateLikeCountByDiaryCommentId(diaryCommentId, i);
+    }
+
+    @Override
+    public DiaryComment findDiaryCommentByDiaryCommentId(int dcId) {
+        return diaryCommentDao.getDiaryCommentByDiaryCommentId(dcId);
+
+    }
+
+    @Override
+    public List<DiaryComment> findDiaryCommentListByUid(int uid) {
+        return diaryCommentDao.getDiaryCommentListByUid(uid);
+    }
+
 }

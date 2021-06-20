@@ -37,10 +37,15 @@ public class UserInfoServlet extends HttpServlet {
         req.setAttribute("userInfo",userInfo);
 
         String address = userInfo.getUaddress();
-        String province = address.substring(0,address.indexOf('省') + 1);
+        String province = null;
+        String city = null;
+        String area = null;
 
-        String city = address.substring(address.indexOf('省') + 1,address.indexOf('市') + 1);
-        String area = address.substring(address.indexOf('市') + 1);
+        if(null != address){
+            province = address.substring(0,address.indexOf('省') + 1);
+            city = address.substring(address.indexOf('省') + 1,address.indexOf('市') + 1);
+            area = address.substring(address.indexOf('市') + 1);
+        }
 
         req.setAttribute("province",province);
         req.setAttribute("city",city);

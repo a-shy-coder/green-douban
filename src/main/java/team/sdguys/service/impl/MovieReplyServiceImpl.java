@@ -15,6 +15,11 @@ public class MovieReplyServiceImpl implements MovieReplyService {
     MovieReplyDao movieReplyDao = new MovieReplyDaoImpl();
 
     @Override
+    public void updateLikeCountByMovieReplyId(int movieReplyId, int i) {
+        movieReplyDao.updateLikeCountByMovieReplyId(movieReplyId,i);
+    }
+
+    @Override
     public List<MovieReply> getMovieReplyListByMovieCommentId(int mcId) {
         return movieReplyDao.getMovieReplyListByMovieCommentId(mcId);
     }
@@ -27,5 +32,10 @@ public class MovieReplyServiceImpl implements MovieReplyService {
     @Override
     public List<MovieReply> findMovieReplyListByUid(int uid) {
         return movieReplyDao.getMovieReplyListByUid(uid);
+    }
+
+    @Override
+    public int deleteMovieReplyByMovieReplyId(int movieReplyId) {
+        return movieReplyDao.deleteMovieReplyByMovieReplyId(movieReplyId);
     }
 }

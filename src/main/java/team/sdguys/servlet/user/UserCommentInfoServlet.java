@@ -1,9 +1,6 @@
 package team.sdguys.servlet.user;
 
-import team.sdguys.entity.Book;
-import team.sdguys.entity.BookComment;
-import team.sdguys.entity.Movie;
-import team.sdguys.entity.MovieComment;
+import team.sdguys.entity.*;
 import team.sdguys.service.*;
 import team.sdguys.service.impl.*;
 
@@ -25,6 +22,7 @@ public class UserCommentInfoServlet extends HttpServlet {
 
     BookCommentService bookCommentService = new BookCommentServiceImpl();
     MovieCommentService movieCommentService = new MovieCommentServiceImpl();
+    DiaryCommentService diaryCommentService = new DiaryCommentServiceImpl();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -32,8 +30,10 @@ public class UserCommentInfoServlet extends HttpServlet {
         int uid = (int) session.getAttribute("uid");
         List<BookComment> userBookCommentList = bookCommentService.findBookCommentListByUid(uid);
         List<MovieComment> userMovieCommentList = movieCommentService.findMovieCommentListByUid(uid);
+        List<DiaryComment> userDiaryCommentList = diaryCommentService.findDiaryCommentListByUid(uid);
         req.setAttribute("userBookCommentList",userBookCommentList);
         req.setAttribute("userMovieCommentList",userMovieCommentList);
+        req.setAttribute("userDiaryCommentList",userDiaryCommentList);
         req.getRequestDispatcher("jsp/user/userCommentInfo.jsp").forward(req,resp);
     }
 }

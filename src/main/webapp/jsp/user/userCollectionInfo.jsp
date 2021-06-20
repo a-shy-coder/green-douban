@@ -11,7 +11,7 @@
 <html>
 <head>
     <base href="<%=request.getContextPath()%>/">
-    <title>个人信息</title>
+    <title>我的收藏</title>
     <link rel="shortcut icon" href="img/douban.ico" type="image/x-icon"/>
     <link rel="stylesheet" type="text/css" href="css/movieInfo.css"/>
 
@@ -113,19 +113,7 @@
         </div>
     </div>
     <!-- 侧边栏 -->
-    <div id="sidebar" class="float-right">
-        <div class="treeview w-20 text-right">
-            <h6 class="pt-3 pl-3">我的空间</h6>
-            <br>
-            <ul class="mb-1 pl-3 pb-2">
-                <li class="mb-2"><a href="userInfoServlet"><i class="far fa-user ic-w mr-1"></i>我的信息</a></li>
-                <li class="mb-2"><a href="#"><i class="far fa-edit ic-w mr-1"></i>我的日志</a></li>
-                <li class="mb-2"><a href="userCollectionInfoServlet"><i class="far fa-star ic-w mr-1"></i>我的收藏</a></li>
-                <li class="mb-2"><a href="userCommentInfoServlet"><i class="far fa-comment ic-w mr-1"></i>我的评论</a></li>
-                <li class="mb-2"><a href="userReplyInfoServlet"><i class="far fa-comment ic-w mr-1"></i>我的回复</a></li>
-            </ul>
-        </div>
-    </div>
+    <%@include file="/jsp/siderbar.jsp"%>
 </div>
 <%@include file="/jsp/footer.jsp"%>
 <!-- Footer -->

@@ -126,4 +126,38 @@ public interface BookDao extends BaseDao {
      * @return 最新的5部图书列表
      */
     List<Book> getTheLatest5BooksByAuthorId(int authorId);
+
+    /**
+     * 分页查询
+     * @return
+     */
+    List<Book> getBookByPage(int pageNo, int pageSize);
+
+    /**
+     * 查询书籍总本数
+     * @return
+     */
+    int getBookCount();
+
+    /**
+     * 发布图书
+     * @param book
+     * @return
+     */
+    int addBook(Book book);
+
+    /**
+     * 修改图书信息
+     * @param book
+     * @return
+     */
+    int modifyBookById(Book book);
+
+    /**
+     * 修改图书作者
+     * @param bookId
+     * @param authorId
+     * @return
+     */
+    int modifyBookAuthorByBookId(int bookId, int authorId);
 }

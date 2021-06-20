@@ -20,4 +20,14 @@ public class MovieActorServiceImpl implements MovieActorService {
     public int addNewMovieWithActorInfo(MovieActor movieActor) {
         return movieActorDao.insertNewMovieWithActorsInfo(movieActor);
     }
+
+    @Override
+    public int deleteRecordByMovieIdAndActorId(int movieId, int actorId) {
+        return movieActorDao.deleteRecordByMovieIdAndActorId(movieId,actorId);
+    }
+
+    @Override
+    public int addMovieActor(int movieId, int actorId) {
+        return movieActorDao.addMovieActor(movieId,actorId);
+    }
 }

@@ -61,7 +61,7 @@ public class MovieReplyDaoImpl extends BaseDaoImpl implements MovieReplyDao {
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         } finally {
-            DataBaseUtil.close(null, preparedStatement, connection);
+            DataBaseUtil.close(resultSet, preparedStatement, connection);
         }
         return autoIncrementId;
     }
@@ -93,5 +93,10 @@ public class MovieReplyDaoImpl extends BaseDaoImpl implements MovieReplyDao {
             DataBaseUtil.close(resultSet, preparedStatement, connection);
         }
         return movieReplyList;
+    }
+
+    @Override
+    public int deleteMovieReplyByMovieReplyId(int movieReplyId) {
+        return executeUpdate("DELETE FROM moviereply WHERE MRId = ?",movieReplyId);
     }
 }

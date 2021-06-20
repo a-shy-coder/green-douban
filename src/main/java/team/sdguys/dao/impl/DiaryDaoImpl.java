@@ -4,9 +4,8 @@ import team.sdguys.dao.DiaryDao;
 import team.sdguys.entity.Diary;
 import team.sdguys.util.DataBaseUtil;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.sql.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -24,14 +23,15 @@ public class DiaryDaoImpl extends BaseDaoImpl implements DiaryDao {
             preparedStatement.setInt(1, DiaryId);
             resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                diary = new Diary(resultSet.getInt(1), resultSet.getString(2),resultSet.getTime(3),resultSet.getInt(4),resultSet.getInt(5));
+                diary = new Diary(resultSet.getInt(1), resultSet.getString(2),resultSet.getString(3),resultSet.getTimestamp(4),resultSet.getInt(5),resultSet.getInt(6));
             }
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
             DataBaseUtil.close(resultSet, preparedStatement, connection);
         }
-        return diary;    }
+        return diary;
+    }
 
     @Override
     public String getDiaryContentbyDiaryId(int DiaryId) {
@@ -145,7 +145,29 @@ public class DiaryDaoImpl extends BaseDaoImpl implements DiaryDao {
 
     @Override
     public int insertNewDiary(Diary diary) {
-        return executeUpdate("insert into Diary (DiaryContent,DiaryTime,UId,DLikeCount) value (?,?,?,0)",diary.getDiaryContent(),diary.getDiaryTime(),diary.getUId());
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        int autoIncrementId = 0;
+        try {
+            connection = DataBaseUtil.getConnection();
+            preparedStatement = connection.prepareStatement("INSERT INTO diary (DiaryContent, DiaryTime, UId, DLikeCount, DiaryTitle) VALUES (?,?,?,?,?)",Statement.RETURN_GENERATED_KEYS);
+            preparedStatement.setString(1,diary.getDiaryContent());
+            preparedStatement.setObject(2,diary.getDiaryTime());
+            preparedStatement.setInt(3,diary.getUId());
+            preparedStatement.setInt(4,diary.getDLikeCount());
+            preparedStatement.setString(5,diary.getDiaryTitle());
+            preparedStatement.executeUpdate();
+            resultSet = preparedStatement.getGeneratedKeys();
+            if(resultSet.next()){
+                autoIncrementId = resultSet.getInt(1);
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DataBaseUtil.close(resultSet, preparedStatement, connection);
+        }
+        return autoIncrementId;
     }
 
     @Override
@@ -230,4 +252,28 @@ public class DiaryDaoImpl extends BaseDaoImpl implements DiaryDao {
             DataBaseUtil.close(resultSet, preparedStatement, connection);
         }
         return list;    }
+
+    @Override
+    public List<Diary> getDiaryListByUid(int uid) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        List<Diary> diaryList = new ArrayList<Diary>();
+
+        try {
+            connection = DataBaseUtil.getConnection();
+            preparedStatement = connection.prepareStatement("select * from Diary where uid=?");
+            preparedStatement.setInt(1, uid);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                Diary diary = new Diary(resultSet.getInt(1), resultSet.getString(2),resultSet.getString(3),resultSet.getTimestamp(4),resultSet.getInt(5),resultSet.getInt(6));
+                diaryList.add(diary);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            DataBaseUtil.close(resultSet, preparedStatement, connection);
+        }
+        return diaryList;
+    }
 }

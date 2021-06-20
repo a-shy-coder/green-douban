@@ -3,7 +3,7 @@ package team.sdguys.service.impl;
 import team.sdguys.dao.DiaryDao;
 import team.sdguys.dao.impl.DiaryDaoImpl;
 import team.sdguys.entity.Diary;
-import team.sdguys.service.DairyService;
+import team.sdguys.service.DiaryService;
 import team.sdguys.util.DataBaseUtil;
 
 import java.sql.Connection;
@@ -11,12 +11,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.List;
 
-public class DiaryServiceImpl implements DairyService {
+public class DiaryServiceImpl implements DiaryService {
     DiaryDao diaryDao = new DiaryDaoImpl();
     @Override
     public int insertNewDiary(Diary diary) {
-        return diaryDao.executeUpdate("insert into Diary (DiaryContent,DiaryTime,UId,DLikeCount) value (?,?,?,0)",diary.getDiaryContent(),diary.getDiaryTime(),diary.getUId());
-
+        return diaryDao.insertNewDiary(diary);
     }
 
     @Override
@@ -119,7 +118,7 @@ public class DiaryServiceImpl implements DairyService {
                 preparedStatement.setInt(1, list.get(i));
                 resultSet = preparedStatement.executeQuery();
                 if (resultSet.next()) {
-                    diary = new Diary(resultSet.getInt(1), resultSet.getString(2),resultSet.getTime(3),resultSet.getInt(4),resultSet.getInt(5));
+//                    diary = new Diary(resultSet.getInt(1), resultSet.getString(2),resultSet.getTime(3),resultSet.getInt(4),resultSet.getInt(5));
                     diarylist.add(diary);
                 }
             }
@@ -134,5 +133,10 @@ public class DiaryServiceImpl implements DairyService {
     @Override
     public Diary getallbyDiaryId(int did) {
         return diaryDao.getallbyDiaryId(did);
+    }
+
+    @Override
+    public List<Diary> getDiaryListByUid(int uid) {
+        return diaryDao.getDiaryListByUid(uid);
     }
 }

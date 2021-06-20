@@ -53,4 +53,24 @@ public class AdminServiceImpl implements AdminService {
     public int findAidByUserName(String username) {
         return adminDao.getAidByUsername(username);
     }
+
+    @Override
+    public List<Admin> getAdminList() {
+        return adminDao.getAdminList();
+    }
+
+    @Override
+    public int addAdmin(Admin admin) {
+        return adminDao.addAdmin(admin);
+    }
+
+    @Override
+    public int modifyAdminPasswordByAdminId(String adminPassword, int adminId) {
+        return adminDao.modifyAdminPasswordByAdminId(adminPassword, adminId);
+    }
+
+    @Override
+    public int deleteAdminByAdminId(int adminId) {
+        return adminDao.deleteAdminByAdminId(adminId);
+    }
 }

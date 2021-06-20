@@ -1,7 +1,5 @@
 package team.sdguys.service.impl;
 
-import com.google.gson.Gson;
-import team.sdguys.dao.MovieActorDao;
 import team.sdguys.dao.MovieDao;
 import team.sdguys.dao.MovieRatingDao;
 import team.sdguys.dao.impl.MovieDaoImpl;
@@ -11,9 +9,7 @@ import team.sdguys.entity.MovieRating;
 import team.sdguys.service.MovieService;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * MovieService接口的实现类
@@ -72,5 +68,35 @@ public class MovieServiceImpl implements MovieService {
     @Override
     public List<Movie> findTheLatest5MoviesByActorId(int actorId) {
         return movieDao.getTheLatest5MoviesByActorId(actorId);
+    }
+
+    @Override
+    public List<Movie> findMovieByPage(int pageNo, int defaultPageSize) {
+        return movieDao.getMovieByPage(pageNo, defaultPageSize);
+    }
+
+    @Override
+    public int getMovieCount() {
+        return movieDao.getMovieCount();
+    }
+
+    @Override
+    public void deleteMovieByMovieId(int mid) {
+        movieDao.deleteMovieByMid(mid);
+    }
+
+    @Override
+    public int addMovie(Movie movie) {
+        return movieDao.addMovie(movie);
+    }
+
+    @Override
+    public int modifyMovieById(Movie movie) {
+        return movieDao.modifyMovieById(movie);
+    }
+
+    @Override
+    public int modifyMovieDirectorById(int directorId, int movieId) {
+        return movieDao.modifyMovieDirectorById(directorId, movieId);
     }
 }

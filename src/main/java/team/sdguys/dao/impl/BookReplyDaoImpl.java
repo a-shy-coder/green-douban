@@ -5,9 +5,7 @@ import team.sdguys.entity.BookReply;
 import team.sdguys.entity.BookReply;
 import team.sdguys.util.DataBaseUtil;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -59,7 +57,32 @@ public class BookReplyDaoImpl extends  BaseDaoImpl implements BookReplyDao {
 
     @Override
     public int insertReply(BookReply bookReply) {
-        return executeUpdate("insert into BookReply (BRFromId,BRToId,BRContent,BRTime,BId,BCId,BRLikeCount) value (?,?,?,?,?,?,0)",bookReply.getBRFromId(),bookReply.getBRToId(),bookReply.getBRContent(),bookReply.getBRTime(),bookReply.getBId(),bookReply.getBCId());
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        int autoIncrementId = 0;
+        try {
+            connection = DataBaseUtil.getConnection();
+            preparedStatement = connection.prepareStatement("insert into BookReply (BRFromId,BRToId,BRContent,BRTime,BId,BCId,BRLikeCount) value (?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
+            preparedStatement.setInt(1,bookReply.getBRFromId());
+            preparedStatement.setInt(2,bookReply.getBRToId());
+            preparedStatement.setString(3,bookReply.getBRContent());
+            preparedStatement.setObject(4, bookReply.getBRTime());
+            preparedStatement.setInt(5,bookReply.getBId());
+            preparedStatement.setInt(6,bookReply.getBCId());
+            preparedStatement.setInt(7,bookReply.getBRLikeCount());
+
+            preparedStatement.executeUpdate();
+            resultSet = preparedStatement.getGeneratedKeys();
+            if(resultSet.next()){
+                autoIncrementId = resultSet.getInt(1);
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DataBaseUtil.close(resultSet, preparedStatement, connection);
+        }
+        return autoIncrementId;
     }
 
     @Override
@@ -188,6 +211,11 @@ public class BookReplyDaoImpl extends  BaseDaoImpl implements BookReplyDao {
             DataBaseUtil.close(resultSet, preparedStatement, connection);
         }
         return bookReplyList;
+    }
+
+    @Override
+    public int deleteBookReplyByBookReplyId(int bookReplyId) {
+        return executeUpdate("DELETE FROM bookreply WHERE BRId = ?",bookReplyId);
     }
 
 
