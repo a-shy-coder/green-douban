@@ -1,14 +1,18 @@
 package team.sdguys.dao.impl;
 
+import org.apache.commons.dbutils.QueryRunner;
+import org.apache.commons.dbutils.handlers.BeanListHandler;
 import team.sdguys.dao.BaseDao;
 import team.sdguys.dao.BookDao;
 import team.sdguys.entity.Book;
 import team.sdguys.entity.Book;
 import team.sdguys.util.DataBaseUtil;
+import team.sdguys.util.DataSourceUtils;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -410,4 +414,32 @@ public class BookDaoImpl extends BaseDaoImpl implements BookDao {
         return executeUpdate("UPDATE book SET AuthorId = ? WHERE BId = ?",authorId,bookId);
     }
 
+    @Override
+    public List<Book> getRecommandBooks() throws SQLException {
+        int[] temp = {1,1,2,3,4,5,6};
+        String sql = "select * from book where BId in (?,?,?,?,?,?)";
+        QueryRunner runner = new QueryRunner(DataSourceUtils.getDataSource());
+        return runner.query(sql,new BeanListHandler<Book>(Book.class), temp[1],temp[2],temp[3],temp[4],temp[5],temp[6]);
+    }
+
+    @Override
+    public List<Book> getBookByLikeName(String name) throws SQLException{
+        String sql = "select * from book where BChineseName like ? or BOriginName like ?";
+        QueryRunner runner = new QueryRunner(DataSourceUtils.getDataSource());
+        return runner.query(sql, new BeanListHandler<Book>(Book.class), "%"+name+"%", "%"+name+"%");
+    }
+
+    /**
+     * TODO:根据类型检索图书
+     * */
+    public List<Book> getBookByType(String type){
+        String sql = "select * from Book where BType like ?";
+        QueryRunner runner = new QueryRunner(DataSourceUtils.getDataSource());
+        try {
+            return runner.query(sql,new BeanListHandler<Book>(Book.class),"%"+type+"%");
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return null;
+    }
 }

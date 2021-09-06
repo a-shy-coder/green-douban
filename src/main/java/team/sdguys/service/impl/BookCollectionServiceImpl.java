@@ -5,7 +5,9 @@ import team.sdguys.dao.impl.BookCollectionDaoImpl;
 import team.sdguys.service.BookCollectionService;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * 图书收藏业务接口的实现类
@@ -28,12 +30,18 @@ public class BookCollectionServiceImpl implements BookCollectionService {
     public List<Integer> findOtherBookIdListByUid(int uid, int bookId) {
         List<Integer> uIdList = findUidListByBookId(bookId);
         List<Integer> otherMovieIdList = new ArrayList<Integer>();
+        Set<Integer> bookIdSet = new HashSet<>();
         for (Integer uId : uIdList){
             if(uId != uid){
                 List<Integer> tempList = findBookIdListByUid(uId);
-                otherMovieIdList.addAll(tempList);
+                for(Integer bid: tempList){
+                    if(!bookIdSet.contains(bid) && bid != bookId){
+                        bookIdSet.add(bid);
+                    }
+                }
             }
         }
+        otherMovieIdList.addAll(bookIdSet);
         return otherMovieIdList;
     }
 
@@ -48,8 +56,6 @@ public class BookCollectionServiceImpl implements BookCollectionService {
         for (int mid : bookIdList){
             if(bookId == mid){
                 return true;
-            }else{
-                return false;
             }
         }
         return false;

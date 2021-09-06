@@ -1,16 +1,21 @@
 package team.sdguys.dao.impl;
 
+import org.apache.commons.dbutils.QueryRunner;
+import org.apache.commons.dbutils.handlers.BeanListHandler;
 import team.sdguys.dao.MovieDao;
 import team.sdguys.entity.BookCollection;
 import team.sdguys.entity.Movie;
 import team.sdguys.util.DataBaseUtil;
+import team.sdguys.util.DataSourceUtils;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 /**
  * MovieDao接口的实现类
@@ -249,6 +254,61 @@ public class MovieDaoImpl extends BaseDaoImpl implements MovieDao {
 
 
 
+    }
+
+    @Override
+    public List<Movie> getMovieByLikeName(String name) throws SQLException {
+        String sql = "select * from movie where MChineseName like ? or MOriginName like ?";
+        QueryRunner runner = new QueryRunner(DataSourceUtils.getDataSource());
+        return runner.query(sql, new BeanListHandler<Movie>(Movie.class), "%"+name+"%", "%"+name+"%");
+    }
+
+    @Override
+    public List<Movie> getRecommandMovies() throws SQLException{
+        Random random = new Random(20);
+        int[] temp = {1,1,2,3,4,5,6};
+        for(int i=0; i<6; i++){
+            temp[i] = random.nextInt(20)+i;
+        }
+        String sql = "select * from movie where MovieId in (?,?,?,?,?,?)";
+        QueryRunner runner = new QueryRunner(DataSourceUtils.getDataSource());
+        return runner.query(sql,new BeanListHandler<Movie>(Movie.class),temp[1],temp[2],temp[3],temp[4],temp[5],temp[6]);
+    }
+
+    @Override
+    public List<Movie> getMovieByType(String type) {
+        String sql = "select * from Movie where Mtype like ?";
+        QueryRunner runner = new QueryRunner(DataSourceUtils.getDataSource());
+        try {
+            return runner.query(sql, new BeanListHandler<Movie>(Movie.class), "%"+type+"%");
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public List<Movie> getMovieByYearAndType(String type, String year) {
+        return null;
+    }
+
+    @Override
+    public List<Movie> getMovieByTypeAndApart(String type) {
+        return null;
+    }
+
+    /**
+     * TODO:根据电影时间倒序查询
+     * */
+    public List<Movie> getNewMovieByMReleaseDateDesc(){
+        String sql = "select * from Movie order by MReleaseDate desc";
+        QueryRunner runner = new QueryRunner(DataSourceUtils.getDataSource());
+        try {
+            return runner.query(sql,new BeanListHandler<Movie>(Movie.class));
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return null;
     }
 
 }

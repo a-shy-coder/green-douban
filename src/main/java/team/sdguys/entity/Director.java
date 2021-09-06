@@ -17,6 +17,10 @@ public class Director {
     // 导演个人照
     private String directorImg;
 
+
+    public Director() {
+    }
+
     public Director(int directorId, String directorChineseName, String directorOriginName, String directorInfo, String directorGender, String directorImg) {
         this.directorId = directorId;
         this.directorChineseName = directorChineseName;

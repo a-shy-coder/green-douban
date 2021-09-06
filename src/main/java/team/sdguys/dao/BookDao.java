@@ -3,6 +3,7 @@ package team.sdguys.dao;
 import team.sdguys.entity.Book;
 import team.sdguys.entity.Book;
 
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -112,7 +113,7 @@ public interface BookDao extends BaseDao {
      * @return 受影响的行数
      */
     int updateBookRatingAndBookRatingCountByBookId(int bookId, double bookRating,int bookRatingCount);
-    
+
     /**
      * 找到作者拍摄的最受欢迎的5部图书
      * @param authorId 作者编号
@@ -160,4 +161,16 @@ public interface BookDao extends BaseDao {
      * @return
      */
     int modifyBookAuthorByBookId(int bookId, int authorId);
+
+    /**
+     * @description TODO 首页的图书推荐
+     * @return 六部图书
+     * */
+    List<Book> getRecommandBooks() throws SQLException;
+
+    /**
+     * @Description TODO 根据图书名字进行模糊查询
+     * @return 返回模糊查询的图书的信息
+     * */
+    List<Book> getBookByLikeName(String name) throws SQLException;
 }

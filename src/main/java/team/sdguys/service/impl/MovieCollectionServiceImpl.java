@@ -6,7 +6,9 @@ import team.sdguys.entity.Movie;
 import team.sdguys.service.MovieCollectionService;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * 电影收藏业务的实现类
@@ -28,13 +30,19 @@ public class MovieCollectionServiceImpl implements MovieCollectionService {
     @Override
     public List<Integer> findOtherMovieIdListByUid(int uid, int movieId) {
         List<Integer> uIdList = findUidListByMovieId(movieId);
-        List<Integer> otherMovieIdList = new ArrayList<Integer>();
+        List<Integer> otherMovieIdList = new ArrayList<>();
+        Set<Integer> movieIdSet = new HashSet<>();
         for (Integer uId : uIdList){
             if(uId != uid){
                 List<Integer> tempList = findMovieIdListByUid(uId);
-                otherMovieIdList.addAll(tempList);
+                for (Integer mid : tempList){
+                    if(!movieIdSet.contains(mid) && mid != movieId){
+                        movieIdSet.add(mid);
+                    }
+                }
             }
         }
+        otherMovieIdList.addAll(movieIdSet);
         return otherMovieIdList;
     }
 
@@ -50,8 +58,6 @@ public class MovieCollectionServiceImpl implements MovieCollectionService {
         for (int mid : movieIdList){
             if(movieId == mid){
                 return true;
-            }else{
-                return false;
             }
         }
         return false;

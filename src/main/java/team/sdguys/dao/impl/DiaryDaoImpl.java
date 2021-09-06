@@ -1,8 +1,11 @@
 package team.sdguys.dao.impl;
 
+import org.apache.commons.dbutils.QueryRunner;
+import org.apache.commons.dbutils.handlers.BeanListHandler;
 import team.sdguys.dao.DiaryDao;
 import team.sdguys.entity.Diary;
 import team.sdguys.util.DataBaseUtil;
+import team.sdguys.util.DataSourceUtils;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -275,5 +278,11 @@ public class DiaryDaoImpl extends BaseDaoImpl implements DiaryDao {
             DataBaseUtil.close(resultSet, preparedStatement, connection);
         }
         return diaryList;
+    }
+    @Override
+    public List<Diary> getDiaryOrderByTimeDesc() throws SQLException {
+        String sql = "select * from Diary order by DiaryTime desc";
+        QueryRunner runner = new QueryRunner(DataSourceUtils.getDataSource());
+        return runner.query(sql, new BeanListHandler<Diary>(Diary.class));
     }
 }

@@ -1,0 +1,87 @@
+h1{
+    color: darksalmon;
+    text-align: center;
+}
+
+.padding5{
+    padding: 5px;
+}
+
+.item{
+    height: 150px;
+    height: 270px;
+    display: block;
+    float: left;
+    /*border: solid 1px lightblue;*/
+    padding: 5px;
+    text-align: center;
+}
+
+.item img{
+    width: 150px;
+    height: 230px;
+    display:inline-block;
+    max-width:100%;
+    padding:4px;
+    line-height:1.42857143;
+    background-color:#fff;
+    border:1px solid #ddd;border-radius:4px;
+    -webkit-transition:all .2s ease-in-out;-o-transition:all .2s ease-in-out;transition:all .2s ease-in-out;
+}
+
+.workerGallery .item img{
+    width: 130px;
+    height: 170px;
+}
+
+.content{
+
+}
+
+.clear{
+    clear: both;
+}
+
+.content .leftDiv{
+    float: left;
+    width: 170px;
+}
+
+.content .leftDiv img{
+    width: 150px;
+    height: 200px;
+    margin-bottom: 18px;
+}
+
+.content .rightDiv{
+    float: left;
+    width: 960px;
+}
+
+.content .bottomDiv{
+    clear: both;
+}
+
+.content div p{
+    text-indent: 2em;
+}
+
+.padding10{
+    padding: 10px;
+}
+
+.home{
+    position: fixed;
+    right: 113px;
+    top: 13px;
+    padding:3px;
+    border-radius: 25px;
+    height: 50px;
+    width: 50px;
+    line-height: 45px;
+}
+
+.home:hover{
+    color: lightyellow;
+    text-decoration: none;
+}

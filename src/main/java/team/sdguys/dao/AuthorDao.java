@@ -2,6 +2,7 @@ package team.sdguys.dao;
 
 import team.sdguys.entity.Author;
 
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -64,4 +65,9 @@ public interface AuthorDao extends BaseDao{
      * @return
      */
     int modifyAuthorById(Author author);
+
+    /**
+     * @description TODO 根据作者名字进行模糊查询
+     * */
+    List<Author> getAuthorByLikeName(String name) throws SQLException;
 }

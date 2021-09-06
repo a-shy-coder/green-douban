@@ -2,6 +2,7 @@ package team.sdguys.dao;
 
 import team.sdguys.entity.Movie;
 
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -113,4 +114,37 @@ public interface MovieDao extends BaseDao{
      * @return
      */
     int modifyMovieDirectorById(int directorId, int movieId);
+
+    /**
+     * @Description: TODO 通过电影名字模糊查找电影
+     * @param name 电影的名字
+     * @Date 2021年5月30日
+     * */
+    List<Movie> getMovieByLikeName(String name) throws SQLException;
+
+    /**
+     * @description: TODO 首页电影推荐，随机找到6部电影
+     * @return 六部电影的详细信息
+     * */
+    List<Movie> getRecommandMovies() throws SQLException;
+
+    /**
+     * @description: TODO 根据电影类型查找到12部电影
+     * */
+    List<Movie> getMovieByType(String type);
+
+    /**
+     * @description: TODO 通过电影年份和种类查找对应的电影
+     * */
+    List<Movie> getMovieByYearAndType(String type, String year);
+
+    /**
+     * @description: TODO 查找某种类电影的数量
+     * */
+    //int getNumFromType();
+
+    /**
+     * @description: TODO 获取某种类电影并分页
+     * */
+    List<Movie> getMovieByTypeAndApart(String type);
 }

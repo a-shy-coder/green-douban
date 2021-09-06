@@ -8,6 +8,7 @@
         <entry key="file://$PROJECT_DIR$/src/main/webapp/jsp/movie/directorInfo.jsp" value="file://$PROJECT_DIR$/src/main/webapp/jsp/movie" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/jsp/movie/movieInfo.jsp" value="file://$PROJECT_DIR$/src/main/webapp/jsp/movie" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/jsp/movie/movieReplyInfo.jsp" value="file://$PROJECT_DIR$/src/main/webapp/jsp/movie" />
+        <entry key="file://$PROJECT_DIR$/src/main/webapp/jsp/user/forgetPassword2.jsp" value="file://$PROJECT_DIR$/src/main/webapp/jsp/user" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/jsp/user/login.jsp" value="file://$PROJECT_DIR$/src/main/webapp/jsp/user" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/jsp/user/register.jsp" value="file://$PROJECT_DIR$/src/main/webapp/jsp/user" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/jsp/user/userCollectionInfo.jsp" value="file://$PROJECT_DIR$/src/main/webapp/jsp/user" />

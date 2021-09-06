@@ -36,6 +36,11 @@ public class Book {
 
 
     // 构造器
+
+
+    public Book() {
+    }
+
     public Book(int BId, String BChineseName, String BOriginName, String BType, float BRating, int BRatingCount, Date BReleaseDate, String BPublisher, int authorId, int bPageCount, String bBinding, String bContent, String bLanguage, String bCover) {
         this.BId = BId;
         this.BChineseName = BChineseName;

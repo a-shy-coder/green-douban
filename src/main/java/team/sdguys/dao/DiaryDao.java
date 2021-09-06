@@ -1,6 +1,7 @@
 package team.sdguys.dao;
 import team.sdguys.entity.Diary;
 
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 
@@ -102,4 +103,10 @@ public interface DiaryDao extends BaseDao{
      * @return 日志列表
      */
     List<Diary> getDiaryListByUid(int uid);
+
+    /**
+     * @description TODO 首页的日志精选，按照时间的降序显示日志列表
+     * @return 十条日志
+     * */
+    List<Diary> getDiaryOrderByTimeDesc() throws SQLException;
 }

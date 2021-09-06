@@ -1,12 +1,16 @@
 package team.sdguys.dao.impl;
 
+import org.apache.commons.dbutils.QueryRunner;
+import org.apache.commons.dbutils.handlers.BeanListHandler;
 import team.sdguys.dao.ActorDao;
 import team.sdguys.entity.Actor;
 import team.sdguys.util.DataBaseUtil;
+import team.sdguys.util.DataSourceUtils;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -133,5 +137,14 @@ public class ActorDaoImpl extends BaseDaoImpl implements ActorDao {
     public int modifyActorById(Actor actor) {
         return executeUpdate("UPDATE actor SET ActorChineseName = ?,ActorOriginName  = ?,ActorInfo = ?,ActorGender = ?,ActorImg = ? WHERE ActorId = ?",
                 actor.getActorChineseName(),actor.getActorOriginName(),actor.getActorInfo(),actor.getActorGender(),actor.getActorImg(),actor.getActorId());
+    }
+    /**
+     * @description TODO 根据演员的名字进行模糊查询
+     * */
+    @Override
+    public List<Actor> getActorByLikeName(String name) throws SQLException {
+        String sql = "select * from Actor where ActorChineseName like ? or ActorOriginName like ?";
+        QueryRunner runner = new QueryRunner(DataSourceUtils.getDataSource());
+        return runner.query(sql,new BeanListHandler<Actor>(Actor.class),"%"+name+"%","%"+name+"%");
     }
 }

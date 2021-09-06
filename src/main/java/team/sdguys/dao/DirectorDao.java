@@ -2,6 +2,7 @@ package team.sdguys.dao;
 
 import team.sdguys.entity.Director;
 
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -55,4 +56,9 @@ public interface DirectorDao extends BaseDao{
      * @return
      */
     int modifyDirectorById(Director director);
+
+    /**
+     * @description TODO 根据导演名字进行模糊查询
+     * */
+    List<Director> getDirectorByLikeName(String name) throws SQLException;
 }

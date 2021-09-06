@@ -2,6 +2,7 @@ package team.sdguys.dao;
 
 import team.sdguys.entity.Actor;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public interface ActorDao extends BaseDao{
@@ -53,4 +54,9 @@ public interface ActorDao extends BaseDao{
      * @return
      */
     int modifyActorById(Actor actor);
+
+    /**
+     * @description TODO 根据演员的名字进行模糊查询
+     * */
+    List<Actor> getActorByLikeName(String name) throws SQLException;
 }

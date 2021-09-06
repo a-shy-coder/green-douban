@@ -19,6 +19,10 @@ public class Diary {
     // 日志点赞数量
     private int DLikeCount;
 
+
+    public Diary() {
+    }
+
     public Diary(int diaryId, String diaryTitle, String diaryContent, Date diaryTime, int UId, int DLikeCount) {
         DiaryId = diaryId;
         DiaryTitle = diaryTitle;

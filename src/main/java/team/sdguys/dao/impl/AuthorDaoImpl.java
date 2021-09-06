@@ -1,13 +1,17 @@
 package team.sdguys.dao.impl;
 
+import org.apache.commons.dbutils.QueryRunner;
+import org.apache.commons.dbutils.handlers.BeanListHandler;
 import team.sdguys.dao.AuthorDao;
 import team.sdguys.entity.Actor;
 import team.sdguys.entity.Author;
 import team.sdguys.util.DataBaseUtil;
+import team.sdguys.util.DataSourceUtils;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -142,6 +146,15 @@ public class AuthorDaoImpl extends BaseDaoImpl implements AuthorDao {
         return executeUpdate("UPDATE author \n" +
                 "        SET AuthorChineseName = ?,AuthorOriginName  = ?,AuthorInfo = ?,AuthorGender = ?,AuthorImg = ?\n" +
                 "        WHERE AuthorId = ?",author.getAuthorChineseName(),author.getAuthorOriginName(),author.getAuthorInfo(),author.getAuthorGender(),author.getAuthorImg(),author.getAuthorId());
+    }
+    /**
+     * @description TODO 根据作者名字进行模糊查询
+     * */
+    @Override
+    public List<Author> getAuthorByLikeName(String name) throws SQLException {
+        String sql = "select * from Author where AuthorChineseName like ? or AuthorOriginName like ?";
+        QueryRunner runner =  new QueryRunner(DataSourceUtils.getDataSource());
+        return runner.query(sql, new BeanListHandler<Author>(Author.class), "%"+name+"%", "%"+name+"%");
     }
 }
 

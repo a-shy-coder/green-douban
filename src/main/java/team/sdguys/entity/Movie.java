@@ -35,6 +35,10 @@ public class Movie {
 
 
     // 构造器
+
+    public Movie() {
+    }
+
     public Movie(int movieId, String MChineseName, String MOriginName, String MType, double MRating, int MRatingCount, Date MReleaseDate, int directorId, String mLanguage, String mLength, String mArea, String mContent, String mCover) {
         MovieId = movieId;
         this.MChineseName = MChineseName;

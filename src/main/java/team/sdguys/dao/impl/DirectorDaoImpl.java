@@ -1,12 +1,16 @@
 package team.sdguys.dao.impl;
 
+import org.apache.commons.dbutils.QueryRunner;
+import org.apache.commons.dbutils.handlers.BeanListHandler;
 import team.sdguys.dao.DirectorDao;
 import team.sdguys.entity.Director;
 import team.sdguys.util.DataBaseUtil;
+import team.sdguys.util.DataSourceUtils;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -135,5 +139,13 @@ public class DirectorDaoImpl extends BaseDaoImpl implements DirectorDao {
         return executeUpdate("UPDATE Director \n" +
                 "    SET DirectorChineseName = ?,DirectorOriginName  = ?, DirectorInfo = ?, DirectorGender = ?, DirectorImg = ? WHERE DirectorId = ?;",director.getDirectorChineseName(),director.getDirectorOriginName(),director.getDirectorInfo(),director.getDirectorGender(),director.getDirectorImg(),director.getDirectorId());
     }
+
+    @Override
+    public List<Director> getDirectorByLikeName(String name) throws SQLException {
+        String sql = "select * from director where DirectorChineseName like ? or DirectorOriginName like ?";
+        QueryRunner runner = new QueryRunner(DataSourceUtils.getDataSource());
+        return runner.query(sql, new BeanListHandler<Director>(Director.class),"%"+name+"%", "%"+name+"%");
+    }
+
 
 }

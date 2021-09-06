@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<c3p0-config>
+    <default-config>
+        <property name="driverClass">com.mysql.cj.jdbc.Driver</property>
+        <property name="jdbcUrl"><![CDATA[jdbc:mysql://47.104.193.77:3306/sdguys?serverTimezone=UTC&useUnicode=true&characterEncoding=UTF-8&allowPublicKeyRetrieval=true]]></property>
+        <property name="user">niit</property>
+        <property name="password">niit</property>
+    </default-config>
+</c3p0-config> 
